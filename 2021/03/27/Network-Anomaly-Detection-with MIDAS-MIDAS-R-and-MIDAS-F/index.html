@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://blog.munhou.com/images/midas/merge-code.png">
 <meta property="og:image" content="https://blog.munhou.com/images/midas/midasf-code.png">
 <meta property="article:published_time" content="2021-03-27T01:29:00.000Z">
-<meta property="article:modified_time" content="2021-03-27T05:46:06.613Z">
+<meta property="article:modified_time" content="2021-03-27T05:57:00.550Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Anomaly Detection">
@@ -205,7 +205,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-03-27 09:29:00 / Modified: 13:46:06" itemprop="dateCreated datePublished" datetime="2021-03-27T09:29:00+08:00">2021-03-27</time>
+              <time title="Created: 2021-03-27 09:29:00 / Modified: 13:57:00" itemprop="dateCreated datePublished" datetime="2021-03-27T09:29:00+08:00">2021-03-27</time>
             </span>
 
           
@@ -304,7 +304,7 @@ Pic 3. Network Graph from Day 2
 <p>Then change to the <code>MIDAS</code> directory and install:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd MIDAS</span><br><span class="line">pip install .</span><br></pre></td></tr></table></figure>
 
-<p>I wrote an example of using MIDAS on real-word dataset here: <a target="_blank" rel="noopener" href="https://github.com/munhouiani/MIDAS/blob/master/notebook/MIDASExample.ipynb">MIDAS Example.ipynb</a></p>
+<p>I wrote an example of using MIDAS on real-word dataset here: <a target="_blank" rel="noopener" href="https://github.com/munhouiani/MIDAS/blob/1.2.0/notebook/MIDASExample.ipynb">MIDAS Example.ipynb</a></p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>MIDAS is both a scalable and effective anomaly detection algorithm. There are several remaining problems we have to solve before deploying MIDAS into the production environment. </p>
 <p>There are two needed thresholds in this algorithm. One is the $\epsilon$ in MIDAS-F, while the other one is to determine an instance is an anomaly or not. Unlike other supervised learning algorithms, where we usually set the threshold at 0.5, MIDAS’s score is unbounded. A systematic method to find thresholds is in need.</p>
 <p>The other problem is whether we should update the MIDAS models. We know that a model drift phenomenon describes that the environment in which the model is operating is changing. A simple way to tackle the model drift problem is retraining our model periodically. MIDAS is an online learning algorithm by design, and we do not know yet if it is safe from the model drift problem.</p>
