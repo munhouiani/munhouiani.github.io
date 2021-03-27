@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://blog.munhou.com/images/midas/merge-code.png">
 <meta property="og:image" content="https://blog.munhou.com/images/midas/midasf-code.png">
 <meta property="article:published_time" content="2021-03-27T01:29:00.000Z">
-<meta property="article:modified_time" content="2021-03-27T06:03:20.456Z">
+<meta property="article:modified_time" content="2021-03-27T06:07:55.423Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Anomaly Detection">
@@ -205,7 +205,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-03-27 09:29:00 / Modified: 14:03:20" itemprop="dateCreated datePublished" datetime="2021-03-27T09:29:00+08:00">2021-03-27</time>
+              <time title="Created: 2021-03-27 09:29:00 / Modified: 14:07:55" itemprop="dateCreated datePublished" datetime="2021-03-27T09:29:00+08:00">2021-03-27</time>
             </span>
 
           
@@ -288,7 +288,7 @@ Pic 3. Network Graph from Day 2
 <img src="/images/midas/midasr-code.png" alt="Midas-R Pseudocode" style="zoom:50%;" />
 
 <h2 id="MIDAS-F"><a href="#MIDAS-F" class="headerlink" title="MIDAS-F"></a>MIDAS-F</h2><p>MIDAS and MIDAS-R are designed to update their records into their internal CMS structure immediately. Let us consider a DOS attack where many edges arrive within a brief period. At first, MIDAS can detect these anomalies. However, the mean level ($\frac{s_{uv}}{t-1}$) of the score increases as the attack continues, which leads to the increasing of the expected count of anomalous edge. Finally, MIDAS can no longer identify these anomalous edges.</p>
-<p>MIDAS-F introduces a conditional merge method to decide whether the current count $a$ should be merged into $s$ to prevent this poising effect. It uses another CMS structure $c_{uv}$ to keep track of the anomaly score. Whenever the time tick changes, if $c_uv$ is less than a pre-determined threshold $\epsilon$, the $a_{uv}$ will be added to $s_{uv}$. Otherwise, the expected count ($\frac{s_{uv}}{t-1}$) will be added to $s_{uv}$ to keep the mean level unchanged.</p>
+<p>MIDAS-F introduces a conditional merge method to decide whether the current count $a$ should be merged into $s$ to prevent this poising effect. It uses another CMS structure $c _{uv}$ to keep track of the anomaly score. Whenever the time tick changes, if $c _{uv}$ is less than a pre-determined threshold $\epsilon$, the $a _{uv}$ will be added to $s _{uv}$. Otherwise, the expected count ($\frac{s _{uv}}{t-1}$) will be added to $s _{uv}$ to keep the mean level unchanged.</p>
 <p>Here is the pseudocode of conditional merge:</p>
 <img src="/images/midas/merge-code.png" alt="Conditional Merge Pseudocode" style="zoom:50%;" />
 
