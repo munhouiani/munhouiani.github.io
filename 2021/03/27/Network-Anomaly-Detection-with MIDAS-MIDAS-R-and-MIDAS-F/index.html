@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.munhou.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="BackgroundAnomaly detection has always been a challenging research field. An anomaly indicates a sudden and short-lived pattern change, while a detection algorithm aims to identify anomalies promptly.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F">
+<meta property="og:url" content="https://blog.munhou.com/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/index.html">
+<meta property="og:site_name" content="Mun Hou&#39;s Blog">
+<meta property="og:description" content="BackgroundAnomaly detection has always been a challenging research field. An anomaly indicates a sudden and short-lived pattern change, while a detection algorithm aims to identify anomalies promptly.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/distribution-of-connections.png">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/network-graph-day1.png">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/network-graph-day2.png">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/cms.png">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/cms-add-count.gif">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/cms-retrieve-count.gif">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/midas-proof.png">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/midas-code.png">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/dos.gif">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/midasr-code.png">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/merge-code.png">
+<meta property="og:image" content="https://blog.munhou.com/images/midas/midasf-code.png">
+<meta property="article:published_time" content="2021-03-27T01:29:00.000Z">
+<meta property="article:modified_time" content="2022-03-14T18:57:07.432Z">
+<meta property="article:author" content="Mun Hou">
+<meta property="article:tag" content="Machine Learning">
+<meta property="article:tag" content="Anomaly Detection">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.munhou.com/images/midas/distribution-of-connections.png">
+
+<link rel="canonical" href="https://blog.munhou.com/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F | Mun Hou's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-61451029-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-61451029-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Mun Hou's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/munhouiani" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mun Hou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mun Hou's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-27 09:29:00" itemprop="dateCreated datePublished" datetime="2021-03-27T09:29:00+08:00">2021-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-15 02:57:07" itemprop="dateModified" datetime="2022-03-15T02:57:07+08:00">2022-03-15</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/27/Network-Anomaly-Detection-with MIDAS-MIDAS-R-and-MIDAS-F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>Anomaly detection has always been a challenging research field. An anomaly indicates a sudden and short-lived pattern change, while a detection algorithm aims to identify anomalies promptly. Detecting anomaly on networks levels up the problem as network monitoring devices usually collect data at high rates, which means a network anomaly detection algorithm should handle high-dimension, noisy, and massive data under power and communication constraints. We should also acknowledge that different anomalies exhibit themselves in network statistics in a different manner. A general anomaly detection model often does not exist. A model that detects surprising edges in a network is probably cannot detect micro cluster anomalies.</p>
+<span id="more"></span>
+
+<p>There are multiple ways to formulate a network anomaly detection problem. The simplest method is to calculate the mean and variance of any connection IP pairs and raise an alert once the connection count is away from 3 standard deviations of the means. This method holds an assumption: the connection count follows a Gaussian distribution. This assumption is strict and often false in a real-world situation.</p>
+<p><img src="/images/midas/distribution-of-connections.png" alt="Distribution of some connections"></p>
+<p>Pic 1. Distribution of connection counts from a real-world dataset, which is not a normal distribution.</p>
+<p>Researchers had studied various machine learning approaches to this network anomaly detection problem. To represent a net flow, one either extracts hand-crafted features, such as ﬂow packet size, amount of specific signals, or build the representation automatically with deep neural networks, such as CNN. Afterwards, they either build an unsupervised model with an Isolation Forest, One-class SVM, or a Deep Autoencoder with these representations.</p>
+<p>MIDAS authors formulated this problem differently. Instead of net flow, they model the network connections a graph, which kind of the networks’ nature. Their algorithm is a graph anomaly detection algorithm that works on a dynamic graph, a sweet capability where the current graph anomaly detection algorithms lack. Current graph algorithms only process a graph snapshot at specific intervals. They do not consider the temporal characteristics, in which everything happening at the current snapshot is somehow related to the past. Here are two graph snapshots from the same network at two different times. They are related to each other, yet their snapshots tell an entirely different story.</p>
+<img src="/images/midas/network-graph-day1.png" alt="Network Graph Day 1" style="zoom:50%;" /> 
+Pic 2. Network Graph from Day 1
+<img src="/images/midas/network-graph-day2.png" alt="Network Graph Day 2" style="zoom:50%;" />
+Pic 3. Network Graph from Day 2
+
+<h2 id="Properties-of-MIDAS"><a href="#Properties-of-MIDAS" class="headerlink" title="Properties of MIDAS"></a>Properties of MIDAS</h2><p>MIDAS has the following properties:</p>
+<ul>
+<li>It can detect micro-cluster anomalies, which are suddenly arriving groups of suspiciously similar edge.</li>
+<li>It processes each incoming edge within constant time and constant memory.</li>
+</ul>
+<p>In general, MIDAS records the counts of every single edge with a Count-Min-Sketch data structure. Before we dive into their methodology, we should figure out what count-min-sketch is and why they use it.</p>
+<h3 id="Count-Min-Sketch-CMS"><a href="#Count-Min-Sketch-CMS" class="headerlink" title="Count-Min-Sketch (CMS)"></a>Count-Min-Sketch (CMS)</h3><p>We often use a hash map to maintain a counter:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;&#125;</span><br><span class="line"></span><br><span class="line">d[some_key] = d.get(some_key, <span class="number">0</span>) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>To retrieve the count of <code>some_key</code>, we use <code>d[some_key]</code>. This method does not scale as the number of keys in a hash map could be huge. Therefore, count-min-sketch (CMS) aims to serve as a frequency table that consumes only constant memory. In other words, the required memory of CMS does not increase when the number of keys increases.</p>
+<img src="/images/midas/cms.png" alt="CMS Data Structure" style="zoom:30%;" />
+
+<p>To use a CMS, we prepare $d$  different hash functions and the number of buckets of each hash function $w$. Then we initialise an matrix of size $d \times w$ with 0.</p>
+<img src="/images/midas/cms-add-count.gif" alt="CMS Increment Count" style="zoom:70%;" />
+
+<p>To update a count of <code>some_key</code>, we first hash <code>some_key</code> with a hash function $h_i$, and then increment the number at $cell(i, h_i(\text{some_key}))$. We continue this process until all $d$ hash functions have been used.</p>
+<img src="/images/midas/cms-retrieve-count.gif" alt="CMS Retrieve Count" style="zoom:70%;" />
+
+<p>Of course, hash functions may conflict with each other due to the limited number of buckets. To retrieve the count of <code>some_key</code>, we get all counts of <code>some_key</code> from each row with $h_i(\text{some_key})$, then return the minimum value.</p>
+<h2 id="MIDAS"><a href="#MIDAS" class="headerlink" title="MIDAS"></a>MIDAS</h2><p>MIDAS will maintain two CMS, one for the total number of edges from $u$ to $v$ until the current time tick, denoted as $\hat{s} _{uv}$, and the number of edge from $u$ to $v$ at the current time tick, denoted as $\hat{a} _{uv}$. The time ticks mentioned here are discrete, for example, $t=10$. Since $\hat{a} _{uv}$ is used to count the edge from $u$ to $v$ at the current time tick, it will be reset every time MIDAS transition to the next time tick. For example, let us say we are at $t = 10$ and $\hat{a} _{uv} = 19$. Before we move to $t=11$, we will reset  $\hat{a} _{uv}$ to $0$.</p>
+<p>MIDAS assumes that the mean level (i.e. the average rate at which edges appear) in the current time tick (e.g. $t = 10$) is the same as the mean level before the current time tick ($t &lt; 10$). Compare to the Gaussian mentioned we stated before, their assumption is weaker as they do not assume any distribution at each time tick.</p>
+<p>With the chi-square goodness of fit test, they score any newly arriving edge $(u, v, t)$ with the following equation:</p>
+<p>$$<br>score((u,v,t)) = (\hat{a} _{uv} - \frac{\hat{s} _{uv}}{t})^2 \frac{t^2}{\hat{s} _{uv}(t-1)}<br>$$</p>
+<p>Let us walk through the proof one by one:</p>
+<p><img src="/images/midas/midas-proof.png" alt="Proof"></p>
+<ol>
+<li> Recall that they have a CMS for the number of edge at the current time tick, therefore the observed count of edge $u \rightarrow v$ can be retrieved from $a_{uv}$.</li>
+<li> Recall that they also have a CMS for the total number of edge until the current tick, therefore the mean level of edge $u \rightarrow v$ is calculated as $\frac{s_{uv}}{t}$.</li>
+<li> To calculate the observed number of edge $u \rightarrow v$ before current time tick, we simply subtract $a_{uv}$ from $s_{uv}$.</li>
+<li> Finally, to get the mean level of the number of edge $u \rightarrow v$ before current time tick, we calculate $\frac{t-1}{t} s_{uv}$.</li>
+</ol>
+<p>Here is the pseudocode of MIDAS:</p>
+<img src="/images/midas/midas-code.png" alt="MIDAS Pseudocode" style="zoom:30%;" />
+
+<h2 id="MIDAS-R"><a href="#MIDAS-R" class="headerlink" title="MIDAS-R"></a>MIDAS-R</h2><p>The “R” in MIDAS-R stands for “relations”. MIDAS-R aims to group related edges.</p>
+<p>The first relation they incorporate is the temporal relation. Instead of resetting $a_{uv}$ before every transition, they reduce the count $a_{uv}$ by a fraction of $\alpha \in (0, 1)$. For example, let us say the $\alpha = 0.5$ and $a_{uv} = 20$. Before we transition to the next time tick, we reduce $a_{uv}$ to $10$ instead of resetting it to $0$.</p>
+<p><img src="/images/midas/dos.gif" alt="DOS Attack"></p>
+<p>Besides temporal relations, MIDAS-R would also like to catch large groups of spatially nearby edges. Imagine there are lots of different hosts connected to the same machine A suddenly at $t=10$. MIDAS will probably not notice this anomaly as it scores the edges only. To tackle this problem, MIDAS-R creates four additional CMS structures, $a_u$, $s_u$, $a_v$, and $s_v$ to approximate the current and total edge counts adjacent to node $u$ and node $v$. Hence, for each incoming edge, MIDAS-R will compute three scores: one for edge $(u, v)$ as before, one for node $u$ and one for node $v$. Finally, it combines three scores by taking their maximum value.</p>
+<p>Here is the pseudocode of MIDAS-R:</p>
+<img src="/images/midas/midasr-code.png" alt="Midas-R Pseudocode" style="zoom:50%;" />
+
+<h2 id="MIDAS-F"><a href="#MIDAS-F" class="headerlink" title="MIDAS-F"></a>MIDAS-F</h2><p>MIDAS and MIDAS-R are designed to update their records into their internal CMS structure immediately. Let us consider a DOS attack where many edges arrive within a brief period. At first, MIDAS can detect these anomalies. However, the mean level ($\frac{s_{uv}}{t-1}$) of the score increases as the attack continues, which leads to the increasing of the expected count of anomalous edge. Finally, MIDAS can no longer identify these anomalous edges.</p>
+<p>MIDAS-F introduces a conditional merge method to decide whether the current count $a$ should be merged into $s$ to prevent this poising effect. It uses another CMS structure $c _{uv}$ to keep track of the anomaly score. Whenever the time tick changes, if $c _{uv}$ is less than a pre-determined threshold $\epsilon$, the $a _{uv}$ will be added to $s _{uv}$. Otherwise, the expected count ($\frac{s _{uv}}{t-1}$) will be added to $s _{uv}$ to keep the mean level unchanged.</p>
+<p>Here is the pseudocode of conditional merge:</p>
+<img src="/images/midas/merge-code.png" alt="Conditional Merge Pseudocode" style="zoom:50%;" />
+
+<p>MIDAS-F also redefined the $s_{uv}$ as the total number of edges from $u$ to $v$ until the previous time tick, not including the current edge count $a_{uv}$, leads to a minor change of scoring function:</p>
+<p>$$<br>score(u, v, t) = \frac{(\hat{a} _{uv} + \hat{s} _{uv} - \hat{a} _{uv}t)^2}{\hat{s} _{uv}(t-1)}<br>$$</p>
+<p>Here is the pseudocode of MIDAS-F:</p>
+<img src="/images/midas/midasf-code.png" alt="MIDAS-F Pseudocode" style="zoom:60%;" />
+
+<h2 id="MIDAS-in-Action"><a href="#MIDAS-in-Action" class="headerlink" title="MIDAS in Action"></a>MIDAS in Action</h2><p>Before install, make sure you have Cmake &gt;3.5.</p>
+<p>To install MIDAS python, first clone this repo:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/munhouiani/MIDAS.git --branch v1.3.0 --recursive</span><br></pre></td></tr></table></figure>
+
+<p>Then change to the <code>MIDAS</code> directory and install:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd MIDAS</span><br><span class="line">pip install .</span><br></pre></td></tr></table></figure>
+
+<p>I wrote an example of using MIDAS on real-word dataset here: <a target="_blank" rel="noopener" href="https://github.com/munhouiani/MIDAS/blob/v1.3.0/notebook/MIDASExample.ipynb">MIDAS Example.ipynb</a></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>MIDAS is both a scalable and effective anomaly detection algorithm. There are several remaining problems we have to solve before deploying MIDAS into the production environment. </p>
+<p>There are two needed thresholds in this algorithm. One is the $\epsilon$ in MIDAS-F, while the other one is to determine an instance is an anomaly or not. Unlike other supervised learning algorithms, where we usually set the threshold at 0.5, MIDAS’s score is unbounded. A systematic method to find thresholds is in need.</p>
+<p>The other problem is whether we should update the MIDAS models. We know that a model drift phenomenon describes that the environment in which the model is operating is changing. A simple way to tackle the model drift problem is retraining our model periodically. MIDAS is an online learning algorithm by design, and we do not know yet if it is safe from the model drift problem.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2009.08452.pdf">Real-Time Streaming Anomaly Detection in Dynamic Graphs</a></p>
+<p>[2] <a target="_blank" rel="noopener" href="https://florian.github.io/count-min-sketch/">Count-Min Sketch</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+              <a href="/tags/Anomaly-Detection/" rel="tag"># Anomaly Detection</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/12/Pytorch-Implementation-of-GEE-A-Gradient-based-Explainable-Variational-Autoencoder-for-Network-Anomaly-Detection/" rel="prev" title="Pytorch Implementation of GEE: A Gradient-based Explainable Variational Autoencoder for Network Anomaly Detection">
+      <i class="fa fa-chevron-left"></i> Pytorch Implementation of GEE: A Gradient-based Explainable Variational Autoencoder for Network Anomaly Detection
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/29/Drug-Listing-Dataset/" rel="next" title="Drug Listing Dataset">
+      Drug Listing Dataset <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Properties-of-MIDAS"><span class="nav-number">2.</span> <span class="nav-text">Properties of MIDAS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Count-Min-Sketch-CMS"><span class="nav-number">2.1.</span> <span class="nav-text">Count-Min-Sketch (CMS)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIDAS"><span class="nav-number">3.</span> <span class="nav-text">MIDAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIDAS-R"><span class="nav-number">4.</span> <span class="nav-text">MIDAS-R</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIDAS-F"><span class="nav-number">5.</span> <span class="nav-text">MIDAS-F</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIDAS-in-Action"><span class="nav-number">6.</span> <span class="nav-text">MIDAS in Action</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">7.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Mun Hou</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/munhouiani" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;munhouiani" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:munhou2022+blog@gmail.com" title="E-Mail → mailto:munhou2022+blog@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mun Hou</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://munhousblog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.munhou.com/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/";
+    this.page.identifier = "2021/03/27/Network-Anomaly-Detection-with MIDAS-MIDAS-R-and-MIDAS-F/";
+    this.page.title = "Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://munhousblog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
