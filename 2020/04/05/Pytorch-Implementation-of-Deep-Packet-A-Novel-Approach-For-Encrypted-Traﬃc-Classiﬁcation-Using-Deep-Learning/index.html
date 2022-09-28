@@ -32,12 +32,12 @@
 <meta property="og:image" content="https://blog.munhou.com/images/deep-packet/cnn_app_classification.png">
 <meta property="og:image" content="https://blog.munhou.com/images/deep-packet/cnn_traffic_classification.png">
 <meta property="article:published_time" content="2020-04-05T19:29:00.000Z">
-<meta property="article:modified_time" content="2022-09-28T01:36:54.824Z">
+<meta property="article:modified_time" content="2022-09-28T01:48:03.900Z">
 <meta property="article:author" content="Mun Hou">
-<meta property="article:tag" content="PySpark">
 <meta property="article:tag" content="Deep Learning">
-<meta property="article:tag" content="PyTorch">
 <meta property="article:tag" content="Traffic Classification">
+<meta property="article:tag" content="PyTorch">
+<meta property="article:tag" content="PySpark">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.munhou.com/images/deep-packet/cnn.png">
 
@@ -207,7 +207,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-28 09:36:54" itemprop="dateModified" datetime="2022-09-28T09:36:54+08:00">2022-09-28</time>
+                <time title="Modified: 2022-09-28 09:48:03" itemprop="dateModified" datetime="2022-09-28T09:48:03+08:00">2022-09-28</time>
               </span>
 
           
@@ -277,7 +277,7 @@
 <p>However, they didn’t mention the kernel size of the max-pooling layer and the sizes of three dense layers. I set the kernel size to 2, while for the dense layers, I use the setting of the last three layers of their SAE model, which are 200, 100, and 50.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">LightningModule</span>):</span></span><br><span class="line">        <span class="comment"># two convolution, then one max pool</span></span><br><span class="line">        self.conv1 = nn.Sequential(</span><br><span class="line">            nn.Conv1d(</span><br><span class="line">                in_channels=<span class="number">1</span>,</span><br><span class="line">                out_channels=self.hparams.c1_output_dim,</span><br><span class="line">                kernel_size=self.hparams.c1_kernel_size,</span><br><span class="line">                stride=self.hparams.c1_stride</span><br><span class="line">            ),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line">        self.conv2 = nn.Sequential(</span><br><span class="line">            nn.Conv1d(</span><br><span class="line">                in_channels=self.hparams.c1_output_dim,</span><br><span class="line">                out_channels=self.hparams.c2_output_dim,</span><br><span class="line">                kernel_size=self.hparams.c2_kernel_size,</span><br><span class="line">                stride=self.hparams.c2_stride</span><br><span class="line">            ),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        self.max_pool = nn.MaxPool1d(</span><br><span class="line">            kernel_size=<span class="number">2</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># flatten, calculate the output size of max pool</span></span><br><span class="line">        <span class="comment"># use a dummy input to calculate</span></span><br><span class="line">        dummy_x = torch.rand(<span class="number">1</span>, <span class="number">1</span>, self.hparams.signal_length, requires_grad=<span class="literal">False</span>)</span><br><span class="line">        dummy_x = self.conv1(dummy_x)</span><br><span class="line">        dummy_x = self.conv2(dummy_x)</span><br><span class="line">        dummy_x = self.max_pool(dummy_x)</span><br><span class="line">        max_pool_out = dummy_x.view(<span class="number">1</span>, -<span class="number">1</span>).shape[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># followed by 5 dense layers</span></span><br><span class="line">        self.fc1 = nn.Sequential(</span><br><span class="line">            nn.Linear(</span><br><span class="line">                in_features=max_pool_out,</span><br><span class="line">                out_features=<span class="number">200</span></span><br><span class="line">            ),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.05</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line">        self.fc2 = nn.Sequential(</span><br><span class="line">            nn.Linear(</span><br><span class="line">                in_features=<span class="number">200</span>,</span><br><span class="line">                out_features=<span class="number">100</span></span><br><span class="line">            ),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.05</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line">        self.fc3 = nn.Sequential(</span><br><span class="line">            nn.Linear(</span><br><span class="line">                in_features=<span class="number">100</span>,</span><br><span class="line">                out_features=<span class="number">50</span></span><br><span class="line">            ),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.05</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># finally, output layer</span></span><br><span class="line">        self.out = nn.Linear(</span><br><span class="line">            in_features=<span class="number">50</span>,</span><br><span class="line">            out_features=self.hparams.output_dim</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
 
-<h2 id="Create-Train-and-Test-Data"><a href="#Create-Train-and-Test-Data" class="headerlink" title="Create Train and Test Data"></a>Create Train and Test Data</h2><p>For each of the application and traffic classification tasks, the dataset is first stratified split into train set and test set with the ratio of 80:20, then each class in the train set are rebalanced by under-sampling. I used all data in the application classification task, but for the traffic classification task, I used only certain apps traffic in each traffic category. This is because I do not know the traffic category of certain apps which are not mentioned in the dataset description page. The applications I used for the traffic classification task are as follow:</p>
+<h2 id="Create-Train-and-Test-Data"><a href="#Create-Train-and-Test-Data" class="headerlink" title="Create Train and Test Data"></a>Create Train and Test Data</h2><p>For each of the application and traffic classification tasks, the dataset is first stratified split into train set and test set with the ratio of 80:20, then each class in the train set are rebalanced by under-sampling. The applications I used for the traffic classification task are as follow:</p>
 <table>
 <thead>
 <tr>
@@ -287,23 +287,23 @@
 </thead>
 <tbody><tr>
 <td>Email</td>
-<td>SMPTS, POP3S and IMAPS</td>
+<td>SMPTS, POP3S, and IMAPS</td>
 </tr>
 <tr>
 <td>Chat</td>
-<td>ICQ, AIM, Skype, Facebook and Hangouts</td>
+<td>AIM, Facebook, Gmail, Hangouts, ICQ, and Skype</td>
 </tr>
 <tr>
 <td>Streaming</td>
-<td>Vimeo and Youtube</td>
+<td>Netflix, Spotify, Vimeo, and Youtube</td>
 </tr>
 <tr>
 <td>File Transfer</td>
-<td>Skype, FTPS and SFTP</td>
+<td>FTPS, SCP, SFTP, and Skype</td>
 </tr>
 <tr>
 <td>VoIP</td>
-<td>Facebook, Skype and Hangouts voice and video calls</td>
+<td>Facebook, Skype and Hangouts voice and video calls and VoipBuster</td>
 </tr>
 </tbody></table>
 <h2 id="Evaluation-Result"><a href="#Evaluation-Result" class="headerlink" title="Evaluation Result"></a>Evaluation Result</h2><p><img src="/images/deep-packet/cnn_app_classification.png"><br>Application classification</p>
@@ -320,10 +320,10 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/PySpark/" rel="tag"># PySpark</a>
               <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
-              <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
               <a href="/tags/Traffic-Classification/" rel="tag"># Traffic Classification</a>
+              <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
+              <a href="/tags/PySpark/" rel="tag"># PySpark</a>
           </div>
 
         
