@@ -16,33 +16,34 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="article">
-<meta property="og:title" content="Summary of Malware Detection By Eating a Whole EXE in One Picture">
-<meta property="og:url" content="https://blog.munhou.com/2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/index.html">
+    <meta name="description" content="Gwern published a collection of Darknet Market Archives in 2015. While the dataset is comprehensive, a lot of works need to be done before we can start analyzing it. I put some effort to organize Gwer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Drug Listing Dataset">
+<meta property="og:url" content="https://blog.munhou.com/2021/09/30/Drug-Listing-Dataset/index.html">
 <meta property="og:site_name" content="Mun Hou&#39;s Blog">
+<meta property="og:description" content="Gwern published a collection of Darknet Market Archives in 2015. While the dataset is comprehensive, a lot of works need to be done before we can start analyzing it. I put some effort to organize Gwer">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://blog.munhou.com/images/eating-whole-files/pasted-0.png">
-<meta property="article:published_time" content="2020-01-15T22:50:00.000Z">
-<meta property="article:modified_time" content="2022-12-01T23:45:54.010Z">
+<meta property="article:published_time" content="2021-09-30T09:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-04T01:26:18.570Z">
 <meta property="article:author" content="Mun Hou">
-<meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Machine Learning">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Pytorch">
+<meta property="article:tag" content="Anomaly Detection">
 <meta property="article:tag" content="Malware Detection">
-<meta property="article:tag" content="Paper Summary">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog.munhou.com/images/eating-whole-files/pasted-0.png">
 
 
-<link rel="canonical" href="https://blog.munhou.com/2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/">
+<link rel="canonical" href="https://blog.munhou.com/2021/09/30/Drug-Listing-Dataset/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.munhou.com/2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/","path":"2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/","title":"Summary of Malware Detection By Eating a Whole EXE in One Picture"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.munhou.com/2021/09/30/Drug-Listing-Dataset/","path":"2021/09/30/Drug-Listing-Dataset/","title":"Drug Listing Dataset"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Summary of Malware Detection By Eating a Whole EXE in One Picture | Mun Hou's Blog</title>
+<title>Drug Listing Dataset | Mun Hou's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-61451029-2"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-61451029-2","only_pageview":false}</script>
@@ -106,7 +107,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -119,6 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Link-to-Dataset"><span class="nav-number">1.</span> <span class="nav-text">Link to Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Coverage"><span class="nav-number">2.</span> <span class="nav-text">Coverage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Field"><span class="nav-number">3.</span> <span class="nav-text">Data Field</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Possible-Research"><span class="nav-number">4.</span> <span class="nav-text">Possible Research</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Drug-Slang-Detection"><span class="nav-number">4.1.</span> <span class="nav-text">Drug Slang Detection</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -172,7 +174,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2021/09/30/Drug-Listing-Dataset/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -185,12 +187,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Summary of Malware Detection By Eating a Whole EXE in One Picture | Mun Hou's Blog">
+      <meta itemprop="name" content="Drug Listing Dataset | Mun Hou's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Summary of Malware Detection By Eating a Whole EXE in One Picture
+          Drug Listing Dataset
         </h1>
 
         <div class="post-meta-container">
@@ -201,14 +203,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2020-01-15 14:50:00" itemprop="dateCreated datePublished" datetime="2020-01-15T14:50:00-08:00">2020-01-15</time>
+      <time title="Created: 2021-09-30 02:00:00" itemprop="dateCreated datePublished" datetime="2021-09-30T02:00:00-07:00">2021-09-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-01 15:45:54" itemprop="dateModified" datetime="2022-12-01T15:45:54-08:00">2022-12-01</time>
+      <time title="Modified: 2022-12-03 17:26:18" itemprop="dateModified" datetime="2022-12-03T17:26:18-08:00">2022-12-03</time>
     </span>
 
   
@@ -220,8 +222,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2021/09/30/Drug-Listing-Dataset/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/30/Drug-Listing-Dataset/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -235,7 +237,32 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="/images/eating-whole-files/pasted-0.png"></p>
+        <p><a target="_blank" rel="noopener" href="https://www.gwern.net/DNM-archives">Gwern published a collection of Darknet Market Archives in 2015</a>. While the dataset is comprehensive, a lot of works need to be done before we can start analyzing it. I put some effort to organize Gwern’s archives, extract only drug-related content, and construct a drug listing dataset in csv format.</p>
+<span id="more"></span>
+
+
+<h2 id="Link-to-Dataset"><a href="#Link-to-Dataset" class="headerlink" title="Link to Dataset"></a>Link to Dataset</h2><p>Feel free to check out my repo <a target="_blank" rel="noopener" href="https://github.com/munhouiani/Drug-Listings-Dataset">here</a>.</p>
+<h2 id="Coverage"><a href="#Coverage" class="headerlink" title="Coverage"></a>Coverage</h2><p>Drug listing data are parsed from the following marketplaces.</p>
+<ul>
+<li>1776</li>
+<li>Abraxas</li>
+<li>Agora</li>
+<li>Evolution</li>
+<li>Nucleus</li>
+<li>Outlaw Market</li>
+<li>Silk Road 2</li>
+<li>The Marketplace</li>
+</ul>
+<h2 id="Data-Field"><a href="#Data-Field" class="headerlink" title="Data Field"></a>Data Field</h2><ul>
+<li><code>product_title</code>: The title of the item.</li>
+<li><code>product_description</code>: The description of the item. This field could be null as some of the listing archives are damaged.</li>
+<li><code>ship_from</code>: The place where the item is shipped from. This field could be null as shipping information isn’t required for certain marketplaces.</li>
+<li><code>ship_to</code>: The place where the item is shipped to. This field could be null as shipping information isn’t required for certain marketplaces.</li>
+<li><code>seller</code>: The seller of the item.</li>
+<li><code>price</code>: The price of the item, the currency is not yet unified.</li>
+<li><code>source</code>: The name of the marketplace where this item is posted.</li>
+</ul>
+<h2 id="Possible-Research"><a href="#Possible-Research" class="headerlink" title="Possible Research"></a>Possible Research</h2><h3 id="Drug-Slang-Detection"><a href="#Drug-Slang-Detection" class="headerlink" title="Drug Slang Detection"></a>Drug Slang Detection</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.16808.pdf">Wanzheng et al. (2021)</a> proposed an unsupervised method to detect and identify drug slang. By masking a drug name (e.g. heroin), they use a language model to fill in the mask with words other than the original drug name. Those predicted words are considered as drug slang. This dataset could be used to enhance their language model.</p>
 
     </div>
 
@@ -244,21 +271,18 @@
     
 
     <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
-              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
-              <a href="/tags/Malware-Detection/" rel="tag"># Malware Detection</a>
-              <a href="/tags/Paper-Summary/" rel="tag"># Paper Summary</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/" rel="prev" title="Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F">
+                  <i class="fa fa-chevron-left"></i> Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/01/16/Data-Pipeline-From-Pyspark-to-Pytorch/" rel="next" title="Data Pipeline: From PySpark to PyTorch">
-                  Data Pipeline: From PySpark to PyTorch <i class="fa fa-chevron-right"></i>
+                <a href="/2022/02/09/Simple-Implementation-of-Rendevzous-Architecture-for-Machine-Learning-Services/" rel="next" title="Simple Implementation of Rendezvous Architecture for Machine Learning Services">
+                  Simple Implementation of Rendezvous Architecture for Machine Learning Services <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
