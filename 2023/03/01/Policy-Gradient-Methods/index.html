@@ -18,29 +18,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Once a XGBoost model is trained, we would like to use PySpark for batch predictions. The method we use here is through Pandas UDF.">
+    <meta name="description" content="What Are Policy Gradient MethodsPolicy gradient methods are a class of reinforcement learning algorithms used for optimizing parametrized policies by gradient descent to maximize the expected return,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ML Prediction with XGBoost and PySpark">
-<meta property="og:url" content="https://blog.munhou.com/2020/03/01/ML-Prediction-with-XGBoost-and-PySpark/index.html">
+<meta property="og:title" content="Policy Gradient Methods">
+<meta property="og:url" content="https://blog.munhou.com/2023/03/01/Policy-Gradient-Methods/index.html">
 <meta property="og:site_name" content="Mun Hou&#39;s Blog">
-<meta property="og:description" content="Once a XGBoost model is trained, we would like to use PySpark for batch predictions. The method we use here is through Pandas UDF.">
+<meta property="og:description" content="What Are Policy Gradient MethodsPolicy gradient methods are a class of reinforcement learning algorithms used for optimizing parametrized policies by gradient descent to maximize the expected return,">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-03-01T05:14:00.000Z">
+<meta property="article:published_time" content="2023-03-01T13:22:00.000Z">
 <meta property="article:modified_time" content="2023-03-01T21:47:57.489Z">
 <meta property="article:author" content="Mun Hou">
-<meta property="article:tag" content="Machine Learning">
-<meta property="article:tag" content="PySpark">
+<meta property="article:tag" content="Reinforcement Learning">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://blog.munhou.com/2020/03/01/ML-Prediction-with-XGBoost-and-PySpark/">
+<link rel="canonical" href="https://blog.munhou.com/2023/03/01/Policy-Gradient-Methods/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.munhou.com/2020/03/01/ML-Prediction-with-XGBoost-and-PySpark/","path":"2020/03/01/ML-Prediction-with-XGBoost-and-PySpark/","title":"ML Prediction with XGBoost and PySpark"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.munhou.com/2023/03/01/Policy-Gradient-Methods/","path":"2023/03/01/Policy-Gradient-Methods/","title":"Policy Gradient Methods"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>ML Prediction with XGBoost and PySpark | Mun Hou's Blog</title>
+<title>Policy Gradient Methods | Mun Hou's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-61451029-2"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-61451029-2","only_pageview":false}</script>
@@ -115,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-pandas-udf-Instead-of-udf"><span class="nav-number">1.</span> <span class="nav-text">Why pandas_udf Instead of udf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-pandas-udf-Prediction-Function"><span class="nav-number">2.</span> <span class="nav-text">Create a pandas_udf Prediction Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-a-pandas-udf-Function"><span class="nav-number">3.</span> <span class="nav-text">Using a pandas_udf Function</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-Are-Policy-Gradient-Methods"><span class="nav-number">1.</span> <span class="nav-text">What Are Policy Gradient Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-a-Policy"><span class="nav-number">2.</span> <span class="nav-text">What is a Policy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Commonly-Used-Gradient-Estimator"><span class="nav-number">3.</span> <span class="nav-text">Commonly Used Gradient Estimator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-Gradient-Ascent-to-Update-Policy"><span class="nav-number">4.</span> <span class="nav-text">Use Gradient Ascent to Update Policy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-Tip-1-Add-a-Baseline"><span class="nav-number">5.</span> <span class="nav-text">Implementation Tip 1: Add a Baseline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-Tip-2-Assign-Suitable-Credit"><span class="nav-number">6.</span> <span class="nav-text">Implementation Tip 2: Assign Suitable Credit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advantage-Function"><span class="nav-number">7.</span> <span class="nav-text">Advantage Function</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -169,7 +168,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2020/03/01/ML-Prediction-with-XGBoost-and-PySpark/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/03/01/Policy-Gradient-Methods/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -182,12 +181,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="ML Prediction with XGBoost and PySpark | Mun Hou's Blog">
+      <meta itemprop="name" content="Policy Gradient Methods | Mun Hou's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ML Prediction with XGBoost and PySpark
+          Policy Gradient Methods
         </h1>
 
         <div class="post-meta-container">
@@ -198,7 +197,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2020-03-01 13:14:00" itemprop="dateCreated datePublished" datetime="2020-03-01T13:14:00+08:00">2020-03-01</time>
+      <time title="Created: 2023-03-01 21:22:00" itemprop="dateCreated datePublished" datetime="2023-03-01T21:22:00+08:00">2023-03-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -217,8 +216,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/03/01/ML-Prediction-with-XGBoost-and-PySpark/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/01/ML-Prediction-with-XGBoost-and-PySpark/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/03/01/Policy-Gradient-Methods/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/01/Policy-Gradient-Methods/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -232,50 +231,47 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Once a XGBoost model is trained, we would like to use PySpark for batch predictions.</p>
-<p>The method we use here is through Pandas UDF.</p>
+        <h2 id="What-Are-Policy-Gradient-Methods"><a href="#What-Are-Policy-Gradient-Methods" class="headerlink" title="What Are Policy Gradient Methods"></a>What Are Policy Gradient Methods</h2><p>Policy gradient methods are a class of reinforcement learning algorithms used for <em>optimizing parametrized policies by gradient descent to maximize the expected return</em>, which is the cumulative reward received over a long-term horizon. These methods are based on updating the policy parameters such that the probabilities of actions leading to higher returns are increased. In comparison, the probabilities of actions leading to lower returns are decreased.</p>
+<p>Iteratively optimizing the policy using this approach makes it possible to arrive at an optimal policy that maximizes the expected return. This technique has proven effective in solving complex decision-making problems in various fields, including robotics, game playing, and natural language processing.</p>
 <span id="more"></span>
 
-
-<h2 id="Why-pandas-udf-Instead-of-udf"><a href="#Why-pandas-udf-Instead-of-udf" class="headerlink" title="Why pandas_udf Instead of udf"></a>Why <code>pandas_udf</code> Instead of <code>udf</code></h2><p>For a <code>udf</code> function, PySpark evaluates it one record at a time, which is the slowest possible way to execute the prediction. While for a <code>pandas_udf</code> function, it takes a bunch of pandas <code>Series</code> and returns a <code>Series</code>, which is vectorised.</p>
-<h2 id="Create-a-pandas-udf-Prediction-Function"><a href="#Create-a-pandas-udf-Prediction-Function" class="headerlink" title="Create a pandas_udf Prediction Function"></a>Create a <code>pandas_udf</code> Prediction Function</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@pandas_udf(<span class="params">FloatType(<span class="params"></span>)</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_prediction_result</span>(<span class="params">features</span>):</span><br><span class="line">    <span class="comment"># convert to 2D-numpy array</span></span><br><span class="line">    numpy_array = np.array(</span><br><span class="line">        features</span><br><span class="line">        .values</span><br><span class="line">        .tolist()</span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># convert to xgboost dmatrix</span></span><br><span class="line">    dmatrix = xgb.DMatrix(numpy_array)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># predict</span></span><br><span class="line">    y = model.predict(dmatrix)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># return with pandas series</span></span><br><span class="line">    series = pd.Series(y)</span><br><span class="line">    <span class="keyword">return</span> series</span><br></pre></td></tr></table></figure>
-
-<p>Let’s say we have a dataframe <code>df</code> with following records:</p>
-<table>
-<thead>
-<tr>
-<th>features</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[149.0, 84.0. 38.5, 79.7]</td>
-</tr>
-<tr>
-<td>[2.5, 34.0. 35.5, 97.6]</td>
-</tr>
-<tr>
-<td>[0.0, 65.3. 58.7, 45.7]</td>
-</tr>
-</tbody></table>
-<p><code>features</code> is the feature column with <code>ArrayType(FloatType())</code> and each row of <code>features</code> contains 4 feature values.</p>
-<p>When we call <code>get_prediction_result</code> function, it receives a <code>Series</code> object. In this case, it would be </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0    [149.0, 84.0, 38.5, 79.7]</span><br><span class="line">1    [2.5, 34.0, 35.5, 97.6]</span><br><span class="line">2    [0.0, 65.3, 58.7, 45.7]</span><br><span class="line">dtype: object</span><br></pre></td></tr></table></figure>
-
-<p>We would need to convert it to a <code>DMatrix</code> object, which is the input for a XGBoost model. We first call its <code>values</code> method, which yields:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([list([149.0, 84.0, 38.5, 79.7]), list([2.5, 34.0, 35.5, 97.6]),</span><br><span class="line">       list([0.0, 65.3, 58.7, 45.7])], dtype=object)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>Then we call <code>tolist</code> to convert it into a list of list, yields:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[149.0, 84.0, 38.5, 79.7], [2.5, 34.0, 35.5, 97.6], [0.0, 65.3, 58.7, 45.7]]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>After that, we convert it into a 2D numpy array:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[149. ,  84. ,  38.5,  79.7],</span><br><span class="line">       [  2.5,  34. ,  35.5,  97.6],</span><br><span class="line">       [  0. ,  65.3,  58.7,  45.7]])</span><br></pre></td></tr></table></figure>
-
-<p>Finally, we initialise a <code>DMatrix</code> object with the 2D numpy array we just created. We then run the prediction. As a <code>pandas_udf</code> requires a <code>Series</code> object to return, we convert the prediction scores into a <code>Series</code> at the line 16.</p>
-<h2 id="Using-a-pandas-udf-Function"><a href="#Using-a-pandas-udf-Function" class="headerlink" title="Using a pandas_udf Function"></a>Using a <code>pandas_udf</code> Function</h2><p>Using a <code>pandas_udf</code> function is just like how we use a normal <code>udf</code> function:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.withColumn(<span class="string">&#x27;prediction&#x27;</span>, get_prediction_result(<span class="string">&#x27;features&#x27;</span>))</span><br></pre></td></tr></table></figure>
-
-
-<p>That’s how we integrate the XGBoost batch prediction into our PySpark pipeline.</p>
+<h2 id="What-is-a-Policy"><a href="#What-is-a-Policy" class="headerlink" title="What is a Policy"></a>What is a Policy</h2><p>In reinforcement learning, a policy, $\pi$, is a function that maps an agent’s current observation to a distribution over actions that the agent can take. In the context of neural network-based policies, the policy function $\pi_{\theta}$ is represented by a network with tunable parameters denoted by $\theta$. The input to the policy network is typically a vector or matrix representing the agent’s observation. The output is a probability distribution over possible actions, with each action corresponding to a neuron in the output layer.</p>
+<h2 id="Commonly-Used-Gradient-Estimator"><a href="#Commonly-Used-Gradient-Estimator" class="headerlink" title="Commonly Used Gradient Estimator"></a>Commonly Used Gradient Estimator</h2><p>Given an expected return</p>
+<p>$$<br>\hat{R} _{\theta} &#x3D; \sum _{\tau} R(t) \pi _{\theta} (t)<br>$$</p>
+<p>Then the gradient</p>
+<p>$$<br>\begin{aligned}<br>\nabla \hat{R} _{\theta} &amp;&#x3D; \hat{g} \\<br>&amp;&#x3D; \sum _{\tau} R( \tau ) \nabla \pi _{\theta} (\tau) \\<br>&amp;&#x3D; \sum _{\tau} R(\tau) \pi _{\theta} \frac{\nabla \pi _{\theta} (\tau)} {\pi _{\theta}( \tau)} \\<br>&amp;&#x3D; \sum _{\tau} R(\tau) \pi _{\theta} (\tau) \nabla \log \pi _{\theta} (\tau) \\<br>&amp;&#x3D; \hat{ \mathbb{E} } _{\tau \sim \pi _{\theta} (\tau)} \bigg[ R(\tau) \nabla \log \pi _{\theta} (\tau) \bigg] \\<br>&amp; \approx \frac{1}{N} \sum ^{N} _{n&#x3D;1} R(\tau^{n}) \nabla \log \pi _{\theta}(\tau ^n) \\<br>&amp;&#x3D; \frac{1}{N} \sum^{N} _{n&#x3D;1} \sum^{T _{n}} _{t&#x3D;1} R(\tau ^n) \nabla \log \pi _{\theta} (a^n_t | s^n_t)<br>\end{aligned}<br>$$</p>
+<p>where</p>
+<ul>
+<li>$\tau$ is a trajectory</li>
+<li>$\pi_{\theta}$ is a stochastic policy</li>
+<li>$a^n_t$ is the taken action of the $n$-th trajectory at time $t$</li>
+<li>$s^n_t$ is the state of the $n$-th trajectory at time $t$</li>
+<li>$\nabla_{\pi_{\theta}}$ is the gradient operator of the policy $\pi$ with respect to $\theta$</li>
+<li>$\hat{ \mathbb{E}} _{\tau \sim \pi _{\theta}(\tau)}[\dots]$ is the empirical average expectation over a finite batch of samples in an algorithm that alternates between sampling and optimization</li>
+<li>$\frac{1}{N} \sum^{N} _{n&#x3D;1} R(\tau^{n}) \nabla \log \pi _{\theta}(\tau^n)$ is the approximation of the $\hat {\mathbb{E}} _{\tau \sim \pi _{\theta}(\tau)}[\dots]$ by sampling since it is impossible to collect all possible state and action pairs.</li>
+</ul>
+<p>The $\log$ term is a log-derivative trick that allows us to rewrite a derivative of a function as a product of its logarithm and its derivative and hence, simplify the computation of gradients for stochastic policies that are defined by probability distributions.</p>
+<h2 id="Use-Gradient-Ascent-to-Update-Policy"><a href="#Use-Gradient-Ascent-to-Update-Policy" class="headerlink" title="Use Gradient Ascent to Update Policy"></a>Use Gradient Ascent to Update Policy</h2><p>We use gradient ascent to update the parameters $\theta$ of the policy $\pi_{\theta}$ using policy gradient methods. The reason for this is that we want to encourage the taken action $\pi_{\theta}(a^n_t|s^n_t)$ that results in a larger return $R(\tau^n)$. The update rule for the parameters is given by:</p>
+<p>$$<br>\theta \leftarrow \theta + \eta \nabla \hat{R}_{\theta}<br>$$</p>
+<p>where</p>
+<p>$$<br>\nabla \hat{R} _{\theta} \approx \frac{1}{N} \sum^{N} _{n&#x3D;1} \sum^{T _{n}} _{t&#x3D;1} R(\tau ^n) \nabla \log \pi _{\theta} (a^n_t | s^n_t)<br>$$</p>
+<p>The update rule nudges the parameters toward higher expected returns, improving the policy over time.</p>
+<h2 id="Implementation-Tip-1-Add-a-Baseline"><a href="#Implementation-Tip-1-Add-a-Baseline" class="headerlink" title="Implementation Tip 1: Add a Baseline"></a>Implementation Tip 1: Add a Baseline</h2><p>Given that</p>
+<p>$$<br>\nabla \hat{R} _{\theta} \approx \frac{1}{N} \sum^{N} _{n&#x3D;1} \sum^{T _{n}} _{t&#x3D;1} R(\tau^n) \nabla \log \pi _{\theta} (a^n_t | s^n_t)<br>$$</p>
+<p>We will subtract the return with a baseline $b$, as for every trajectory $\tau^n$, the return $R(\tau^n)$ may always be positive. Subtracting a baseline $b$ gives the equation a positive and negative value.</p>
+<p>$$<br>\nabla \hat{R} _{\theta} \approx \frac{1}{N} \sum^{N} _{n&#x3D;1} \sum^{T _{n}} _{t&#x3D;1} (R(\tau^n) - b) \nabla \log \pi _{\theta} (a^n_t | s^n_t)<br>$$</p>
+<p>The selection of $b$ varies by choice. A straightforward implementation uses the expected value of the return $R(\tau)$.</p>
+<p>$$<br>b \approx \mathbb{E}[R(\tau)]<br>$$</p>
+<h2 id="Implementation-Tip-2-Assign-Suitable-Credit"><a href="#Implementation-Tip-2-Assign-Suitable-Credit" class="headerlink" title="Implementation Tip 2: Assign Suitable Credit"></a>Implementation Tip 2: Assign Suitable Credit</h2><p>Given that</p>
+<p>$$<br>\nabla \hat{R} _{\theta} \approx \frac{1}{N} \sum^{N} _{n&#x3D;1} \sum^{T _{n}} _{t&#x3D;1} R(\tau^n) \nabla \log \pi _{\theta} (a^n_t | s^n_t)<br>$$</p>
+<p>For the result of each specified state-action pair $\pi_{\theta} (a^n_t | s^n_t)$, instead of weighting by the return of a trajectory $R(\tau^n)$, it is more suitable to weight it by a discounted term, i.e., a discounted total reward after this state-action pair.</p>
+<p>$$<br>\nabla \hat{R} _{\theta} \approx \frac{1}{N} \sum^{N} _{n&#x3D;1} \sum ^{T _{n}} _{t&#x3D;1} \sum ^{T_n} _{t’&#x3D;t} \gamma ^{t’ - t} r^n _{t’} \nabla \log \pi _{\theta} (a^n_t | s^n_t)<br>$$</p>
+<p>where<br>$\gamma$ is a discount factor, $\gamma &lt; 1$, usually set to $0.9$ or $0.99$</p>
+<h2 id="Advantage-Function"><a href="#Advantage-Function" class="headerlink" title="Advantage Function"></a>Advantage Function</h2><p>Combining implementation tip 1 and 2, we called $\sum ^{T_n} _{t’&#x3D;t} \gamma ^{t’ - t} r^n _{t’} - b$ an <em>advantage function</em>, denoted as</p>
+<p>$$<br>A^{\theta}(s_t, a_t)<br>$$</p>
+<p>This advantage function can be estimated by a <em>“critic”</em>. The meaning of an advantage function is to tell how good it is if we take $a_t$ other than other actions at $s_t$</p>
+<p>Therefore, the gradient term becomes</p>
+<p>$$<br>\begin{aligned}<br>\nabla \hat{R} _{\theta} &amp;&#x3D; \hat{g} \\<br>&amp;&#x3D; \hat{\mathbb{E}} _{\tau \sim \pi _{\theta}(\tau)} \bigg[ A^{\theta}(\tau) \nabla \log \pi _{\theta} (\tau) \bigg] \\<br>&amp;\approx \frac{1}{N} \sum^{N} _{n&#x3D;1} \sum^{T _{n}} _{t&#x3D;1} A ^{\theta} (s^n_t, a^n_t) \nabla \log \pi _{\theta} (a^n_t | s^n_t)<br>\end{aligned}<br>$$</p>
 
     </div>
 
@@ -285,22 +281,18 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
-              <a href="/tags/PySpark/" rel="tag"># PySpark</a>
+              <a href="/tags/Reinforcement-Learning/" rel="tag"># Reinforcement Learning</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/01/16/Data-Pipeline-From-Pyspark-to-Pytorch/" rel="prev" title="Data Pipeline: From PySpark to PyTorch">
-                  <i class="fa fa-chevron-left"></i> Data Pipeline: From PySpark to PyTorch
+                <a href="/2023/03/01/Importance-Sampling/" rel="prev" title="Importance Sampling">
+                  <i class="fa fa-chevron-left"></i> Importance Sampling
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/04/05/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Tra%EF%AC%83c-Classi%EF%AC%81cation-Using-Deep-Learning/" rel="next" title="Pytorch Implementation of Deep Packet: A Novel Approach For Encrypted Traﬃc Classiﬁcation Using Deep Learning">
-                  Pytorch Implementation of Deep Packet: A Novel Approach For Encrypted Traﬃc Classiﬁcation Using Deep Learning <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

@@ -18,15 +18,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly. Suppose we want to calculate the">
+    <meta name="description" content="Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Importance Sampling">
 <meta property="og:url" content="https://blog.munhou.com/2023/03/01/Importance-Sampling/index.html">
 <meta property="og:site_name" content="Mun Hou&#39;s Blog">
-<meta property="og:description" content="Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly. Suppose we want to calculate the">
+<meta property="og:description" content="Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-01T12:39:00.000Z">
-<meta property="article:modified_time" content="2023-03-01T20:55:27.707Z">
+<meta property="article:modified_time" content="2023-03-01T21:47:57.489Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Deep Learning">
@@ -131,13 +131,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -208,7 +208,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
+      <time title="Modified: 2023-03-02 05:47:57" itemprop="dateModified" datetime="2023-03-02T05:47:57+08:00">2023-03-02</time>
     </span>
 
   
@@ -236,6 +236,8 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly.</p>
+<span id="more"></span>
+
 <p>Suppose we want to calculate the expectation of a distribution $p$, but we don’t have a closed-form expression for it. Instead, we can approximate it by drawing samples from $p$ and using the average of these samples. Specifically, we draw $N$ samples from $p$ denoted as $x^i$, where $i$ ranges from $1$ to $N$. Then, we compute the average value of function $f(x)$ over these samples. Mathematically, the approximation is expressed as:</p>
 <p>$$<br>E_{x \sim p}\big[ f(x) \big] \approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i)<br>$$</p>
 <p>Drawing samples directly from the distribution $p$ can sometimes be difficult or computationally expensive. Importance sampling provides a way to estimate the expectation of a function $f(x)$ with respect to $p$ by instead drawing samples from a different distribution $q$. The basic idea is to use the samples from $q$ to estimate the integral of $f(x)$ with respect to $p$ by applying a weighting factor. Specifically, we can express the expectation of $f(x)$ with respect to $p$ as:</p>
@@ -267,6 +269,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/03/01/Policy-Gradient-Methods/" rel="next" title="Policy Gradient Methods">
+                  Policy Gradient Methods <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
