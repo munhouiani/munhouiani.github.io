@@ -18,11 +18,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Mun Hou&#39;s Blog">
-<meta property="og:url" content="https://blog.munhou.com/archives/2020/07/index.html">
+    <meta name="description" content="Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly. Suppose we want to calculate the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Importance Sampling">
+<meta property="og:url" content="https://blog.munhou.com/2023/03/01/Importance-Sampling/index.html">
 <meta property="og:site_name" content="Mun Hou&#39;s Blog">
+<meta property="og:description" content="Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly. Suppose we want to calculate the">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-01T12:39:00.000Z">
+<meta property="article:modified_time" content="2023-03-01T20:55:27.707Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Deep Learning">
@@ -32,14 +36,14 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://blog.munhou.com/archives/2020/07/">
+<link rel="canonical" href="https://blog.munhou.com/2023/03/01/Importance-Sampling/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":"","permalink":"","path":"archives/2020/07/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.munhou.com/2023/03/01/Importance-Sampling/","path":"2023/03/01/Importance-Sampling/","title":"Importance Sampling"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Archive | Mun Hou's Blog</title>
+<title>Importance Sampling | Mun Hou's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-61451029-2"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-61451029-2","only_pageview":false}</script>
@@ -75,7 +79,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Mun Hou's Blog</h1>
+      <p class="site-title">Mun Hou's Blog</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -101,7 +105,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -114,6 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Issue-of-Importance-Sampling"><span class="nav-number">1.</span> <span class="nav-text">Issue of Importance Sampling</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -156,50 +161,128 @@
 
     </div>
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 10 posts in total. Keep on posting.</span>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/03/01/Importance-Sampling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mun Hou">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Importance Sampling | Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Importance Sampling
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-01 20:39:00" itemprop="dateCreated datePublished" datetime="2023-03-01T20:39:00+08:00">2023-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2023/03/01/Importance-Sampling/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/01/Importance-Sampling/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly.</p>
+<p>Suppose we want to calculate the expectation of a distribution $p$, but we don’t have a closed-form expression for it. Instead, we can approximate it by drawing samples from $p$ and using the average of these samples. Specifically, we draw $N$ samples from $p$ denoted as $x^i$, where $i$ ranges from $1$ to $N$. Then, we compute the average value of function $f(x)$ over these samples. Mathematically, the approximation is expressed as:</p>
+<p>$$<br>E_{x \sim p}\big[ f(x) \big] \approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i)<br>$$</p>
+<p>Drawing samples directly from the distribution $p$ can sometimes be difficult or computationally expensive. Importance sampling provides a way to estimate the expectation of a function $f(x)$ with respect to $p$ by instead drawing samples from a different distribution $q$. The basic idea is to use the samples from $q$ to estimate the integral of $f(x)$ with respect to $p$ by applying a weighting factor. Specifically, we can express the expectation of $f(x)$ with respect to $p$ as:</p>
+<p>$$<br>\begin{aligned}<br>E_{x \sim p}\big[ f(x) \big] &amp;&#x3D; \int f(x)p(x) dx \\<br>&amp;&#x3D; \int f(x) \frac{p(x)}{q(x)} q(x) dx \\<br>&amp;&#x3D; E_{x \sim q}\bigg[ f(x) \frac{p(x)}{q(x)} \bigg] \\<br>&amp;\approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i) \frac{p(x^i)}{q(x^i)} \\<br>\end{aligned}<br>$$</p>
+<p>where $x^i$ is a sample drawn from $q$, and the importance weight $\frac{p(x^i)}{q(x^i)}$ is used to adjust for the difference between the two distributions. Using this weighting factor, we can generate more accurate estimates of the expectation of $f(x)$ with respect to $p$ using samples drawn from $q$, even if drawing samples directly from $p$ is difficult or impractical.</p>
+<h2 id="Issue-of-Importance-Sampling"><a href="#Issue-of-Importance-Sampling" class="headerlink" title="Issue of Importance Sampling"></a>Issue of Importance Sampling</h2><p>Importance sampling aims to estimate the expectation of a target distribution $p$ by drawing samples from another distribution $q$. However, it is important to note that the two distributions cannot differ too much. This is because the weight $\frac{p(x)}{q(x)}$ used to account for the difference between $p$ and $q$ can be very large if the difference between the two distributions is significant. As a result, the variance of the estimator can be large, which may require a larger number of samples to obtain an accurate estimate. To illustrate this, we can compare the variances of $\operatorname{VAR} _{x \sim p} [f(x)]$ and $\operatorname{VAR} _{x \sim q} [f(x) \frac{p(x)}{q(x)}]$.</p>
+<p>Recall that the equation of variance is</p>
+<p>$$<br>\operatorname{VAR} \big[ X \big] &#x3D; E \big[ X^2 \big] - (E \big[ X \big])^2<br>$$</p>
+<p>Hence:</p>
+<p>$$<br>\begin{aligned}<br>\operatorname{VAR} _{x \sim p} \big[ f(x) \big] &amp;&#x3D; E _{x \sim p} \big[ f(x)^2 \big] - \big( E _{x \sim p} \big[ f(x) \big] \big)^2<br>\end{aligned}<br>$$</p>
+<p>and</p>
+<p>$$<br>\begin{aligned}<br>\operatorname{VAR} _{x \sim q} \bigg[ f(x) \frac{p(x)}{q(x)} \bigg] &amp;&#x3D; E _{x \sim q} \bigg[ \bigg( f(x) \frac{p(x)}{q(x)} \bigg) ^2 \bigg] - E _{x \sim q} \bigg[ \bigg( f(x) \frac{p(x)}{q(x)} \bigg) \bigg]^2 \\<br>&amp;&#x3D; E _{x \sim p} \bigg[ \bigg( f(x) ^2 \frac{p(x)}{q(x)} \bigg) \bigg] - \big( E _{x \sim p} \big[ f(x) \big] \big) ^2<br>\end{aligned}<br>$$</p>
+<p>Note that the difference between the two variances depends on the weight $\frac{p(x)}{q(x)}$, which can be large if $p$ and $q$ differ significantly. Therefore, choosing a suitable distribution $q$ close enough to $p$ for importance sampling to be effective is crucial.</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2020-07-12T18:26:00+08:00"
-              content="2020-07-12">
-          07-12
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/07/12/Pytorch-Implementation-of-GEE-A-Gradient-based-Explainable-Variational-Autoencoder-for-Network-Anomaly-Detection/" itemprop="url">
-            <span itemprop="name">Pytorch Implementation of GEE: A Gradient-based Explainable Variational Autoencoder for Network Anomaly Detection</span>
-          </a>
-      </div>
+    <footer class="post-footer">
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/" rel="prev" title="Detecting Out-of-Distribution Samples with kNN">
+                  <i class="fa fa-chevron-left"></i> Detecting Out-of-Distribution Samples with kNN
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
 
-    </div>
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
   </div>
   
-  
-  
-
 </div>
   </main>
 

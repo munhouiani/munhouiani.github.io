@@ -14,9 +14,9 @@
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Mun Hou&#39;s Blog">
@@ -50,9 +50,7 @@
 
 
 
-  <script async defer data-website-id="" src=""></script>
 
-  <script defer data-domain="" src=""></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -128,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -141,10 +139,10 @@
 </div>
   <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/munhouiani" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;munhouiani" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/munhouiani" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;munhouiani" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:munhou2022+blog@gmail.com" title="E-Mail → mailto:munhou2022+blog@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:munhou2022+blog@gmail.com" title="E-Mail → mailto:munhou2022+blog@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -159,6 +157,109 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/03/01/Importance-Sampling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mun Hou">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/03/01/Importance-Sampling/" class="post-title-link" itemprop="url">Importance Sampling</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-01 20:39:00" itemprop="dateCreated datePublished" datetime="2023-03-01T20:39:00+08:00">2023-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2023/03/01/Importance-Sampling/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/01/Importance-Sampling/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly.</p>
+<p>Suppose we want to calculate the expectation of a distribution $p$, but we don’t have a closed-form expression for it. Instead, we can approximate it by drawing samples from $p$ and using the average of these samples. Specifically, we draw $N$ samples from $p$ denoted as $x^i$, where $i$ ranges from $1$ to $N$. Then, we compute the average value of function $f(x)$ over these samples. Mathematically, the approximation is expressed as:</p>
+<p>$$<br>E_{x \sim p}\big[ f(x) \big] \approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i)<br>$$</p>
+<p>Drawing samples directly from the distribution $p$ can sometimes be difficult or computationally expensive. Importance sampling provides a way to estimate the expectation of a function $f(x)$ with respect to $p$ by instead drawing samples from a different distribution $q$. The basic idea is to use the samples from $q$ to estimate the integral of $f(x)$ with respect to $p$ by applying a weighting factor. Specifically, we can express the expectation of $f(x)$ with respect to $p$ as:</p>
+<p>$$<br>\begin{aligned}<br>E_{x \sim p}\big[ f(x) \big] &amp;&#x3D; \int f(x)p(x) dx \\<br>&amp;&#x3D; \int f(x) \frac{p(x)}{q(x)} q(x) dx \\<br>&amp;&#x3D; E_{x \sim q}\bigg[ f(x) \frac{p(x)}{q(x)} \bigg] \\<br>&amp;\approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i) \frac{p(x^i)}{q(x^i)} \\<br>\end{aligned}<br>$$</p>
+<p>where $x^i$ is a sample drawn from $q$, and the importance weight $\frac{p(x^i)}{q(x^i)}$ is used to adjust for the difference between the two distributions. Using this weighting factor, we can generate more accurate estimates of the expectation of $f(x)$ with respect to $p$ using samples drawn from $q$, even if drawing samples directly from $p$ is difficult or impractical.</p>
+<h2 id="Issue-of-Importance-Sampling"><a href="#Issue-of-Importance-Sampling" class="headerlink" title="Issue of Importance Sampling"></a>Issue of Importance Sampling</h2><p>Importance sampling aims to estimate the expectation of a target distribution $p$ by drawing samples from another distribution $q$. However, it is important to note that the two distributions cannot differ too much. This is because the weight $\frac{p(x)}{q(x)}$ used to account for the difference between $p$ and $q$ can be very large if the difference between the two distributions is significant. As a result, the variance of the estimator can be large, which may require a larger number of samples to obtain an accurate estimate. To illustrate this, we can compare the variances of $\operatorname{VAR} _{x \sim p} [f(x)]$ and $\operatorname{VAR} _{x \sim q} [f(x) \frac{p(x)}{q(x)}]$.</p>
+<p>Recall that the equation of variance is</p>
+<p>$$<br>\operatorname{VAR} \big[ X \big] &#x3D; E \big[ X^2 \big] - (E \big[ X \big])^2<br>$$</p>
+<p>Hence:</p>
+<p>$$<br>\begin{aligned}<br>\operatorname{VAR} _{x \sim p} \big[ f(x) \big] &amp;&#x3D; E _{x \sim p} \big[ f(x)^2 \big] - \big( E _{x \sim p} \big[ f(x) \big] \big)^2<br>\end{aligned}<br>$$</p>
+<p>and</p>
+<p>$$<br>\begin{aligned}<br>\operatorname{VAR} _{x \sim q} \bigg[ f(x) \frac{p(x)}{q(x)} \bigg] &amp;&#x3D; E _{x \sim q} \bigg[ \bigg( f(x) \frac{p(x)}{q(x)} \bigg) ^2 \bigg] - E _{x \sim q} \bigg[ \bigg( f(x) \frac{p(x)}{q(x)} \bigg) \bigg]^2 \\<br>&amp;&#x3D; E _{x \sim p} \bigg[ \bigg( f(x) ^2 \frac{p(x)}{q(x)} \bigg) \bigg] - \big( E _{x \sim p} \big[ f(x) \big] \big) ^2<br>\end{aligned}<br>$$</p>
+<p>Note that the difference between the two variances depends on the weight $\frac{p(x)}{q(x)}$, which can be large if $p$ and $q$ differ significantly. Therefore, choosing a suitable distribution $q$ close enough to $p$ for importance sampling to be effective is crucial.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -204,7 +305,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-04 16:17:10" itemprop="dateModified" datetime="2022-12-04T16:17:10+08:00">2022-12-04</time>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
     </span>
 
   
@@ -304,7 +405,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-04 16:17:10" itemprop="dateModified" datetime="2022-12-04T16:17:10+08:00">2022-12-04</time>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
     </span>
 
   
@@ -407,7 +508,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-04 16:17:10" itemprop="dateModified" datetime="2022-12-04T16:17:10+08:00">2022-12-04</time>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
     </span>
 
   
@@ -504,7 +605,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-04 16:17:10" itemprop="dateModified" datetime="2022-12-04T16:17:10+08:00">2022-12-04</time>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
     </span>
 
   
@@ -601,7 +702,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-04 16:17:10" itemprop="dateModified" datetime="2022-12-04T16:17:10+08:00">2022-12-04</time>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
     </span>
 
   
@@ -698,7 +799,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-04 16:17:10" itemprop="dateModified" datetime="2022-12-04T16:17:10+08:00">2022-12-04</time>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
     </span>
 
   
@@ -795,7 +896,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-04 16:17:10" itemprop="dateModified" datetime="2022-12-04T16:17:10+08:00">2022-12-04</time>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
     </span>
 
   
@@ -893,7 +994,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-04 16:17:10" itemprop="dateModified" datetime="2022-12-04T16:17:10+08:00">2022-12-04</time>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
     </span>
 
   
@@ -990,7 +1091,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-04 16:17:10" itemprop="dateModified" datetime="2022-12-04T16:17:10+08:00">2022-12-04</time>
+      <time title="Modified: 2023-03-02 04:55:27" itemprop="dateModified" datetime="2023-03-02T04:55:27+08:00">2023-03-02</time>
     </span>
 
   
@@ -1046,7 +1147,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
