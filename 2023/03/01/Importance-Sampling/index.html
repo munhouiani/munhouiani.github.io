@@ -26,7 +26,7 @@
 <meta property="og:description" content="Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-01T12:39:00.000Z">
-<meta property="article:modified_time" content="2023-03-02T00:20:50.523Z">
+<meta property="article:modified_time" content="2023-03-02T01:57:53.815Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Deep Learning">
@@ -208,7 +208,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-02 08:20:50" itemprop="dateModified" datetime="2023-03-02T08:20:50+08:00">2023-03-02</time>
+      <time title="Modified: 2023-03-02 09:57:53" itemprop="dateModified" datetime="2023-03-02T09:57:53+08:00">2023-03-02</time>
     </span>
 
   
@@ -242,7 +242,8 @@
 <p>$$<br>E_{x \sim p}\big[ f(x) \big] \approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i)<br>$$</p>
 <p>Drawing samples directly from the distribution $p$ can sometimes be difficult or computationally expensive. Importance sampling provides a way to estimate the expectation of a function $f(x)$ with respect to $p$ by instead drawing samples from a different distribution $q$. The basic idea is to use the samples from $q$ to estimate the integral of $f(x)$ with respect to $p$ by applying a weighting factor. Specifically, we can express the expectation of $f(x)$ with respect to $p$ as:</p>
 <p>$$<br>\begin{aligned}<br>E_{x \sim p}\big[ f(x) \big] &amp;&#x3D; \int f(x)p(x) dx \\<br>&amp;&#x3D; \int f(x) \frac{p(x)}{q(x)} q(x) dx \\<br>&amp;&#x3D; E_{x \sim q}\bigg[ f(x) \frac{p(x)}{q(x)} \bigg] \\<br>&amp;\approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i) \frac{p(x^i)}{q(x^i)} \\<br>\end{aligned}<br>$$</p>
-<p>where $x^i$ is a sample drawn from $q$, and the importance weight $\frac{p(x^i)}{q(x^i)}$ is used to adjust for the difference between the two distributions. Using this weighting factor, we can generate more accurate estimates of the expectation of $f(x)$ with respect to $p$ using samples drawn from $q$, even if drawing samples directly from $p$ is difficult or impractical.</p>
+<p>where $x^i$ is a sample drawn from $q$, and the importance weight $\frac{p(x^i)}{q(x^i)}$ is used to adjust for the difference between the two distributions. Using this weighting factor, we can generate more accurate estimates of the expectation of $f(x)$ with respect to $p$ using samples drawn from $q$, even if drawing samples directly from $p$ is difficult or impractical. </p>
+<p>By the way, this weight term assigns high weight to samples that are more likely to contribute to the expected value, and low weight to samples that are less likely to contribute, hence the name, “Importance Sampling”.</p>
 <h2 id="Issue-of-Importance-Sampling"><a href="#Issue-of-Importance-Sampling" class="headerlink" title="Issue of Importance Sampling"></a>Issue of Importance Sampling</h2><p>Importance sampling aims to estimate the expectation of a target distribution $p$ by drawing samples from another distribution $q$. However, it is important to note that the two distributions cannot differ too much. This is because the weight $\frac{p(x)}{q(x)}$ used to account for the difference between $p$ and $q$ can be very large if the difference between the two distributions is significant. As a result, the variance of the estimator can be large, which may require a larger number of samples to obtain an accurate estimate. To illustrate this, we can compare the variances of $\operatorname{VAR} _{x \sim p} [f(x)]$ and $\operatorname{VAR} _{x \sim q} [f(x) \frac{p(x)}{q(x)}]$.</p>
 <p>Recall that the equation of variance is</p>
 <p>$$<br>\operatorname{VAR} \big[ X \big] &#x3D; E \big[ X^2 \big] - (E \big[ X \big])^2<br>$$</p>
