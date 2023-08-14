@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -166,6 +166,156 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/08/14/Byte-Pair-Encoding-BPE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mun Hou">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/14/Byte-Pair-Encoding-BPE/" class="post-title-link" itemprop="url">Byte-Pair-Encoding (BPE)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-08-14 18:31:00" itemprop="dateCreated datePublished" datetime="2023-08-14T18:31:00+08:00">2023-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2023/08/14/Byte-Pair-Encoding-BPE/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/08/14/Byte-Pair-Encoding-BPE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Byte-Pair-Encoding"><a href="#Byte-Pair-Encoding" class="headerlink" title="Byte-Pair Encoding"></a>Byte-Pair Encoding</h1><h2 id="What-is-Byte-Pair-Encoding"><a href="#What-is-Byte-Pair-Encoding" class="headerlink" title="What is Byte-Pair Encoding"></a>What is Byte-Pair Encoding</h2><p>Byte-pair encoding (BPE) is a compression algorithm that can be used for text tokenization.</p>
+<h2 id="How-It-Works"><a href="#How-It-Works" class="headerlink" title="How It Works"></a>How It Works</h2><ul>
+<li>The algorithm starts by splitting the text into individual characters.</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aaabdaaabac</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>It then iteratively merges the most frequent pair of tokens (initially characters) into a new token.</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ZabdZabac</span><br><span class="line">Z=aa</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>This merging process continues until a target vocabulary size is reached.</li>
+<li>The most frequent tokens get merged first, creating common subwords.</li>
+<li>Less frequent words get split into multiple tokens.</li>
+<li>When applying BPE, the text is encoded as a sequence of tokens from the final BPE vocabulary.</li>
+</ul>
+<h2 id="Key-Properties"><a href="#Key-Properties" class="headerlink" title="Key Properties"></a>Key Properties</h2><ul>
+<li>It balances vocabulary size while capturing the most common subword units.</li>
+<li>Morphologically related words get consistent tokenized representations.</li>
+<li>Rare and unknown words are automatically split into meaningful subwords.</li>
+<li>The final vocabulary size can be controlled.</li>
+<li>BPE creates an open vocabulary that can handle new words.</li>
+<li>Simple and efficient to learn and apply.</li>
+</ul>
+<h2 id="Differences-Between-The-Original-Algorithm-And-Modification"><a href="#Differences-Between-The-Original-Algorithm-And-Modification" class="headerlink" title="Differences Between The Original Algorithm And Modification"></a>Differences Between The Original Algorithm And Modification</h2><p>There are a few key differences between the original byte-pair encoding (BPE) algorithm and how it is typically used for tokenization in large language models:</p>
+<ul>
+<li>Open vs. closed vocabulary: The original BPE produces a closed vocabulary based on the training corpus. For language models, an open vocabulary is needed to handle unseen words. So, BPE is modified to allow encoding unknown characters as individual tokens.</li>
+<li>Iterative merging: Original BPE does iterative merging of symbols until it reaches the target vocabulary size. The number of merge operations for language models is fixed based on heuristics rather than a size target.</li>
+<li>Unicode handling: The original BPE works at the byte level. For text tokenization, BPE is modified to work at the Unicode character level while handling variable-length encodings.</li>
+<li>Digit handling: Digits are often separated into individual tokens in text BPE rather than merged. This provides consistency across numbers.</li>
+<li>Casing: Language model BPE tokenizers often preserve the original word casing rather than lowercasing.</li>
+<li>Granularity: Language model BPE tokenizers use larger vocabularies (10k-100k tokens) than the original algorithm. This provides greater coverage of subword units.</li>
+</ul>
+<h3 id="Support-for-Open-Vocabulary"><a href="#Support-for-Open-Vocabulary" class="headerlink" title="Support for Open Vocabulary"></a>Support for Open Vocabulary</h3><ul>
+<li>Escape character token: The BPE vocabulary can include a special “escape character” token like <code>&lt;unk&gt;</code> to represent any unknown character. Encoding replaces any character not in the base vocabulary with this escape token.</li>
+<li>Character fallback: When an unknown character is encountered during encoding, it is converted into a single-character token. This allows handling any Unicode characters not seen in training.</li>
+<li>Hybrid approach: A hybrid of the above two approaches can be used. First, unknown characters are converted to single-character tokens. But if the frequency of an unknown character exceeds a threshold, it is added to the vocabulary, and the existing tokens are updated.</li>
+</ul>
+<h3 id="Modified-Merge-Process"><a href="#Modified-Merge-Process" class="headerlink" title="Modified Merge Process"></a>Modified Merge Process</h3><ul>
+<li>The number of merge operations is fixed ahead of time, based on heuristics like 30k or 50k merges. It is not determined by a target vocabulary size.</li>
+<li>Certain symbols, like digits, are prevented from merging. This keeps them as consistent individual tokens.</li>
+<li>Casing information can be retained by preventing case variants from merging.</li>
+<li>Uncommon characters are often excluded from merging to limit vocabulary growth.</li>
+<li>The final vocabulary size is much larger, ranging from 10k to 100k tokens.</li>
+</ul>
+<h3 id="Unicode-Handling"><a href="#Unicode-Handling" class="headerlink" title="Unicode Handling"></a>Unicode Handling</h3><ul>
+<li>Unicode symbols are treated as atomic units rather than individual bytes. So, multi-byte encoded characters are kept together.</li>
+<li>Vocabulary symbols correspond to Unicode code points rather than byte values.</li>
+<li>Merge operations are based on Unicode characters regardless of variable encoding lengths.</li>
+<li>Characters outside the Basic Multilingual Plane (BMP) are supported seamlessly.</li>
+<li>Unknown or uncommon characters default to single-character symbols rather than escapes.</li>
+<li>Casing, diacritics, and punctuation are mostly preserved rather than discarded.</li>
+<li>Whitespace tokens delimit words rather than space characters.</li>
+<li>The model learns contextual representations for rare symbols.</li>
+<li>Special handling for common non-alphabet characters like digits, quotes, etc.</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Byte_pair_encoding">https://en.wikipedia.org/wiki/Byte_pair_encoding</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Plane_(Unicode)">https://en.wikipedia.org/wiki/Plane_(Unicode)</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/08/11/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -194,9 +344,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-08-12 00:08:00 / Modified: 08:25:15" itemprop="dateCreated datePublished" datetime="2023-08-12T00:08:00+08:00">2023-08-12</time>
+      <time title="Created: 2023-08-12 00:08:00" itemprop="dateCreated datePublished" datetime="2023-08-12T00:08:00+08:00">2023-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
     </span>
 
   
@@ -293,7 +449,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-12 08:25:15" itemprop="dateModified" datetime="2023-08-12T08:25:15+08:00">2023-08-12</time>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
     </span>
 
   
@@ -390,7 +546,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-12 08:25:15" itemprop="dateModified" datetime="2023-08-12T08:25:15+08:00">2023-08-12</time>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
     </span>
 
   
@@ -491,7 +647,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-12 08:25:15" itemprop="dateModified" datetime="2023-08-12T08:25:15+08:00">2023-08-12</time>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
     </span>
 
   
@@ -601,7 +757,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-12 08:25:15" itemprop="dateModified" datetime="2023-08-12T08:25:15+08:00">2023-08-12</time>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
     </span>
 
   
@@ -699,7 +855,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-12 08:25:15" itemprop="dateModified" datetime="2023-08-12T08:25:15+08:00">2023-08-12</time>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
     </span>
 
   
@@ -796,7 +952,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-12 08:25:15" itemprop="dateModified" datetime="2023-08-12T08:25:15+08:00">2023-08-12</time>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
     </span>
 
   
@@ -896,7 +1052,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-12 08:25:15" itemprop="dateModified" datetime="2023-08-12T08:25:15+08:00">2023-08-12</time>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
     </span>
 
   
@@ -999,7 +1155,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-12 08:25:15" itemprop="dateModified" datetime="2023-08-12T08:25:15+08:00">2023-08-12</time>
+      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
     </span>
 
   
@@ -1030,103 +1186,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/29/Drug-Listing-Dataset/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Mun Hou">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mun Hou's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Mun Hou's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/" class="post-title-link" itemprop="url">Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-03-27 09:29:00" itemprop="dateCreated datePublished" datetime="2021-03-27T09:29:00+08:00">2021-03-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-12 08:25:15" itemprop="dateModified" datetime="2023-08-12T08:25:15+08:00">2023-08-12</time>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/27/Network-Anomaly-Detection-with MIDAS-MIDAS-R-and-MIDAS-F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>Anomaly detection has always been a challenging research field. An anomaly indicates a sudden and short-lived pattern change, while a detection algorithm aims to identify anomalies promptly. Detecting anomaly on networks levels up the problem as network monitoring devices usually collect data at high rates, which means a network anomaly detection algorithm should handle high-dimension, noisy, and massive data under power and communication constraints. We should also acknowledge that different anomalies exhibit themselves in network statistics in a different manner. A general anomaly detection model often does not exist. A model that detects surprising edges in a network is probably cannot detect micro cluster anomalies.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
