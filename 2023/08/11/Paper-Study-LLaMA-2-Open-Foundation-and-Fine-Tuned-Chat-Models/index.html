@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://blog.munhou.com/images/llama2/CleanShot2023-08-11at233511.png">
 <meta property="og:image" content="https://blog.munhou.com/images/llama2/CleanShot2023-08-11at233615.png">
 <meta property="article:published_time" content="2023-08-11T16:08:00.000Z">
-<meta property="article:modified_time" content="2023-08-14T18:36:16.827Z">
+<meta property="article:modified_time" content="2023-08-14T18:50:02.293Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Paper Study">
@@ -221,7 +221,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-15 02:36:16" itemprop="dateModified" datetime="2023-08-15T02:36:16+08:00">2023-08-15</time>
+      <time title="Modified: 2023-08-15 02:50:02" itemprop="dateModified" datetime="2023-08-15T02:50:02+08:00">2023-08-15</time>
     </span>
 
   
@@ -293,7 +293,7 @@
 </ul>
 <h4 id="Tokenizer"><a href="#Tokenizer" class="headerlink" title="Tokenizer"></a>Tokenizer</h4><ul>
 <li>Same tokenizer as Llama1</li>
-<li>use BPE</li>
+<li>use <a href="/2023/08/14/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">BPE</a></li>
 <li>The total vocabulary size is 32K tokens.</li>
 </ul>
 <h3 id="Fine-Tuned-For-Chat"><a href="#Fine-Tuned-For-Chat" class="headerlink" title="Fine-Tuned For Chat"></a>Fine-Tuned For Chat</h3><img src="/images/llama2/CleanShot2023-08-09at211039.png" width=500px/>
@@ -396,7 +396,7 @@
 <h5 id="RLHF-Iterative-Fine-Tuning"><a href="#RLHF-Iterative-Fine-Tuning" class="headerlink" title="RLHF Iterative Fine-Tuning"></a>RLHF Iterative Fine-Tuning</h5><ul>
 <li>They trained 5 successive versions for RLHF models, referred to here as <em>RLHF-V1</em>, <em>RLHF-V2</em>, <em>RLHF-V3</em>, <em>RLHF-V4</em>, <em>RLHF-V5</em> </li>
 <li>They fine-tuned the models with:<ul>
-<li>Proximal Policy Optimization Algorithms(PPO)</li>
+<li><a href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" title="Proximal Policy Optimization Algorithms (PPO and PPO2)">Proximal Policy Optimization Algorithms</a> (<a href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" title="Proximal Policy Optimization Algorithms (PPO and PPO2)">PPO</a>)</li>
 <li>Rejection Sampling fine-tuning<ul>
 <li>The model samples K candidate responses for each prompt in the RLHF dataset.</li>
 <li>The reward models score these <em>K</em> responses.</li>
@@ -409,8 +409,8 @@
 </li>
 <li>Rejection sampling is only done with the 70B LLaMA 2-Chat. All smaller models are fine-tuned on rejection sampled data from the larger model.</li>
 <li>The new training set in each iteration includes the rejection-sampled data from the current iteration and top-performing samples from all prior iterations.</li>
-<li>Until <em>RLHF-V4</em>, they used only Rejection Sampling fine-tuning. After that, they first applied Rejection Sampling, then applied PPO on top of the resulting Rejection Sampling checkpoint before sampling again.</li>
-<li>The reward function they use in the PPO is:</li>
+<li>Until <em>RLHF-V4</em>, they used only Rejection Sampling fine-tuning. After that, they first applied Rejection Sampling, then applied <a href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" title="Proximal Policy Optimization Algorithms (PPO and PPO2)">PPO</a> on top of the resulting Rejection Sampling checkpoint before sampling again.</li>
+<li>The reward function they use in the <a href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" title="Proximal Policy Optimization Algorithms (PPO and PPO2)">PPO</a> is:</li>
 </ul>
 <p>$$<br>R(g | p) &#x3D; \tilde{R_c}(g|p) - \beta D_{KL}(\pi_{\theta}(g|p) || \pi_0(g|p))<br>$$</p>
 <ul>
@@ -427,9 +427,9 @@
 <li>Use gradient clipping of 1.0</li>
 </ul>
 </li>
-<li>For each PPO operation, they:<ul>
+<li>For each <a href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" title="Proximal Policy Optimization Algorithms (PPO and PPO2)">PPO</a> operation, they:<ul>
 <li>Use a batch size of 512</li>
-<li>Use a PPO clip threshold of 0.2</li>
+<li>Use a <a href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" title="Proximal Policy Optimization Algorithms (PPO and PPO2)">PPO</a> clip threshold of 0.2</li>
 <li>Use a mini-batch size of 64</li>
 <li>Take 1 gradient step per mini-batch</li>
 <li>They set the $\beta &#x3D; 0.01$ (KL penalty) for 7B and 13B models, and $\beta &#x3D; 0.005$ for the 34B and 70B models.</li>
@@ -497,7 +497,7 @@
 <li>More analysis of the developed techniques on languages beyond English could better reveal multilingual issues and opportunities.</li>
 </ul>
 <h2 id="🙋‍♂️-Questions-and-Answers"><a href="#🙋‍♂️-Questions-and-Answers" class="headerlink" title="🙋‍♂️ Questions and Answers"></a>🙋‍♂️ Questions and Answers</h2><p><strong>Q</strong>: How was Llama 2 pretrained?<br><strong>A</strong>: Llama 2 was pretrained on 2 trillion tokens of publicly available data. The architecture uses an optimized transformer with improvements like a longer context length of 4k and grouped query attention for larger models. It was trained using AdamW optimization and checkpoint averaging.</p>
-<p><strong>Q</strong>: What techniques were used to create the helpful and safe Llama 2-Chat models?<br><strong>A</strong>: The authors used supervised fine-tuning (SFT) on high-quality human annotations to bootstrap. This was followed by iterative reinforcement learning with human feedback (RLHF) using preference learning and PPO to align the models with human preferences on helpfulness and safety. Techniques like rejection sampling, targeted context distillation, and Ghost Attention were also used.</p>
+<p><strong>Q</strong>: What techniques were used to create the helpful and safe Llama 2-Chat models?<br><strong>A</strong>: The authors used supervised fine-tuning (SFT) on high-quality human annotations to bootstrap. This was followed by iterative reinforcement learning with human feedback (RLHF) using preference learning and <a href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" title="Proximal Policy Optimization Algorithms (PPO and PPO2)">PPO</a> to align the models with human preferences on helpfulness and safety. Techniques like rejection sampling, targeted context distillation, and Ghost Attention were also used.</p>
 <p><strong>Q</strong>: How were the safety capabilities of Llama 2 measured?<br><strong>A</strong>: The safety of Llama 2 was measured through automatic benchmarks for truthfulness, toxicity, and bias, as well as human evaluations on adversarial prompts. Red teaming exercises were also conducted. The authors share a detailed analysis of aspects like pronoun usage, identity terms, and toxicity in the pretraining data.</p>
 <p><strong>Q</strong>: What were some key observations made during the development of Llama 2-Chat?<br><strong>A</strong>: Some observations include RLHF outperforming supervised tuning, the model learning to temporally organize knowledge and call APIs for tool usage with minimal examples, and the need to adjust temperature during iterative RLHF.</p>
 <p><strong>Q</strong>: What are some limitations of the human evaluations conducted?<br><strong>A</strong>: Limitations include the subjectivity of reviews, the scope of the prompt set, limiting generations to 1k tokens for some models, and assessing only final generations for conversations. Evaluations may also be biased towards the Llama 2-Chat models.</p>
