@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://blog.munhou.com/images/rl-evo-guide/figure3_dapo_innovations.png">
 <meta property="og:image" content="https://blog.munhou.com/images/rl-evo-guide/figure4_algorithm_evolution.png">
 <meta property="article:published_time" content="2026-01-14T13:54:00.000Z">
-<meta property="article:modified_time" content="2026-01-14T23:43:04.437Z">
+<meta property="article:modified_time" content="2026-01-14T23:49:17.892Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Large Language Model">
 <meta property="article:tag" content="Machine Learning">
@@ -233,7 +233,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-01-15 07:43:04" itemprop="dateModified" datetime="2026-01-15T07:43:04+08:00">2026-01-15</time>
+      <time title="Modified: 2026-01-15 07:49:17" itemprop="dateModified" datetime="2026-01-15T07:49:17+08:00">2026-01-15</time>
     </span>
 
   
@@ -350,7 +350,7 @@
 <li>$r_t$ &#x3D; reward at timestep $t$</li>
 </ul>
 <h3 id="The-Policy-Gradient-Theorem"><a href="#The-Policy-Gradient-Theorem" class="headerlink" title="The Policy Gradient Theorem"></a>The Policy Gradient Theorem</h3><p>Since we cannot differentiate through the discrete sampling of tokens, we use the Policy Gradient:</p>
-<p>$$\nabla_\theta J(\theta) &#x3D; \mathbb{E}<em>{\tau \sim \pi</em>\theta} \left[ \sum_t \nabla_\theta \log \pi_\theta(a_t|s_t) \cdot A^{\pi}(s_t, a_t) \right]$$</p>
+<p>$$\nabla_\theta J(\theta) &#x3D; \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_t \nabla_\theta \log \pi_\theta(a_t|s_t) \cdot A^{\pi}(s_t, a_t) \right]$$</p>
 <p>The <strong>Advantage Function</strong> $A^{\pi}(s_t, a_t)$ is crucial — it answers:</p>
 <blockquote>
 <p>“How much better was this specific action compared to the average action I could have taken?”</p>
