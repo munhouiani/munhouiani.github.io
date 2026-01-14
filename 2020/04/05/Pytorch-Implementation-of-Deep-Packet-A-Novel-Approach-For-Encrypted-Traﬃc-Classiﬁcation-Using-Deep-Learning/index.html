@@ -14,9 +14,9 @@
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="Why Traffic ClassificationThe authors explained that network traffic classification attracts many interests in both academia and industrial area is because it is one of the prerequisites for advanced">
 <meta property="og:type" content="article">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://blog.munhou.com/images/deep-packet/cnn_app_classification.png">
 <meta property="og:image" content="https://blog.munhou.com/images/deep-packet/cnn_traffic_classification.png">
 <meta property="article:published_time" content="2020-04-05T19:29:00.000Z">
-<meta property="article:modified_time" content="2023-08-14T19:17:16.943Z">
+<meta property="article:modified_time" content="2026-01-14T23:03:39.756Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="PyTorch">
@@ -43,20 +43,42 @@
 <link rel="canonical" href="https://blog.munhou.com/2020/04/05/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Tra%EF%AC%83c-Classi%EF%AC%81cation-Using-Deep-Learning/">
 
 
-
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.munhou.com/2020/04/05/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Tra%EF%AC%83c-Classi%EF%AC%81cation-Using-Deep-Learning/","path":"2020/04/05/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Traﬃc-Classiﬁcation-Using-Deep-Learning/","title":"Pytorch Implementation of Deep Packet: A Novel Approach For Encrypted Traﬃc Classiﬁcation Using Deep Learning"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Pytorch Implementation of Deep Packet: A Novel Approach For Encrypted Traﬃc Classiﬁcation Using Deep Learning | Mun Hou's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-345528590"></script>
-  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-345528590","only_pageview":false}</script>
-  <script src="/js/third-party/analytics/google-analytics.js"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-345528590","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
 
 
 
 
 
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
 
 
 
@@ -135,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -212,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-15 03:17:16" itemprop="dateModified" datetime="2023-08-15T03:17:16+08:00">2023-08-15</time>
+      <time title="Modified: 2026-01-15 07:03:39" itemprop="dateModified" datetime="2026-01-15T07:03:39+08:00">2026-01-15</time>
     </span>
 
   
@@ -281,7 +303,7 @@
 <p>The input of their CNN model is a vector of size 1,500. It consists of two consecutive 1-D convolutional layers, followed by a max-pooling layer. Afterwards, the tensor will be flattened and fed into 4 fully connected layers, while the last layer acts as the softmax classifier. The revealed hyperparameters of their convolutional layers, which are</p>
 <p><img src="/images/deep-packet/cnn_hyperparameter.png"></p>
 <p>However, they didn’t mention the kernel size of the max-pooling layer and the sizes of three dense layers. I set the kernel size to 2, while for the dense layers, I use the setting of the last three layers of their SAE model, which are 200, 100, and 50.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CNN</span>(<span class="title class_ inherited__">LightningModule</span>):</span><br><span class="line">        <span class="comment"># two convolution, then one max pool</span></span><br><span class="line">        self.conv1 = nn.Sequential(</span><br><span class="line">            nn.Conv1d(</span><br><span class="line">                in_channels=<span class="number">1</span>,</span><br><span class="line">                out_channels=self.hparams.c1_output_dim,</span><br><span class="line">                kernel_size=self.hparams.c1_kernel_size,</span><br><span class="line">                stride=self.hparams.c1_stride</span><br><span class="line">            ),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line">        self.conv2 = nn.Sequential(</span><br><span class="line">            nn.Conv1d(</span><br><span class="line">                in_channels=self.hparams.c1_output_dim,</span><br><span class="line">                out_channels=self.hparams.c2_output_dim,</span><br><span class="line">                kernel_size=self.hparams.c2_kernel_size,</span><br><span class="line">                stride=self.hparams.c2_stride</span><br><span class="line">            ),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        self.max_pool = nn.MaxPool1d(</span><br><span class="line">            kernel_size=<span class="number">2</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># flatten, calculate the output size of max pool</span></span><br><span class="line">        <span class="comment"># use a dummy input to calculate</span></span><br><span class="line">        dummy_x = torch.rand(<span class="number">1</span>, <span class="number">1</span>, self.hparams.signal_length, requires_grad=<span class="literal">False</span>)</span><br><span class="line">        dummy_x = self.conv1(dummy_x)</span><br><span class="line">        dummy_x = self.conv2(dummy_x)</span><br><span class="line">        dummy_x = self.max_pool(dummy_x)</span><br><span class="line">        max_pool_out = dummy_x.view(<span class="number">1</span>, -<span class="number">1</span>).shape[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># followed by 5 dense layers</span></span><br><span class="line">        self.fc1 = nn.Sequential(</span><br><span class="line">            nn.Linear(</span><br><span class="line">                in_features=max_pool_out,</span><br><span class="line">                out_features=<span class="number">200</span></span><br><span class="line">            ),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.05</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line">        self.fc2 = nn.Sequential(</span><br><span class="line">            nn.Linear(</span><br><span class="line">                in_features=<span class="number">200</span>,</span><br><span class="line">                out_features=<span class="number">100</span></span><br><span class="line">            ),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.05</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line">        self.fc3 = nn.Sequential(</span><br><span class="line">            nn.Linear(</span><br><span class="line">                in_features=<span class="number">100</span>,</span><br><span class="line">                out_features=<span class="number">50</span></span><br><span class="line">            ),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.05</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># finally, output layer</span></span><br><span class="line">        self.out = nn.Linear(</span><br><span class="line">            in_features=<span class="number">50</span>,</span><br><span class="line">            out_features=self.hparams.output_dim</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CNN</span>(<span class="title class_ inherited__">LightningModule</span>):</span><br><span class="line">        <span class="comment"># two convolution, then one max pool</span></span><br><span class="line">        <span class="variable language_">self</span>.conv1 = nn.Sequential(</span><br><span class="line">            nn.Conv1d(</span><br><span class="line">                in_channels=<span class="number">1</span>,</span><br><span class="line">                out_channels=<span class="variable language_">self</span>.hparams.c1_output_dim,</span><br><span class="line">                kernel_size=<span class="variable language_">self</span>.hparams.c1_kernel_size,</span><br><span class="line">                stride=<span class="variable language_">self</span>.hparams.c1_stride</span><br><span class="line">            ),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line">        <span class="variable language_">self</span>.conv2 = nn.Sequential(</span><br><span class="line">            nn.Conv1d(</span><br><span class="line">                in_channels=<span class="variable language_">self</span>.hparams.c1_output_dim,</span><br><span class="line">                out_channels=<span class="variable language_">self</span>.hparams.c2_output_dim,</span><br><span class="line">                kernel_size=<span class="variable language_">self</span>.hparams.c2_kernel_size,</span><br><span class="line">                stride=<span class="variable language_">self</span>.hparams.c2_stride</span><br><span class="line">            ),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.max_pool = nn.MaxPool1d(</span><br><span class="line">            kernel_size=<span class="number">2</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># flatten, calculate the output size of max pool</span></span><br><span class="line">        <span class="comment"># use a dummy input to calculate</span></span><br><span class="line">        dummy_x = torch.rand(<span class="number">1</span>, <span class="number">1</span>, <span class="variable language_">self</span>.hparams.signal_length, requires_grad=<span class="literal">False</span>)</span><br><span class="line">        dummy_x = <span class="variable language_">self</span>.conv1(dummy_x)</span><br><span class="line">        dummy_x = <span class="variable language_">self</span>.conv2(dummy_x)</span><br><span class="line">        dummy_x = <span class="variable language_">self</span>.max_pool(dummy_x)</span><br><span class="line">        max_pool_out = dummy_x.view(<span class="number">1</span>, -<span class="number">1</span>).shape[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># followed by 5 dense layers</span></span><br><span class="line">        <span class="variable language_">self</span>.fc1 = nn.Sequential(</span><br><span class="line">            nn.Linear(</span><br><span class="line">                in_features=max_pool_out,</span><br><span class="line">                out_features=<span class="number">200</span></span><br><span class="line">            ),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.05</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line">        <span class="variable language_">self</span>.fc2 = nn.Sequential(</span><br><span class="line">            nn.Linear(</span><br><span class="line">                in_features=<span class="number">200</span>,</span><br><span class="line">                out_features=<span class="number">100</span></span><br><span class="line">            ),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.05</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line">        <span class="variable language_">self</span>.fc3 = nn.Sequential(</span><br><span class="line">            nn.Linear(</span><br><span class="line">                in_features=<span class="number">100</span>,</span><br><span class="line">                out_features=<span class="number">50</span></span><br><span class="line">            ),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.05</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># finally, output layer</span></span><br><span class="line">        <span class="variable language_">self</span>.out = nn.Linear(</span><br><span class="line">            in_features=<span class="number">50</span>,</span><br><span class="line">            out_features=<span class="variable language_">self</span>.hparams.output_dim</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
 
 <h2 id="Create-Train-and-Test-Data"><a href="#Create-Train-and-Test-Data" class="headerlink" title="Create Train and Test Data"></a>Create Train and Test Data</h2><p>For each of the application and traffic classification tasks, the dataset is first stratified split into train set and test set with the ratio of 80:20, then each class in the train set are rebalanced by under-sampling. I used all data in the application classification task, but for the traffic classification task, I used only certain apps traffic in each traffic category. This is because I do not know the traffic category of certain apps which are not mentioned in the dataset description page. The applications I used for the traffic classification task are as follow:</p>
 <table>
@@ -372,7 +394,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2023</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
@@ -403,32 +425,8 @@
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
-
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js"></script>
-
-
 <script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"munhousblog","count":true,"i18n":{"disqus":"disqus"}}</script>
-<script src="/js/third-party/comments/disqus.js"></script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
 
 </body>
 </html>

@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="From PPO to GDPO — Understanding the Evolution of Reinforcement Learning AlgorithmsIntroduction: Why Reinforcement Learning?The Two Stages of LLM TrainingTraining a Large Language Model is fundamental">
+<meta property="og:type" content="article">
+<meta property="og:title" content="From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms">
+<meta property="og:url" content="https://blog.munhou.com/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/index.html">
+<meta property="og:site_name" content="Mun Hou&#39;s Blog">
+<meta property="og:description" content="From PPO to GDPO — Understanding the Evolution of Reinforcement Learning AlgorithmsIntroduction: Why Reinforcement Learning?The Two Stages of LLM TrainingTraining a Large Language Model is fundamental">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.munhou.com/images/rl-evo-guide/figure1_ppo_architecture.png">
+<meta property="og:image" content="https://blog.munhou.com/images/rl-evo-guide/figure2_grpo_algorithm_flow.png">
+<meta property="og:image" content="https://blog.munhou.com/images/rl-evo-guide/figure3_dapo_innovations.png">
+<meta property="og:image" content="https://blog.munhou.com/images/rl-evo-guide/figure4_algorithm_evolution.png">
+<meta property="article:published_time" content="2026-01-14T13:54:00.000Z">
+<meta property="article:modified_time" content="2026-01-14T23:03:39.756Z">
+<meta property="article:author" content="Mun Hou">
+<meta property="article:tag" content="Machine Learning">
+<meta property="article:tag" content="Reinforcement Learning">
+<meta property="article:tag" content="Large Language Model">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.munhou.com/images/rl-evo-guide/figure1_ppo_architecture.png">
+
+
+<link rel="canonical" href="https://blog.munhou.com/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.munhou.com/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/","path":"2026/01/14/From-PPO-to-GDPO-—-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/","title":"From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms | Mun Hou's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-345528590"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-345528590","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mun Hou's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms"><span class="nav-number">1.</span> <span class="nav-text">From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction-Why-Reinforcement-Learning"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction: Why Reinforcement Learning?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Two-Stages-of-LLM-Training"><span class="nav-number">1.1.1.</span> <span class="nav-text">The Two Stages of LLM Training</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-Not-Just-Use-Supervised-Fine-Tuning"><span class="nav-number">1.1.2.</span> <span class="nav-text">Why Not Just Use Supervised Fine-Tuning?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-RL-Solution"><span class="nav-number">1.1.3.</span> <span class="nav-text">The RL Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Theoretical-Foundations"><span class="nav-number">1.2.</span> <span class="nav-text">Theoretical Foundations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Language-Model-as-an-Agent"><span class="nav-number">1.2.1.</span> <span class="nav-text">The Language Model as an Agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Optimization-Objective"><span class="nav-number">1.2.2.</span> <span class="nav-text">The Optimization Objective</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Policy-Gradient-Theorem"><span class="nav-number">1.2.3.</span> <span class="nav-text">The Policy Gradient Theorem</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PPO-The-Foundation"><span class="nav-number">1.3.</span> <span class="nav-text">PPO: The Foundation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Origin-and-Purpose"><span class="nav-number">1.3.1.</span> <span class="nav-text">Origin and Purpose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Problem-PPO-Solves-Policy-Collapse"><span class="nav-number">1.3.2.</span> <span class="nav-text">The Problem PPO Solves: Policy Collapse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Four-Model-Architecture"><span class="nav-number">1.3.3.</span> <span class="nav-text">The Four-Model Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Common-Confusion-Critic-vs-Reward-Model"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">Common Confusion: Critic vs Reward Model</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-PPO-Objective-Function"><span class="nav-number">1.3.4.</span> <span class="nav-text">The PPO Objective Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-PPO-Failed-for-Modern-Reasoning"><span class="nav-number">1.3.5.</span> <span class="nav-text">Why PPO Failed for Modern Reasoning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DPO-The-Offline-Revolution"><span class="nav-number">1.4.</span> <span class="nav-text">DPO: The Offline Revolution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Key-Insight"><span class="nav-number">1.4.1.</span> <span class="nav-text">The Key Insight</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-Changed-From-Online-to-Offline"><span class="nav-number">1.4.2.</span> <span class="nav-text">What Changed: From Online to Offline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-DPO-Objective"><span class="nav-number">1.4.3.</span> <span class="nav-text">The DPO Objective</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DPO-Variants"><span class="nav-number">1.4.4.</span> <span class="nav-text">DPO Variants</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-DPO-Failed-for-Reasoning"><span class="nav-number">1.4.5.</span> <span class="nav-text">Why DPO Failed for Reasoning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GRPO-The-Reasoning-Renaissance"><span class="nav-number">1.5.</span> <span class="nav-text">GRPO: The Reasoning Renaissance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Origin-DeepSeek-Math-and-DeepSeek-R1"><span class="nav-number">1.5.1.</span> <span class="nav-text">Origin: DeepSeek-Math and DeepSeek-R1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Core-Innovation-Killing-the-Critic"><span class="nav-number">1.5.2.</span> <span class="nav-text">The Core Innovation: Killing the Critic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Classroom-Analogy"><span class="nav-number">1.5.3.</span> <span class="nav-text">The Classroom Analogy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-GRPO-Works"><span class="nav-number">1.5.4.</span> <span class="nav-text">How GRPO Works</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-%E2%80%9CAha-Moment%E2%80%9D-Phenomenon"><span class="nav-number">1.5.5.</span> <span class="nav-text">The “Aha Moment” Phenomenon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GRPO-vs-PPO-Comparison"><span class="nav-number">1.5.6.</span> <span class="nav-text">GRPO vs PPO Comparison</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advanced-Algorithms-GRPO-DAPO-and-GDPO"><span class="nav-number">1.6.</span> <span class="nav-text">Advanced Algorithms: GRPO+, DAPO, and GDPO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Problems-with-Basic-GRPO"><span class="nav-number">1.6.1.</span> <span class="nav-text">The Problems with Basic GRPO</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Deep-Dive-What-is-Entropy-Collapse"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">Deep Dive: What is Entropy Collapse?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GRPO"><span class="nav-number">1.6.2.</span> <span class="nav-text">GRPO+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DAPO-Decoupled-Clip-and-Dynamic-Sampling"><span class="nav-number">1.6.3.</span> <span class="nav-text">DAPO: Decoupled Clip and Dynamic Sampling</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Innovation-1-Asymmetric-Clipping-Clip-Higher"><span class="nav-number">1.6.3.1.</span> <span class="nav-text">Innovation 1: Asymmetric Clipping (Clip-Higher)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Innovation-2-Dynamic-Sampling"><span class="nav-number">1.6.3.2.</span> <span class="nav-text">Innovation 2: Dynamic Sampling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Innovation-3-Token-Level-Policy-Gradient"><span class="nav-number">1.6.3.3.</span> <span class="nav-text">Innovation 3: Token-Level Policy Gradient</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Innovation-4-Overlong-Reward-Shaping"><span class="nav-number">1.6.3.4.</span> <span class="nav-text">Innovation 4: Overlong Reward Shaping</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDPO-Group-Reward-Decoupled-Normalization-Policy-Optimization"><span class="nav-number">1.6.4.</span> <span class="nav-text">GDPO: Group Reward-Decoupled Normalization Policy Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#The-Reward-Signal-Collapse-Problem"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">The Reward Signal Collapse Problem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-GDPO-Algorithm-Normalize-First-Aggregate-Second"><span class="nav-number">1.6.4.2.</span> <span class="nav-text">The GDPO Algorithm: Normalize First, Aggregate Second</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Worked-Example-Computing-GDPO-Z-Scores-Step-by-Step"><span class="nav-number">1.6.4.3.</span> <span class="nav-text">Worked Example: Computing GDPO Z-Scores Step-by-Step</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GDPO-Empirical-Results"><span class="nav-number">1.6.4.4.</span> <span class="nav-text">GDPO Empirical Results</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#When-to-Use-GDPO"><span class="nav-number">1.6.4.5.</span> <span class="nav-text">When to Use GDPO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparative-Analysis"><span class="nav-number">1.7.</span> <span class="nav-text">Comparative Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Algorithm-Comparison-Table"><span class="nav-number">1.7.1.</span> <span class="nav-text">Algorithm Comparison Table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Evolution-Diagram"><span class="nav-number">1.7.2.</span> <span class="nav-text">Evolution Diagram</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#When-to-Use-Each-Algorithm"><span class="nav-number">1.7.3.</span> <span class="nav-text">When to Use Each Algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Future-Directions"><span class="nav-number">1.8.</span> <span class="nav-text">Future Directions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Process-Reward-Models-PRMs"><span class="nav-number">1.8.1.</span> <span class="nav-text">Process Reward Models (PRMs)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generative-Reward-Models-GenRM"><span class="nav-number">1.8.2.</span> <span class="nav-text">Generative Reward Models (GenRM)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Self-Improving-Loops"><span class="nav-number">1.8.3.</span> <span class="nav-text">Self-Improving Loops</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.9.</span> <span class="nav-text">Conclusion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Journey"><span class="nav-number">1.9.1.</span> <span class="nav-text">The Journey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Central-Insights"><span class="nav-number">1.9.2.</span> <span class="nav-text">The Central Insights</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.10.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Mun Hou</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/munhouiani" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;munhouiani" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:munhou2022+blog@gmail.com" title="E-Mail → mailto:munhou2022+blog@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mun Hou">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms | Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-14 21:54:00" itemprop="dateCreated datePublished" datetime="2026-01-14T21:54:00+08:00">2026-01-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-01-15 07:03:39" itemprop="dateModified" datetime="2026-01-15T07:03:39+08:00">2026-01-15</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/01/14/From-PPO-to-GDPO-—-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="From-PPO-to-GDPO-—-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms"><a href="#From-PPO-to-GDPO-—-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms" class="headerlink" title="From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms"></a>From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms</h1><h2 id="Introduction-Why-Reinforcement-Learning"><a href="#Introduction-Why-Reinforcement-Learning" class="headerlink" title="Introduction: Why Reinforcement Learning?"></a>Introduction: Why Reinforcement Learning?</h2><h3 id="The-Two-Stages-of-LLM-Training"><a href="#The-Two-Stages-of-LLM-Training" class="headerlink" title="The Two Stages of LLM Training"></a>The Two Stages of LLM Training</h3><p>Training a Large Language Model is fundamentally a two-stage process:</p>
+<p><strong>Stage 1: Pre-training (Knowledge Acquisition)</strong></p>
+<ul>
+<li>The model learns from trillions of tokens of text</li>
+<li>It learns to predict the next token: $P(x_t | x_{&lt;t})$</li>
+<li>Result: A “document completor” that understands language structure</li>
+</ul>
+<p><strong>Stage 2: Post-training (Behavioral Alignment)</strong></p>
+<ul>
+<li>The model learns to be helpful, harmless, and honest</li>
+<li>It learns to follow instructions and provide useful responses</li>
+<li>Result: A helpful AI assistant</li>
+</ul>
+<blockquote>
+<p><strong>The Problem</strong>: A pre-trained model asked “How do I bake a cake?” might respond with “How do I bake a pie?” — continuing a pattern rather than answering the question.</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="Why-Not-Just-Use-Supervised-Fine-Tuning"><a href="#Why-Not-Just-Use-Supervised-Fine-Tuning" class="headerlink" title="Why Not Just Use Supervised Fine-Tuning?"></a>Why Not Just Use Supervised Fine-Tuning?</h3><p>Supervised Fine-Tuning (SFT) teaches the model to mimic expert responses. While effective for basic tasks, it has critical limitations:</p>
+<table>
+<thead>
+<tr>
+<th>Limitation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Data Ceiling</strong></td>
+<td>Limited by availability of expert demonstrations</td>
+</tr>
+<tr>
+<td><strong>Mimicry Problem</strong></td>
+<td>Model copies style without understanding reasoning</td>
+</tr>
+<tr>
+<td><strong>No Negative Feedback</strong></td>
+<td>Model is told what to do, but rarely what <em>not</em> to do</td>
+</tr>
+<tr>
+<td><strong>No Exploration</strong></td>
+<td>Cannot discover novel solutions beyond training data</td>
+</tr>
+</tbody></table>
+<h3 id="The-RL-Solution"><a href="#The-RL-Solution" class="headerlink" title="The RL Solution"></a>The RL Solution</h3><p>Reinforcement Learning solves these problems by defining the <strong>goal</strong> (what we want) without specifying the <strong>path</strong> (how to get there):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Instead of: &quot;Here&#x27;s the perfect poem, copy it&quot;</span><br><span class="line">RL says:    &quot;Generate 100 poems, I&#x27;ll score each one, learn what works&quot;</span><br></pre></td></tr></table></figure>
+
+<p>This enables:</p>
+<ul>
+<li><strong>Trial and Error</strong>: Model can explore and discover novel solutions</li>
+<li><strong>Negative Feedback</strong>: Low scores teach what to avoid</li>
+<li><strong>Emergent Behaviors</strong>: Self-correction, extended thinking, “aha moments”</li>
+</ul>
+<hr>
+<h2 id="Theoretical-Foundations"><a href="#Theoretical-Foundations" class="headerlink" title="Theoretical Foundations"></a>Theoretical Foundations</h2><h3 id="The-Language-Model-as-an-Agent"><a href="#The-Language-Model-as-an-Agent" class="headerlink" title="The Language Model as an Agent"></a>The Language Model as an Agent</h3><p>To understand RL for LLMs, we must map text generation onto the Markov Decision Process (MDP) framework:</p>
+<table>
+<thead>
+<tr>
+<th>MDP Component</th>
+<th>In LLM Context</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>State ($s_t$)</strong></td>
+<td>The prompt + all tokens generated so far</td>
+</tr>
+<tr>
+<td><strong>Action ($a_t$)</strong></td>
+<td>Selecting the next token from vocabulary (32K-100K options)</td>
+</tr>
+<tr>
+<td><strong>Transition ($P$)</strong></td>
+<td>Deterministic: “The cat sat on” + “mat” → “The cat sat on mat”</td>
+</tr>
+<tr>
+<td><strong>Reward ($R$)</strong></td>
+<td>Score from reward model or verifier (e.g., 1 for correct, 0 for wrong)</td>
+</tr>
+<tr>
+<td><strong>Policy ($\pi_\theta$)</strong></td>
+<td>The LLM itself — outputs probability distribution over tokens</td>
+</tr>
+</tbody></table>
+<h3 id="The-Optimization-Objective"><a href="#The-Optimization-Objective" class="headerlink" title="The Optimization Objective"></a>The Optimization Objective</h3><p>The goal is to maximize expected cumulative reward:</p>
+<p>$$J(\theta) &#x3D; \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t&#x3D;0}^{T} \gamma^t r_t \right]$$</p>
+<p>Where:</p>
+<ul>
+<li>$\tau$ &#x3D; trajectory (complete sequence of tokens)</li>
+<li>$\gamma$ &#x3D; discount factor (typically close to 1 for LLMs)</li>
+<li>$r_t$ &#x3D; reward at timestep $t$</li>
+</ul>
+<h3 id="The-Policy-Gradient-Theorem"><a href="#The-Policy-Gradient-Theorem" class="headerlink" title="The Policy Gradient Theorem"></a>The Policy Gradient Theorem</h3><p>Since we cannot differentiate through the discrete sampling of tokens, we use the Policy Gradient:</p>
+<p>$$\nabla_\theta J(\theta) &#x3D; \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_t \nabla_\theta \log \pi_\theta(a_t|s_t) \cdot A^{\pi}(s_t, a_t) \right]$$</p>
+<p>The <strong>Advantage Function</strong> $A^{\pi}(s_t, a_t)$ is crucial — it answers:</p>
+<blockquote>
+<p>“How much better was this specific action compared to the average action I could have taken?”</p>
+</blockquote>
+<p>$$A^{\pi}(s_t, a_t) &#x3D; Q^{\pi}(s_t, a_t) - V^{\pi}(s_t)$$</p>
+<p>Where:</p>
+<ul>
+<li><strong>$V^{\pi}(s_t)$</strong> &#x3D; <strong>Value Function</strong> (state-value): “If I’m in state $s_t$, what’s my expected total future reward?”<ul>
+<li>In LLM terms: “Given the prompt + tokens so far, how good is my situation on average?”</li>
+<li>This is what the <strong>Critic</strong> network learns to predict in PPO</li>
+</ul>
+</li>
+<li><strong>$Q^{\pi}(s_t, a_t)$</strong> &#x3D; <strong>Q-Function</strong> (action-value): “If I’m in state $s_t$ AND I take action $a_t$, what’s my expected total future reward?”<ul>
+<li>In LLM terms: “Given the prompt + tokens so far, if I choose <em>this specific next token</em>, how good will my final answer be?”</li>
+</ul>
+</li>
+</ul>
+<p><strong>Intuition</strong>: $V$ tells you “how good is your current position on average” while $Q$ tells you “how good is your current position <em>if you take this specific action</em>.” The difference ($Q - V$) tells you whether this particular action is better or worse than your average option — that’s the Advantage.</p>
+<p><strong>The history of LLM alignment is essentially the history of finding better, cheaper, and more stable ways to estimate this Advantage function.</strong></p>
+<hr>
+<h2 id="PPO-The-Foundation"><a href="#PPO-The-Foundation" class="headerlink" title="PPO: The Foundation"></a>PPO: The Foundation</h2><h3 id="Origin-and-Purpose"><a href="#Origin-and-Purpose" class="headerlink" title="Origin and Purpose"></a>Origin and Purpose</h3><p><strong>Proximal Policy Optimization (PPO)</strong> was introduced by Schulman et al. at OpenAI in 2017. It was the algorithm that proved RLHF could scale to billions of parameters, powering:</p>
+<ul>
+<li>InstructGPT</li>
+<li>Early GPT-4</li>
+<li>ChatGPT’s initial alignment</li>
+</ul>
+<h3 id="The-Problem-PPO-Solves-Policy-Collapse"><a href="#The-Problem-PPO-Solves-Policy-Collapse" class="headerlink" title="The Problem PPO Solves: Policy Collapse"></a>The Problem PPO Solves: Policy Collapse</h3><p>In standard policy gradient methods, if an update is too large, the policy can change drastically. This leads to:</p>
+<ul>
+<li><strong>Policy Collapse</strong>: The model enters a bad region of parameter space</li>
+<li><strong>Catastrophic Forgetting</strong>: Good behaviors are lost</li>
+<li><strong>Training Instability</strong>: Rewards oscillate wildly</li>
+</ul>
+<p>PPO enforces a <strong>Trust Region</strong> — limiting how much the policy can change in a single update.</p>
+<h3 id="The-Four-Model-Architecture"><a href="#The-Four-Model-Architecture" class="headerlink" title="The Four-Model Architecture"></a>The Four-Model Architecture</h3><p>PPO requires maintaining four neural networks simultaneously:</p>
+<p><img src="/images/rl-evo-guide/figure1_ppo_architecture.png" alt="Figure 1: PPO Four-Model Architecture"></p>
+<p><em>Figure 1: The PPO architecture requires four neural networks: Actor (policy model being trained), Critic (value model predicting expected reward), Reference (frozen SFT model for KL constraint), and Reward Model (scoring outputs). This creates the “memory wall” problem for large models.</em></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Role</th>
+<th>Memory Cost</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Actor ($\pi_\theta$)</strong></td>
+<td>The LLM being trained</td>
+<td>Trainable + Optimizer States</td>
+</tr>
+<tr>
+<td><strong>Critic ($V_\phi$)</strong></td>
+<td>Predicts expected future reward</td>
+<td>Trainable + Optimizer States</td>
+</tr>
+<tr>
+<td><strong>Reference ($\pi_{ref}$)</strong></td>
+<td>Frozen SFT model for KL constraint</td>
+<td>Frozen weights</td>
+</tr>
+<tr>
+<td><strong>Reward ($R_\psi$)</strong></td>
+<td>Scores the Actor’s outputs</td>
+<td>Frozen weights</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>The Memory Wall</strong>: For a 70B model, this setup requires ~800GB-1TB of VRAM, necessitating massive GPU clusters.</p>
+</blockquote>
+<h4 id="Common-Confusion-Critic-vs-Reward-Model"><a href="#Common-Confusion-Critic-vs-Reward-Model" class="headerlink" title="Common Confusion: Critic vs Reward Model"></a>Common Confusion: Critic vs Reward Model</h4><p>Both the Critic and Reward Model output a “score,” which often confuses newcomers. The key difference is <strong>when they act</strong> and <strong>what they represent</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>When It Acts</th>
+<th>What It Does</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Reward Model</strong></td>
+<td><em>After</em> generation is complete</td>
+<td>Looks at finished answer, gives final grade (e.g., “Correct: +1”)</td>
+<td><strong>Ground Truth</strong> — the actual goal</td>
+</tr>
+<tr>
+<td><strong>Critic</strong></td>
+<td><em>Before&#x2F;during</em> generation</td>
+<td>Looks at current state, predicts “I expect to score 0.7 on this”</td>
+<td><strong>Baseline&#x2F;Expectation</strong> — used for normalization</td>
+</tr>
+</tbody></table>
+<p><strong>Why do we need both?</strong> To calculate the <strong>Advantage</strong> (how much better&#x2F;worse than expected):</p>
+<p>$$\text{Advantage} &#x3D; \text{Actual Reward (from Reward Model)} - \text{Expected Reward (from Critic)}$$</p>
+<ul>
+<li>If you get 0.8, but Critic expected 0.9 → Negative advantage (worse than expected)</li>
+<li>If you get 0.8, but Critic expected 0.2 → Large positive advantage (much better than expected)</li>
+</ul>
+<p>The Critic normalizes the reward signal so the model knows if an action was truly “special” or just “average.” This is exactly what GRPO replaces with group statistics.</p>
+<h3 id="The-PPO-Objective-Function"><a href="#The-PPO-Objective-Function" class="headerlink" title="The PPO Objective Function"></a>The PPO Objective Function</h3><p>PPO uses a “clipped surrogate” objective to ensure stability:</p>
+<p><strong>Step 1: Calculate the Probability Ratio</strong></p>
+<p>$$r_t(\theta) &#x3D; \frac{\pi_\theta(a_t|s_t)}{\pi_{old}(a_t|s_t)}$$</p>
+<ul>
+<li>If $r_t &gt; 1$: action is more likely now than before</li>
+<li>If $r_t &lt; 1$: action is less likely</li>
+</ul>
+<p><strong>Step 2: Calculate Advantage using GAE</strong></p>
+<p>The Critic computes the advantage via <strong>Generalized Advantage Estimation (GAE)</strong>.</p>
+<p><strong>What is GAE?</strong> When calculating the Advantage ($A &#x3D; Q - V$), we face a tradeoff:</p>
+<ul>
+<li><strong>One-step estimate</strong> ($A &#x3D; r_t + \gamma V(s_{t+1}) - V(s_t)$): Low bias, high variance — uses actual reward but noisy</li>
+<li><strong>Multi-step estimate</strong>: Look further ahead for more signal, but compounds errors from the Critic</li>
+</ul>
+<p>GAE solves this by computing a <strong>weighted average</strong> of all possible n-step estimates:</p>
+<p>$$\hat{A}_t^{GAE} &#x3D; \sum_{l&#x3D;0}^{\infty} (\gamma \lambda)^l \delta_{t+l}$$</p>
+<p>Where $\delta_t &#x3D; r_t + \gamma V(s_{t+1}) - V(s_t)$ is the one-step TD error, and $\lambda \in [0, 1]$ controls the tradeoff:</p>
+<ul>
+<li>$\lambda &#x3D; 0$: Pure one-step (high variance, low bias)</li>
+<li>$\lambda &#x3D; 1$: Full Monte Carlo (low variance, high bias)</li>
+<li>$\lambda &#x3D; 0.95$: Typical setting — balanced</li>
+</ul>
+<p><strong>In LLM terms</strong>: GAE helps the model understand “was this token choice good?” by looking not just at the immediate effect, but also at how the rest of the response turned out — while discounting increasingly uncertain future predictions.</p>
+<p><strong>Result of GAE:</strong></p>
+<ul>
+<li><strong>Positive Advantage</strong>: Model did better than expected → Increase probability</li>
+<li><strong>Negative Advantage</strong>: Model did worse than expected → Decrease probability</li>
+</ul>
+<p><strong>Step 3: Apply Clipping</strong></p>
+<p>$$L^{CLIP}(\theta) &#x3D; \mathbb{E}_t \left[ \min(r_t(\theta)\hat{A}_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t) \right]$$</p>
+<p>The clip bounds (typically $\epsilon &#x3D; 0.2$) limit the ratio to $[0.8, 1.2]$:</p>
+<ul>
+<li>Updates cannot push probability too high or too low</li>
+<li>Creates a “safe zone” for stable training</li>
+</ul>
+<h3 id="Why-PPO-Failed-for-Modern-Reasoning"><a href="#Why-PPO-Failed-for-Modern-Reasoning" class="headerlink" title="Why PPO Failed for Modern Reasoning"></a>Why PPO Failed for Modern Reasoning</h3><table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Memory Cost</strong></td>
+<td>4 models × 70B &#x3D; prohibitive VRAM requirements</td>
+</tr>
+<tr>
+<td><strong>Critic Instability</strong></td>
+<td>Hard to predict value of intermediate reasoning steps</td>
+</tr>
+<tr>
+<td><strong>Hyperparameter Sensitivity</strong></td>
+<td>Small changes cause training collapse</td>
+</tr>
+<tr>
+<td><strong>Sparse Rewards</strong></td>
+<td>Binary pass&#x2F;fail makes credit assignment difficult</td>
+</tr>
+</tbody></table>
+<p>These limitations drove the search for alternatives.</p>
+<hr>
+<h2 id="DPO-The-Offline-Revolution"><a href="#DPO-The-Offline-Revolution" class="headerlink" title="DPO: The Offline Revolution"></a>DPO: The Offline Revolution</h2><h3 id="The-Key-Insight"><a href="#The-Key-Insight" class="headerlink" title="The Key Insight"></a>The Key Insight</h3><p>In 2023, researchers at Stanford asked a fundamental question:</p>
+<blockquote>
+<p>“If we have preference data (Response A is better than Response B), do we really need a separate Reward Model and Critic?”</p>
+</blockquote>
+<p>The answer was <strong>no</strong>. DPO (Direct Preference Optimization) exploits a mathematical duality:</p>
+<ul>
+<li>For every reward function, there exists a unique optimal policy</li>
+<li>We can optimize the policy directly on preference pairs</li>
+</ul>
+<h3 id="What-Changed-From-Online-to-Offline"><a href="#What-Changed-From-Online-to-Offline" class="headerlink" title="What Changed: From Online to Offline"></a>What Changed: From Online to Offline</h3><table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>PPO (Online)</th>
+<th>DPO (Offline)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Data</strong></td>
+<td>Generated during training</td>
+<td>Pre-collected preference pairs</td>
+</tr>
+<tr>
+<td><strong>Models</strong></td>
+<td>4 (Actor, Critic, Ref, Reward)</td>
+<td>2 (Actor, Reference)</td>
+</tr>
+<tr>
+<td><strong>Training Loop</strong></td>
+<td>Generate → Score → Update</td>
+<td>Load pairs → Update</td>
+</tr>
+<tr>
+<td><strong>Exploration</strong></td>
+<td>Yes (generates new samples)</td>
+<td>No (fixed dataset)</td>
+</tr>
+</tbody></table>
+<h3 id="The-DPO-Objective"><a href="#The-DPO-Objective" class="headerlink" title="The DPO Objective"></a>The DPO Objective</h3><p>Given preference pairs $(y_w, y_l)$ where $y_w$ is preferred over $y_l$:</p>
+<p>$$L_{DPO} &#x3D; -\mathbb{E}_{(x, y_w, y_l)} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} \right) \right]$$</p>
+<p><strong>Breaking it down:</strong></p>
+<ul>
+<li>$\frac{\pi_\theta(y|x)}{\pi_{ref}(y|x)}$ &#x3D; How much has the model deviated from reference?</li>
+<li>DPO wants to <strong>increase</strong> this ratio for winners, <strong>decrease</strong> for losers</li>
+<li>$\beta$ &#x3D; Temperature controlling how strongly we enforce KL constraint</li>
+<li>$\sigma$ &#x3D; Sigmoid function (turns into classification)</li>
+</ul>
+<h3 id="DPO-Variants"><a href="#DPO-Variants" class="headerlink" title="DPO Variants"></a>DPO Variants</h3><table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Offline DPO</strong></td>
+<td>Standard: train once on fixed dataset</td>
+</tr>
+<tr>
+<td><strong>Iterative DPO</strong></td>
+<td>Cyclical: generate new pairs → label → retrain</td>
+</tr>
+<tr>
+<td><strong>Online DPO</strong></td>
+<td>Like PPO: generate during training, immediate labeling</td>
+</tr>
+</tbody></table>
+<h3 id="Why-DPO-Failed-for-Reasoning"><a href="#Why-DPO-Failed-for-Reasoning" class="headerlink" title="Why DPO Failed for Reasoning"></a>Why DPO Failed for Reasoning</h3><p>While DPO revolutionized chat alignment (style, safety, helpfulness), it hit a hard ceiling for reasoning tasks:</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Out-of-Distribution</strong></td>
+<td>Can only learn from provided solutions, cannot explore</td>
+</tr>
+<tr>
+<td><strong>Copycat Effect</strong></td>
+<td>Mimics form of correct answer without understanding process</td>
+</tr>
+<tr>
+<td><strong>No Trial-and-Error</strong></td>
+<td>Cannot generate, verify, and learn from own attempts</td>
+</tr>
+<tr>
+<td><strong>Static Data</strong></td>
+<td>Hard problems need model to discover novel reasoning paths</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>The Fundamental Tension</strong>: Reasoning needs online exploration (like PPO), but PPO’s memory cost was prohibitive. This tension birthed GRPO.</p>
+</blockquote>
+<hr>
+<h2 id="GRPO-The-Reasoning-Renaissance"><a href="#GRPO-The-Reasoning-Renaissance" class="headerlink" title="GRPO: The Reasoning Renaissance"></a>GRPO: The Reasoning Renaissance</h2><h3 id="Origin-DeepSeek-Math-and-DeepSeek-R1"><a href="#Origin-DeepSeek-Math-and-DeepSeek-R1" class="headerlink" title="Origin: DeepSeek-Math and DeepSeek-R1"></a>Origin: DeepSeek-Math and DeepSeek-R1</h3><p>In early 2024, DeepSeek AI introduced <strong>Group Relative Policy Optimization (GRPO)</strong> in their paper “DeepSeekMath: Pushing the Limits of Mathematical Reasoning.” This algorithm enabled:</p>
+<ul>
+<li>DeepSeek-R1’s breakthrough reasoning capabilities</li>
+<li>“Aha moments” and emergent self-correction</li>
+<li>Training massive reasoning models on accessible hardware</li>
+</ul>
+<h3 id="The-Core-Innovation-Killing-the-Critic"><a href="#The-Core-Innovation-Killing-the-Critic" class="headerlink" title="The Core Innovation: Killing the Critic"></a>The Core Innovation: Killing the Critic</h3><p>GRPO’s insight: The Critic in PPO is just estimating a baseline. Why train a neural network when we can calculate it directly?</p>
+<table>
+<thead>
+<tr>
+<th>PPO Approach</th>
+<th>GRPO Approach</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Train Critic to predict $V(s)$</td>
+<td>Sample G outputs, use group mean</td>
+</tr>
+<tr>
+<td>Compare to neural network prediction</td>
+<td>Compare to other outputs from same model</td>
+</tr>
+<tr>
+<td>Memory: 4 models</td>
+<td>Memory: 2 models</td>
+</tr>
+</tbody></table>
+<h3 id="The-Classroom-Analogy"><a href="#The-Classroom-Analogy" class="headerlink" title="The Classroom Analogy"></a>The Classroom Analogy</h3><p><strong>PPO</strong>:</p>
+<ul>
+<li>Student answers a question</li>
+<li>Teacher (Reward Model) grades it</li>
+<li>Statistician (Critic) predicts what grade should have been</li>
+<li>Student learns from the difference</li>
+</ul>
+<p><strong>GRPO</strong>:</p>
+<ul>
+<li>Teacher asks a question</li>
+<li>Student writes 64 different answers</li>
+<li>Teacher grades all 64</li>
+<li>Student learns to favor above-average answers, avoid below-average</li>
+</ul>
+<h3 id="How-GRPO-Works"><a href="#How-GRPO-Works" class="headerlink" title="How GRPO Works"></a>How GRPO Works</h3><p><img src="/images/rl-evo-guide/figure2_grpo_algorithm_flow.png" alt="Figure 2: GRPO Algorithm Flow"></p>
+<p><em>Figure 2: The GRPO algorithm flow shows how the model generates G outputs for each prompt, scores them, calculates group-relative advantages using mean&#x2F;std normalization, and updates the policy to favor above-average outputs. No Critic network is needed.</em></p>
+<p><strong>Step 1: Group Sampling</strong><br>For each prompt $q$, generate G outputs ${o_1, o_2, …, o_G}$ (typically G &#x3D; 16-64)</p>
+<p><strong>Step 2: Scoring</strong><br>Use reward model or rule-based verifier to score all outputs: ${r_1, r_2, …, r_G}$</p>
+<p><strong>Step 3: Advantage Calculation</strong><br>Normalize each reward against group statistics:</p>
+<p>$$A_i &#x3D; \frac{r_i - \text{mean}({r_1, …, r_G})}{\text{std}({r_1, …, r_G}) + \epsilon}$$</p>
+<p><strong>Why this works:</strong></p>
+<ul>
+<li>If all answers are bad (scores 0.1, 0.2, 0.1), the 0.2 still gets positive advantage</li>
+<li>If all answers are good (scores 0.9, 0.9, 0.8), the 0.8 gets negative advantage</li>
+<li>Algorithm is robust to prompt difficulty</li>
+</ul>
+<p><strong>Step 4: Policy Optimization</strong><br>Update weights to maximize likelihood of high-advantage outputs, with KL constraint.</p>
+<h3 id="The-“Aha-Moment”-Phenomenon"><a href="#The-“Aha-Moment”-Phenomenon" class="headerlink" title="The “Aha Moment” Phenomenon"></a>The “Aha Moment” Phenomenon</h3><p>During training of DeepSeek-R1-Zero, researchers observed emergent behaviors that were not explicitly programmed:</p>
+<table>
+<thead>
+<tr>
+<th>Behavior</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Self-Correction</strong></td>
+<td>“Wait, this assumes X which is wrong. Let me try Y…”</td>
+</tr>
+<tr>
+<td><strong>Extended Thinking</strong></td>
+<td>Response length grew from hundreds to thousands of tokens</td>
+</tr>
+<tr>
+<td><strong>Phase Transitions</strong></td>
+<td>Sudden jumps in benchmark scores (“aha moments”)</td>
+</tr>
+</tbody></table>
+<p>These behaviors prove that online RL with GRPO unlocks capabilities that SFT and DPO cannot — the model discovers strategies humans might not know how to demonstrate.</p>
+<h3 id="GRPO-vs-PPO-Comparison"><a href="#GRPO-vs-PPO-Comparison" class="headerlink" title="GRPO vs PPO Comparison"></a>GRPO vs PPO Comparison</h3><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>PPO</th>
+<th>GRPO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Model Count</strong></td>
+<td>4 (Actor, Ref, Reward, Critic)</td>
+<td>2 (Actor, Ref) + Group Buffer</td>
+</tr>
+<tr>
+<td><strong>Memory</strong></td>
+<td>~4x model size</td>
+<td>~2x model size</td>
+</tr>
+<tr>
+<td><strong>Advantage Source</strong></td>
+<td>Neural Network (Critic)</td>
+<td>Group Statistics (Mean&#x2F;Std)</td>
+</tr>
+<tr>
+<td><strong>Compute Overhead</strong></td>
+<td>Forward&#x2F;backward on Critic</td>
+<td>Generating G samples</td>
+</tr>
+<tr>
+<td><strong>Reward Signal</strong></td>
+<td>Absolute</td>
+<td>Relative</td>
+</tr>
+<tr>
+<td><strong>Best For</strong></td>
+<td>General chat, short tasks</td>
+<td>Reasoning, math, coding</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Advanced-Algorithms-GRPO-DAPO-and-GDPO"><a href="#Advanced-Algorithms-GRPO-DAPO-and-GDPO" class="headerlink" title="Advanced Algorithms: GRPO+, DAPO, and GDPO"></a>Advanced Algorithms: GRPO+, DAPO, and GDPO</h2><h3 id="The-Problems-with-Basic-GRPO"><a href="#The-Problems-with-Basic-GRPO" class="headerlink" title="The Problems with Basic GRPO"></a>The Problems with Basic GRPO</h3><p>While GRPO solved the memory bottleneck, researchers identified several failure modes:</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Entropy Collapse</strong></td>
+<td>Model converges to single “safe” pattern, stops exploring</td>
+</tr>
+<tr>
+<td><strong>Gradient Deadzones</strong></td>
+<td>All-correct or all-wrong batches produce zero gradient</td>
+</tr>
+<tr>
+<td><strong>Multi-Objective Blindness</strong></td>
+<td>Summed rewards mask individual signal contributions</td>
+</tr>
+<tr>
+<td><strong>Length Bias</strong></td>
+<td>Long responses dilute gradient signal</td>
+</tr>
+</tbody></table>
+<h4 id="Deep-Dive-What-is-Entropy-Collapse"><a href="#Deep-Dive-What-is-Entropy-Collapse" class="headerlink" title="Deep Dive: What is Entropy Collapse?"></a>Deep Dive: What is Entropy Collapse?</h4><p><strong>Entropy</strong> in this context measures the <em>uncertainty</em> or <em>randomness</em> of the model’s token choices:</p>
+<ul>
+<li><strong>High Entropy</strong>: Model assigns similar probabilities to many tokens → exploring diverse options</li>
+<li><strong>Low Entropy</strong>: Model puts ~100% probability on one token → exploiting what it knows</li>
+</ul>
+<p><strong>The Vicious Cycle of Collapse:</strong></p>
+<ol>
+<li><strong>Discovery</strong>: Model tries a phrase (e.g., “Step 1:”) and happens to get a positive reward</li>
+<li><strong>Reinforcement</strong>: Algorithm increases probability of that pattern</li>
+<li><strong>Loss of Diversity</strong>: That pattern is now more likely, so model samples it more often</li>
+<li><strong>Feedback Loop</strong>: Since it’s sampled more, it gets rewarded more (if still “safe”)</li>
+<li><strong>Collapse</strong>: Probability distribution transforms from a gentle hill (diverse) to a sharp spike (single option)</li>
+</ol>
+<p><strong>Why This Fails for Reasoning:</strong></p>
+<p>Imagine a student who learns that writing “The answer is 5” gets partial credit. With entropy collapse, they stop trying to solve equations — they just write “The answer is 5” on every question because it’s the “safest” bet they know. They are stuck in a <strong>local optimum</strong> (okay, but not optimal).</p>
+<p>When given a difficult problem requiring a creative approach, a collapsed model produces a “safe” but likely incorrect answer. It stops “thinking” and starts “reciting.”</p>
+<h3 id="GRPO"><a href="#GRPO" class="headerlink" title="GRPO+"></a>GRPO+</h3><p>GRPO+ was developed for the DeepCoder model and addresses entropy collapse:</p>
+<p><strong>Innovation 1: Remove KL Divergence (and the Reference Model)</strong></p>
+<ul>
+<li>Standard RLHF keeps model close to SFT baseline via KL penalty</li>
+<li>For reasoning, SFT baseline doesn’t know how to “think”</li>
+<li>GRPO+ sets $\beta_{KL} &#x3D; 0$ to allow radical policy shifts</li>
+</ul>
+<blockquote>
+<p><strong>Memory Implication</strong>: When $\beta_{KL} &#x3D; 0$, the Reference Model serves no purpose and can be <strong>removed entirely</strong>. This further reduces VRAM usage from 2 models to effectively 1 model (just the Actor), enabling even larger batch sizes or model scales. DeepSeek-R1-Zero leveraged this to train without any SFT anchor.</p>
+</blockquote>
+<p><strong>Why Remove KL Divergence? The “Leash” Analogy</strong></p>
+<p>Think of KL divergence as a <strong>leash</strong> attached to your dog (the policy):</p>
+<table>
+<thead>
+<tr>
+<th>With Leash (KL Penalty)</th>
+<th>Without Leash (β&#x3D;0)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dog can explore, but only within leash radius</td>
+<td>Dog can run anywhere in the park</td>
+</tr>
+<tr>
+<td>Safe: won’t run into traffic</td>
+<td>Risky: might find trouble, but also treasure</td>
+</tr>
+<tr>
+<td>Predictable: stays near you (SFT baseline)</td>
+<td>Unpredictable: discovers new behaviors</td>
+</tr>
+</tbody></table>
+<p><strong>For general chat</strong>: Keep the leash. You want responses similar to your carefully curated SFT data. Going too far from the baseline risks incoherence or harmful outputs.</p>
+<p><strong>For reasoning&#x2F;math</strong>: Remove the leash. Your SFT model doesn’t know how to “think through” hard problems — it was trained on direct answers. You <em>want</em> the model to discover entirely new reasoning patterns, even if they look nothing like the original distribution.</p>
+<p>This is why models like DeepSeek-R1-Zero can develop emergent reasoning behaviors (chain-of-thought, self-verification) that weren’t in the training data — they weren’t constrained to stay near a baseline that didn’t have these skills.</p>
+<p><strong>Innovation 2: Asymmetric Clipping</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Standard GRPO: symmetric clipping</span></span><br><span class="line">ratio_clipped = torch.clamp(ratio, <span class="number">0.8</span>, <span class="number">1.2</span>)  <span class="comment"># [1-ε, 1+ε]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># GRPO+: asymmetric clipping (Clip-Higher)</span></span><br><span class="line">epsilon_low = <span class="number">0.2</span></span><br><span class="line">epsilon_high = <span class="number">0.28</span>  <span class="comment"># Higher upper bound!</span></span><br><span class="line">ratio_clipped = torch.clamp(ratio, <span class="number">1</span> - epsilon_low, <span class="number">1</span> + epsilon_high)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Why Asymmetric?</strong></p>
+<ul>
+<li>Conservative lower bound (0.8): Don’t destroy knowledge</li>
+<li>Aggressive upper bound (1.28): Encourage discovery of good actions</li>
+<li>Result: Maintains exploration (entropy) much longer</li>
+</ul>
+<p><strong>Innovation 3: Iterative Context Lengthening</strong></p>
+<ul>
+<li>Start with short contexts (4K tokens)</li>
+<li>Gradually increase (16K → 32K) as training stabilizes</li>
+<li>Prevents model from getting lost in “hallucinated ramblings”</li>
+</ul>
+<h3 id="DAPO-Decoupled-Clip-and-Dynamic-Sampling"><a href="#DAPO-Decoupled-Clip-and-Dynamic-Sampling" class="headerlink" title="DAPO: Decoupled Clip and Dynamic Sampling"></a>DAPO: Decoupled Clip and Dynamic Sampling</h3><p>DAPO (2025) represents the current state-of-the-art, specifically designed to beat DeepSeek-R1-Zero on AIME benchmarks.</p>
+<p><img src="/images/rl-evo-guide/figure3_dapo_innovations.png" alt="Figure 3: DAPO&#39;s Four Innovations"></p>
+<p><em>Figure 3: DAPO introduces four key improvements over GRPO: (1) Asymmetric clipping for better exploration, (2) Dynamic sampling to filter uninformative batches, (3) Token-level loss normalization, and (4) Overlong reward shaping to prevent verbosity.</em></p>
+<h4 id="Innovation-1-Asymmetric-Clipping-Clip-Higher"><a href="#Innovation-1-Asymmetric-Clipping-Clip-Higher" class="headerlink" title="Innovation 1: Asymmetric Clipping (Clip-Higher)"></a>Innovation 1: Asymmetric Clipping (Clip-Higher)</h4><p>Same as GRPO+ — uses different bounds for increase vs decrease:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dapo_clip</span>(<span class="params">ratio, advantages, eps_low=<span class="number">0.2</span>, eps_high=<span class="number">0.28</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Asymmetric clipping: be aggressive about good actions,</span></span><br><span class="line"><span class="string">    conservative about removing bad actions.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    clip_min = <span class="number">1.0</span> - eps_low   <span class="comment"># 0.8</span></span><br><span class="line">    clip_max = <span class="number">1.0</span> + eps_high  <span class="comment"># 1.28</span></span><br><span class="line"></span><br><span class="line">    surr1 = ratio * advantages</span><br><span class="line">    surr2 = torch.clamp(ratio, clip_min, clip_max) * advantages</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -torch.<span class="built_in">min</span>(surr1, surr2)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Innovation-2-Dynamic-Sampling"><a href="#Innovation-2-Dynamic-Sampling" class="headerlink" title="Innovation 2: Dynamic Sampling"></a>Innovation 2: Dynamic Sampling</h4><p>The “gradient deadzone” problem:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Rewards</th>
+<th>Mean</th>
+<th>Std</th>
+<th>Advantage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Too Easy</td>
+<td>[1, 1, 1, 1]</td>
+<td>1</td>
+<td>0</td>
+<td>0&#x2F;0 &#x3D; undefined</td>
+</tr>
+<tr>
+<td>Too Hard</td>
+<td>[0, 0, 0, 0]</td>
+<td>0</td>
+<td>0</td>
+<td>0&#x2F;0 &#x3D; undefined</td>
+</tr>
+</tbody></table>
+<p><strong>DAPO’s Solution</strong>: Filter batches that provide no learning signal.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dynamic_sampling_rollout</span>(<span class="params">self, dataloader</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Only keep groups where the model shows variance.</span></span><br><span class="line"><span class="string">    Discard groups where all samples are the same.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    valid_batch_data = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(valid_batch_data) &lt; <span class="variable language_">self</span>.batch_size:</span><br><span class="line">        prompt = dataloader.<span class="built_in">next</span>()</span><br><span class="line">        outputs = <span class="variable language_">self</span>.model.generate(prompt, num_return_sequences=<span class="variable language_">self</span>.group_size)</span><br><span class="line">        rewards = <span class="variable language_">self</span>.reward_function(outputs)</span><br><span class="line"></span><br><span class="line">        num_correct = <span class="built_in">sum</span>(rewards)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># FILTER: Keep only if there&#x27;s a mix of correct/incorrect</span></span><br><span class="line">        <span class="keyword">if</span> <span class="number">0</span> &lt; num_correct &lt; <span class="variable language_">self</span>.group_size:</span><br><span class="line">            valid_batch_data.append((prompt, outputs, rewards))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># Discard: no gradient signal here</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> valid_batch_data</span><br></pre></td></tr></table></figure>
+
+<p><strong>Impact</strong>: Every training step provides meaningful gradient. DAPO converges to higher accuracy with 50% fewer training steps.</p>
+<blockquote>
+<p><strong>Connection to Active Learning</strong>: Dynamic Sampling is essentially a form of <strong>uncertainty-based active learning</strong>. By filtering for groups where the model shows variance (some correct, some incorrect), DAPO automatically focuses compute on problems in the model’s “Zone of Proximal Development” — problems it’s uncertain about and can learn from. This is analogous to curriculum learning, but discovered dynamically rather than pre-specified.</p>
+</blockquote>
+<h4 id="Innovation-3-Token-Level-Policy-Gradient"><a href="#Innovation-3-Token-Level-Policy-Gradient" class="headerlink" title="Innovation 3: Token-Level Policy Gradient"></a>Innovation 3: Token-Level Policy Gradient</h4><p>Standard methods average loss over sequences. For long Chain-of-Thought:</p>
+<ul>
+<li>200-token answer vs 2000-token answer</li>
+<li>Averaging dilutes the signal for longer (often more rigorous) reasoning</li>
+</ul>
+<p><strong>DAPO</strong>: Normalize by total tokens, not number of samples:</p>
+<p>$$J_{DAPO} &#x3D; \frac{1}{\sum |o_i|} \sum_{i,t} \text{loss}_{i,t}$$</p>
+<h4 id="Innovation-4-Overlong-Reward-Shaping"><a href="#Innovation-4-Overlong-Reward-Shaping" class="headerlink" title="Innovation 4: Overlong Reward Shaping"></a>Innovation 4: Overlong Reward Shaping</h4><p>Reasoning models tend toward verbosity (more tokens &#x3D; more chances to be right). DAPO adds a soft length penalty:</p>
+<p>$$R_{final} &#x3D; R_{outcome} - \lambda \cdot \text{ReLU}(\text{length} - L_{threshold})$$</p>
+<h3 id="GDPO-Group-Reward-Decoupled-Normalization-Policy-Optimization"><a href="#GDPO-Group-Reward-Decoupled-Normalization-Policy-Optimization" class="headerlink" title="GDPO: Group Reward-Decoupled Normalization Policy Optimization"></a>GDPO: Group Reward-Decoupled Normalization Policy Optimization</h3><p>GDPO (Group reward-Decoupled Normalization Policy Optimization) addresses a critical problem that GRPO and DAPO don’t solve: <strong>multi-objective optimization</strong> where you need to balance multiple, potentially conflicting reward signals.</p>
+<h4 id="The-Reward-Signal-Collapse-Problem"><a href="#The-Reward-Signal-Collapse-Problem" class="headerlink" title="The Reward Signal Collapse Problem"></a>The Reward Signal Collapse Problem</h4><p>In real-world alignment, we rarely optimize a single metric. We want:</p>
+<ul>
+<li><strong>Correctness</strong> (is the answer right?)</li>
+<li><strong>Formatting</strong> (is it valid JSON&#x2F;markdown?)</li>
+<li><strong>Safety</strong> (does it avoid harmful content?)</li>
+<li><strong>Brevity</strong> (is it concise?)</li>
+</ul>
+<p>Standard GRPO aggregates these into a scalar before calculating advantage:</p>
+<p>$$R_{total} &#x3D; w_A R_{correctness} + w_B R_{format} + w_C R_{safety} + …$$</p>
+<p><strong>This causes Reward Signal Collapse.</strong> Consider this scenario:</p>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>Correctness ($R_c$)</th>
+<th>Format ($R_f$)</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\tau_1$</td>
+<td>1 (correct)</td>
+<td>0 (bad JSON)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$\tau_2$</td>
+<td>0 (wrong)</td>
+<td>1 (good JSON)</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>In standard GRPO:</p>
+<ul>
+<li>Rewards &#x3D; {1, 1}</li>
+<li>Mean &#x3D; 1, Std &#x3D; 0</li>
+<li>Advantage &#x3D; $(1-1)&#x2F;0$ &#x3D; <strong>undefined</strong></li>
+</ul>
+<p>Even with more samples, $\tau_1$ and $\tau_2$ get identical advantages. The model cannot learn that “Correctness is good” independently of “Formatting is good” — it becomes confused, unable to disentangle which feature caused the reward.</p>
+<h4 id="The-GDPO-Algorithm-Normalize-First-Aggregate-Second"><a href="#The-GDPO-Algorithm-Normalize-First-Aggregate-Second" class="headerlink" title="The GDPO Algorithm: Normalize First, Aggregate Second"></a>The GDPO Algorithm: Normalize First, Aggregate Second</h4><blockquote>
+<p>⚠️ <strong>Common Misconception</strong>: Weighted aggregation of rewards is NOT new to GDPO. GRPO and DAPO also use weighted sums like $R &#x3D; w_1 R_1 + w_2 R_2 + …$.</p>
+<p><strong>What IS new</strong>: The <em>order of operations</em>. GRPO does “Sum → Normalize” while GDPO does “Normalize → Sum”. This seemingly small change completely solves the reward signal collapse problem.</p>
+</blockquote>
+<p>GDPO inverts the order of operations: instead of normalizing the sum, it normalizes each component independently.</p>
+<p><strong>Step-by-Step GDPO Execution:</strong></p>
+<ol>
+<li><strong>Group Generation</strong>: Sample $G$ outputs ${o_1, …, o_G}$ for prompt $x$</li>
+<li><strong>Multi-Objective Evaluation</strong>: Compute reward vector $\mathbf{r}_i &#x3D; [r_{i,1}, r_{i,2}, …, r_{i,K}]$ for each output</li>
+<li><strong>Component-wise Normalization</strong>: For each objective $k$:<ul>
+<li>Calculate group mean: $\mu_k &#x3D; \frac{1}{G} \sum_{i&#x3D;1}^G r_{i,k}$</li>
+<li>Calculate group std: $\sigma_k &#x3D; \sqrt{\frac{1}{G} \sum_{i&#x3D;1}^G (r_{i,k} - \mu_k)^2}$</li>
+<li>Compute normalized advantage: $\hat{A}_{i,k} &#x3D; \frac{r_{i,k} - \mu_k}{\sigma_k + \epsilon}$</li>
+</ul>
+</li>
+<li><strong>Weighted Aggregation</strong>: $A_i^{GDPO} &#x3D; \sum_{k&#x3D;1}^K w_k \hat{A}_{i,k}$</li>
+<li><strong>Global Normalization</strong> (optional): Normalize final advantages across batch</li>
+</ol>
+<h4 id="Worked-Example-Computing-GDPO-Z-Scores-Step-by-Step"><a href="#Worked-Example-Computing-GDPO-Z-Scores-Step-by-Step" class="headerlink" title="Worked Example: Computing GDPO Z-Scores Step-by-Step"></a>Worked Example: Computing GDPO Z-Scores Step-by-Step</h4><blockquote>
+<p>🔑 <strong>Key Insight</strong>: The normalized advantage $\hat{A}$ is a <strong>Z-score</strong> — it tells you “how many standard deviations away from the group mean is this sample?” This is NOT the raw reward value!</p>
+</blockquote>
+<p><strong>Scenario</strong>: Tool calling task with 4 outputs in a group</p>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>Tool Choice ($R_t$)</th>
+<th>JSON Format ($R_j$)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\tau_1$</td>
+<td>1 (correct tool)</td>
+<td>0 (invalid JSON)</td>
+</tr>
+<tr>
+<td>$\tau_2$</td>
+<td>1 (correct tool)</td>
+<td>1 (valid JSON)</td>
+</tr>
+<tr>
+<td>$\tau_3$</td>
+<td>0 (wrong tool)</td>
+<td>1 (valid JSON)</td>
+</tr>
+<tr>
+<td>$\tau_4$</td>
+<td>0 (wrong tool)</td>
+<td>0 (invalid JSON)</td>
+</tr>
+</tbody></table>
+<p><strong>Step 1: Compute statistics for Tool Choice ($R_t$)</strong></p>
+<ul>
+<li>Raw values: [1, 1, 0, 0]</li>
+<li>Mean: $\mu_t &#x3D; (1+1+0+0)&#x2F;4 &#x3D; 0.5$</li>
+<li>Standard deviation: $\sigma_t &#x3D; \sqrt{((1-0.5)^2 + (1-0.5)^2 + (0-0.5)^2 + (0-0.5)^2)&#x2F;4} &#x3D; \sqrt{0.25} &#x3D; 0.5$</li>
+</ul>
+<p><strong>Step 2: Compute Z-scores for Tool Choice</strong></p>
+<ul>
+<li>$\hat{A}_{1,t} &#x3D; (1 - 0.5) &#x2F; 0.5 &#x3D; +1.0$ ← “1 std above mean”</li>
+<li>$\hat{A}_{2,t} &#x3D; (1 - 0.5) &#x2F; 0.5 &#x3D; +1.0$</li>
+<li>$\hat{A}_{3,t} &#x3D; (0 - 0.5) &#x2F; 0.5 &#x3D; -1.0$ ← “1 std below mean”</li>
+<li>$\hat{A}_{4,t} &#x3D; (0 - 0.5) &#x2F; 0.5 &#x3D; -1.0$</li>
+</ul>
+<p><strong>Step 3: Compute statistics for JSON Format ($R_j$)</strong></p>
+<ul>
+<li>Raw values: [0, 1, 1, 0]</li>
+<li>Mean: $\mu_j &#x3D; 0.5$, Std: $\sigma_j &#x3D; 0.5$</li>
+</ul>
+<p><strong>Step 4: Compute Z-scores for JSON Format</strong></p>
+<ul>
+<li>$\hat{A}_{1,j} &#x3D; (0 - 0.5) &#x2F; 0.5 &#x3D; -1.0$</li>
+<li>$\hat{A}_{2,j} &#x3D; (1 - 0.5) &#x2F; 0.5 &#x3D; +1.0$</li>
+<li>$\hat{A}_{3,j} &#x3D; (1 - 0.5) &#x2F; 0.5 &#x3D; +1.0$</li>
+<li>$\hat{A}_{4,j} &#x3D; (0 - 0.5) &#x2F; 0.5 &#x3D; -1.0$</li>
+</ul>
+<p><strong>Step 5: Aggregate with weights</strong> (using $w_t &#x3D; 1, w_j &#x3D; 1$)</p>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>$\hat{A}_t$ (Z-score)</th>
+<th>$\hat{A}_j$ (Z-score)</th>
+<th>$A^{GDPO} &#x3D; \hat{A}_t + \hat{A}_j$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\tau_1$</td>
+<td>+1.0</td>
+<td>-1.0</td>
+<td><strong>0</strong> (good tool, bad format)</td>
+</tr>
+<tr>
+<td>$\tau_2$</td>
+<td>+1.0</td>
+<td>+1.0</td>
+<td><strong>+2</strong> (good at both!)</td>
+</tr>
+<tr>
+<td>$\tau_3$</td>
+<td>-1.0</td>
+<td>+1.0</td>
+<td><strong>0</strong> (bad tool, good format)</td>
+</tr>
+<tr>
+<td>$\tau_4$</td>
+<td>-1.0</td>
+<td>-1.0</td>
+<td><strong>-2</strong> (bad at both)</td>
+</tr>
+</tbody></table>
+<p><strong>Result</strong>: The model receives clear, disentangled feedback:</p>
+<ul>
+<li>$\tau_2$ gets strongly reinforced (excellent at both)</li>
+<li>$\tau_4$ gets strongly discouraged (poor at both)</li>
+<li>$\tau_1$ and $\tau_3$ get neutral signal — they’re not wrong overall, just have different strengths</li>
+</ul>
+<blockquote>
+<p>❌ <strong>Common Mistake</strong>: Using raw rewards instead of Z-scores. If you computed $A_1 &#x3D; R_t + R_j &#x3D; 1 + 0 &#x3D; 1$ instead of using Z-scores, you’d get wrong gradients!</p>
+</blockquote>
+<p>Now consider a more realistic scenario with heterogeneous reward distributions:</p>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>Safety ($R_s$)</th>
+<th>Conciseness ($R_l$)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\tau_1$</td>
+<td>0 (safe)</td>
+<td>0.3 (verbose)</td>
+</tr>
+<tr>
+<td>$\tau_2$</td>
+<td>-100 (unsafe)</td>
+<td>0.9 (concise)</td>
+</tr>
+<tr>
+<td>$\tau_3$</td>
+<td>0 (safe)</td>
+<td>0.7 (moderate)</td>
+</tr>
+</tbody></table>
+<p><strong>In GRPO</strong> (summed first):</p>
+<ul>
+<li>The massive -100 spike dominates variance</li>
+<li>Safe but verbose ($\tau_1$) and safe but moderate ($\tau_3$) look similar after normalization</li>
+<li>The conciseness signal is drowned out</li>
+</ul>
+<p><strong>In GDPO</strong> (normalized per-component):</p>
+<ul>
+<li>Safety normalized: $\tau_1, \tau_3$ get similar positive scores, $\tau_2$ gets large negative</li>
+<li>Conciseness normalized independently: $\tau_2$ gets +1, $\tau_3$ gets moderate, $\tau_1$ gets -1</li>
+<li>Final gradient: “Be Safe AND Be Concise” — signals preserved</li>
+</ul>
+<h4 id="GDPO-Empirical-Results"><a href="#GDPO-Empirical-Results" class="headerlink" title="GDPO Empirical Results"></a>GDPO Empirical Results</h4><table>
+<thead>
+<tr>
+<th>Task</th>
+<th>GRPO Performance</th>
+<th>GDPO Performance</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Math + Length Constraint</strong></td>
+<td>Baseline</td>
+<td>+6.3% accuracy</td>
+<td>Length violations reduced 80%</td>
+</tr>
+<tr>
+<td><strong>Tool Calling (Choice + Format)</strong></td>
+<td>90% choice, 60% format</td>
+<td>92% choice, 95% format</td>
+<td>Format massively improved</td>
+</tr>
+<tr>
+<td><strong>Code + Safety</strong></td>
+<td>Safety often ignored</td>
+<td>Both optimized</td>
+<td>Clear multi-objective signal</td>
+</tr>
+</tbody></table>
+<h4 id="When-to-Use-GDPO"><a href="#When-to-Use-GDPO" class="headerlink" title="When to Use GDPO"></a>When to Use GDPO</h4><p>Use GDPO when:</p>
+<ul>
+<li>You have <strong>multiple, potentially conflicting reward signals</strong></li>
+<li>You observe <strong>“Reward Hacking”</strong> where the model ignores one objective to maximize another</li>
+<li>You are building <strong>agentic systems</strong> with complex tool-use constraints</li>
+<li>Your rewards have <strong>different scales or distributions</strong> (binary vs continuous, sparse vs dense)</li>
+</ul>
+<p><strong>GDPO vs DAPO</strong>: DAPO focuses on single-objective efficiency (dynamic sampling, asymmetric clipping). GDPO focuses on multi-objective clarity. In practice, you can combine them: use GDPO’s decoupled normalization with DAPO’s dynamic sampling and asymmetric clipping.</p>
+<hr>
+<h2 id="Comparative-Analysis"><a href="#Comparative-Analysis" class="headerlink" title="Comparative Analysis"></a>Comparative Analysis</h2><h3 id="Algorithm-Comparison-Table"><a href="#Algorithm-Comparison-Table" class="headerlink" title="Algorithm Comparison Table"></a>Algorithm Comparison Table</h3><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>PPO</th>
+<th>DPO</th>
+<th>GRPO</th>
+<th>GRPO+</th>
+<th>DAPO</th>
+<th>GDPO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Type</strong></td>
+<td>Online Actor-Critic</td>
+<td>Offline</td>
+<td>Online Policy-Gradient</td>
+<td>Online</td>
+<td>Online</td>
+<td>Online</td>
+</tr>
+<tr>
+<td><strong>Models Required</strong></td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Memory Cost</strong></td>
+<td>Very High</td>
+<td>Low</td>
+<td>Low</td>
+<td>Low</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>Baseline</strong></td>
+<td>Learned Critic</td>
+<td>Implicit</td>
+<td>Group Mean</td>
+<td>Group Mean</td>
+<td>Filtered Group Mean</td>
+<td>Per-Reward Mean</td>
+</tr>
+<tr>
+<td><strong>Reward Handling</strong></td>
+<td>Single Scalar</td>
+<td>Pairwise Preference</td>
+<td>Summed Scalar</td>
+<td>Summed Scalar</td>
+<td>Summed + Length Penalty</td>
+<td><strong>Decoupled Multi-Reward</strong></td>
+</tr>
+<tr>
+<td><strong>Clipping</strong></td>
+<td>Symmetric</td>
+<td>None</td>
+<td>Symmetric</td>
+<td>Asymmetric</td>
+<td>Asymmetric</td>
+<td>Symmetric</td>
+</tr>
+<tr>
+<td><strong>Best For</strong></td>
+<td>General Chat</td>
+<td>Style&#x2F;Safety</td>
+<td>Math&#x2F;Code</td>
+<td>Code</td>
+<td>Advanced Reasoning</td>
+<td><strong>Multi-Objective Agentic</strong></td>
+</tr>
+<tr>
+<td><strong>Key Innovation</strong></td>
+<td>Trust Region</td>
+<td>Implicit Reward</td>
+<td>Critic-Free</td>
+<td>KL-Free</td>
+<td>Dynamic Sampling</td>
+<td><strong>Per-Reward Normalization</strong></td>
+</tr>
+</tbody></table>
+<h3 id="Evolution-Diagram"><a href="#Evolution-Diagram" class="headerlink" title="Evolution Diagram"></a>Evolution Diagram</h3><p><img src="/images/rl-evo-guide/figure4_algorithm_evolution.png" alt="Figure 4: The Evolution of RL Algorithms for LLMs"></p>
+<p><em>Figure 4: The evolution from PPO (2017) through DPO (2023), GRPO (2024), to DAPO&#x2F;GRPO+&#x2F;GDPO (2025-2026) shows a clear trend: eliminating proxies and unnecessary components while improving efficiency. Each algorithm eliminated something from its predecessor. DAPO optimizes single-objective efficiency, while GDPO solves the multi-objective problem that GRPO couldn’t handle.</em></p>
+<h3 id="When-to-Use-Each-Algorithm"><a href="#When-to-Use-Each-Algorithm" class="headerlink" title="When to Use Each Algorithm"></a>When to Use Each Algorithm</h3><table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Recommended Algorithm</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chat alignment (politeness, tone)</td>
+<td>DPO</td>
+<td>Efficient, stable, sufficient for style</td>
+</tr>
+<tr>
+<td>Math reasoning (single objective)</td>
+<td>DAPO</td>
+<td>Best exploration, handles sparse rewards</td>
+</tr>
+<tr>
+<td>Code generation</td>
+<td>GRPO+</td>
+<td>KL-free allows radical policy shifts</td>
+</tr>
+<tr>
+<td><strong>Tool calling + Format constraints</strong></td>
+<td><strong>GDPO</strong></td>
+<td>Multiple rewards with different scales</td>
+</tr>
+<tr>
+<td><strong>Agentic systems (safety + correctness)</strong></td>
+<td><strong>GDPO</strong></td>
+<td>Prevents reward hacking across objectives</td>
+</tr>
+<tr>
+<td><strong>Any multi-reward optimization</strong></td>
+<td><strong>GDPO</strong></td>
+<td>Per-reward normalization preserves all signals</td>
+</tr>
+<tr>
+<td>Limited compute</td>
+<td>DPO</td>
+<td>No generation during training</td>
+</tr>
+<tr>
+<td>Maximum single-objective performance</td>
+<td>DAPO</td>
+<td>State-of-the-art on reasoning benchmarks</td>
+</tr>
+<tr>
+<td><strong>Multi-objective + Efficiency</strong></td>
+<td><strong>GDPO + DAPO tricks</strong></td>
+<td>Combine decoupled norm with dynamic sampling</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Future-Directions"><a href="#Future-Directions" class="headerlink" title="Future Directions"></a>Future Directions</h2><h3 id="Process-Reward-Models-PRMs"><a href="#Process-Reward-Models-PRMs" class="headerlink" title="Process Reward Models (PRMs)"></a>Process Reward Models (PRMs)</h3><p>Current algorithms use <strong>Outcome Supervision</strong> (was the final answer correct?). The future lies in <strong>Process Supervision</strong> (was each reasoning step correct?).</p>
+<p><strong>Challenge</strong>: Labeling every step is expensive.</p>
+<p><strong>Solution</strong>: Algorithms like SCOPE automatically generate step-level rewards by:</p>
+<ol>
+<li>Translating reasoning into code</li>
+<li>Building prefix trees of solution paths</li>
+<li>Estimating step correctness from tree structure</li>
+</ol>
+<h3 id="Generative-Reward-Models-GenRM"><a href="#Generative-Reward-Models-GenRM" class="headerlink" title="Generative Reward Models (GenRM)"></a>Generative Reward Models (GenRM)</h3><p>Instead of outputting a single score, GenRM outputs a “Chain of Thought” critique:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: [Model&#x27;s answer to a math problem]</span><br><span class="line">GenRM Output: &quot;The first step is correct. However, in step 3,</span><br><span class="line">              the model incorrectly assumes X. Score: 0.3&quot;</span><br></pre></td></tr></table></figure>
+
+<p>This provides richer signal than scalar rewards.</p>
+<h3 id="Self-Improving-Loops"><a href="#Self-Improving-Loops" class="headerlink" title="Self-Improving Loops"></a>Self-Improving Loops</h3><p>The next frontier: models that improve themselves through:</p>
+<ol>
+<li>Generate solutions</li>
+<li>Self-verify using learned verifier</li>
+<li>Update policy based on self-assessment</li>
+<li>Improve verifier based on new data</li>
+</ol>
+<hr>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><h3 id="The-Journey"><a href="#The-Journey" class="headerlink" title="The Journey"></a>The Journey</h3><p>The evolution of RL for LLMs follows a clear trajectory of eliminating proxies and solving specific problems:</p>
+<table>
+<thead>
+<tr>
+<th>Era</th>
+<th>Algorithm</th>
+<th>What It Eliminated&#x2F;Solved</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2017-2022</td>
+<td>PPO</td>
+<td>Nothing (baseline Actor-Critic)</td>
+</tr>
+<tr>
+<td>2023</td>
+<td>DPO</td>
+<td>Critic + Reward Model (offline)</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>GRPO</td>
+<td>Critic (using group statistics, online)</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>DAPO</td>
+<td>Gradient deadzones, entropy collapse</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>GRPO+</td>
+<td>KL constraint (for radical policy shifts)</td>
+</tr>
+<tr>
+<td>2026</td>
+<td>GDPO</td>
+<td><strong>Reward signal collapse in multi-objective</strong></td>
+</tr>
+</tbody></table>
+<h3 id="The-Central-Insights"><a href="#The-Central-Insights" class="headerlink" title="The Central Insights"></a>The Central Insights</h3><p><strong>Insight 1: The Critic is unnecessary for LLM training.</strong></p>
+<p>By comparing a model’s outputs against its own peers (Group Relative), we get:</p>
+<ul>
+<li>Unbiased baseline estimates</li>
+<li>50% memory reduction</li>
+<li>Robustness to prompt difficulty</li>
+<li>Emergent reasoning behaviors (“Aha moments”)</li>
+</ul>
+<p><strong>Insight 2: Multi-objective optimization requires decoupled normalization.</strong></p>
+<p>When combining multiple reward signals:</p>
+<ul>
+<li>Sum-then-normalize causes <strong>reward signal collapse</strong></li>
+<li>GDPO’s normalize-then-aggregate preserves all signals</li>
+<li>Critical for agentic systems with safety + correctness + format constraints</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li>John Schulman., et al, “<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1707.06347">Proximal Policy Optimization Algorithms</a>,” 2017.</li>
+<li>Rafael Rafailov, et al, “<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.18290">Direct Preference Optimization: Your Language Model is Secretly a Reward Model</a>,” 2024.</li>
+<li>Zhihong Shao, et al, “<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.03300">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a>,” 2024.</li>
+<li>DeepSeek-AI, et al. “<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2501.12948">DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning</a>,”, 2025.</li>
+<li>Qiying Yu, et al, “<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2503.14476">DAPO: An Open-Source LLM Reinforcement Learning System at Scale</a>,” 2025.</li>
+<li>Shih-Yang Liu, et al, “<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2601.05242">GDPO: Group reward-Decoupled Normalization Policy Optimization for Multi-reward RL Optimization</a>,” 2026.</li>
+<li>Ray Huang, et al, “<a target="_blank" rel="noopener" href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2025/EECS-2025-123.pdf">Reinforcement Learning for Safe LLM Code Generation</a>,” 2025.</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+              <a href="/tags/Reinforcement-Learning/" rel="tag"># Reinforcement Learning</a>
+              <a href="/tags/Large-Language-Model/" rel="tag"># Large Language Model</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/14/Byte-Pair-Encoding-BPE/" rel="prev" title="Byte-Pair-Encoding (BPE)">
+                  <i class="fa fa-angle-left"></i> Byte-Pair-Encoding (BPE)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mun Hou</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/munhouiani" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"munhousblog","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>
