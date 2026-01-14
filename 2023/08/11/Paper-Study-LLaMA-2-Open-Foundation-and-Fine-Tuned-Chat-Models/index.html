@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://blog.munhou.com/images/llama2/CleanShot2023-08-11at233511.png">
 <meta property="og:image" content="https://blog.munhou.com/images/llama2/CleanShot2023-08-11at233615.png">
 <meta property="article:published_time" content="2023-08-11T16:08:00.000Z">
-<meta property="article:modified_time" content="2026-01-14T23:16:48.180Z">
+<meta property="article:modified_time" content="2026-01-14T23:43:04.437Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Large Language Model">
@@ -243,7 +243,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-01-15 07:16:48" itemprop="dateModified" datetime="2026-01-15T07:16:48+08:00">2026-01-15</time>
+      <time title="Modified: 2026-01-15 07:43:04" itemprop="dateModified" datetime="2026-01-15T07:43:04+08:00">2026-01-15</time>
     </span>
 
   
@@ -287,10 +287,12 @@
 <li>They used a new mix of data from publicly available sources,  including web pages, books, Wikipedia, forums, and other text-based sites, but didn’t mention the exact sources.</li>
 <li>They excluded data from certain sites known to contain high volumes of personal information about private individuals.</li>
 <li>The training corpus has 2 trillion tokens.</li>
-<li>The majority of the data is in English:  <img src="/images/llama2/CleanShot2023-08-09at215358.png" width=500px/></li>
-<li>The data has a cutoff of September 2022.</li>
-<li>The data was collected adhering to standard privacy and legal reviews and includes no private Meta user data.</li>
+<li>The majority of the data is in English:</li>
 </ul>
+<img src="/images/llama2/CleanShot2023-08-09at215358.png" width=500px/>
+- The data has a cutoff of September 2022.
+- The data was collected adhering to standard privacy and legal reviews and includes no private Meta user data.
+
 <h4 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h4><ul>
 <li>Adopt most of the pretraining setting from Llama1<ul>
 <li>Standard Transformer architecture</li>
@@ -349,8 +351,10 @@
 </ol>
 </li>
 <li>They observed that a few thousand safety-related samples were enough for SFT.</li>
-<li>Example of SFT annotation:  <img src="/images/llama2/CleanShot2023-08-09at225631.png" width=500px/></li>
+<li>Example of SFT annotation:</li>
 </ul>
+<img src="/images/llama2/CleanShot2023-08-09at225631.png" width=500px/>
+
 <h5 id="SFT-Hyperparemeters"><a href="#SFT-Hyperparemeters" class="headerlink" title="SFT Hyperparemeters"></a>SFT Hyperparemeters</h5><ul>
 <li>Use cosine learning rate schedule</li>
 <li>Use an initial learning rate of $2 \times 10^{-5}$</li>
@@ -374,30 +378,28 @@
 <li>Asked annotators to label model responses into one of three categories: <em>1) the preferred response is safe and the other response is not</em>, <em>2) both responses are safe</em>, and <em>3) both responses are unsafe</em>. They <em><strong>didn’t</strong></em> use samples where the chosen response was unsafe and the other was safe.</li>
 <li>These data are used to train two reward models: <em>Helpfulness RM</em>, optimized for helpfulness, and <em>Safety RM</em>, optimized for safety.</li>
 <li>Human annotations were collected in batches on a weekly basis.</li>
-<li>They collected over <em><strong>1 million</strong></em> binary comparisons by humans and have longer, more conversation turns. See the comparison against open datasets:  <img src="/images/llama2/CleanShot2023-08-09at235927.png" width=500px/></li>
+<li>They collected over <em><strong>1 million</strong></em> binary comparisons by humans and have longer, more conversation turns. See the comparison against open datasets:</li>
 </ul>
+<img src="/images/llama2/CleanShot2023-08-09at235927.png" width=500px/>
+
 <h5 id="RLHF-Reward-Modeling"><a href="#RLHF-Reward-Modeling" class="headerlink" title="RLHF Reward Modeling"></a>RLHF Reward Modeling</h5><ul>
 <li>Trained two reward models: <strong>Helpfulness RM</strong>, optimized for helpfulness, and <strong>Safety RM</strong>, optimized for safety.</li>
 <li>They initialized both reward models from pre-trained chat model checkpoints to ensure that both models benefit from the knowledge acquired in pre-training.</li>
 <li>Model architecture and hyper-parameters are identical to the pre-trained language models, except that the classification head for next-token prediction is replaced with a regression head for outputting a scalar reward.</li>
 <li>The training objective is binary ranking loss, enforcing the chosen response to score higher than its counterpart:<br>$$<br>\operatorname{Loss_{\text{ranking}}} &#x3D; -\log(\sigma(r_{\theta}(x, y_c) - r_{\theta}(x, y_r) - m(r)))<br>$$</li>
 <li>Where $r_{\theta}(x, y)$ is the scalar score output for prompt $x$ and completion $y$ with model weights $\theta$. $y_c$ is the preferred response and $y_r$ is the rejected counterpart. The margin $m(r)$ is a discrete function of the preference rating.  </li>
-<li>They use a large margin for pairs with distinct responses and a smaller one for those with similar responses. There are two variants for setting the margin function. See the table below.  <img src="/images/llama2/CleanShot2023-08-10at001305.png" width=500px/></li>
-<li>The final training data composition for both reward models:<ul>
-<li><strong>Helpfulness RM</strong>:<ul>
-<li>All Meta Helpfulness data</li>
-<li>Equal parts of the remaining data were uniformly sampled from Meta Safety and the open-source datasets.</li>
+<li>They use a large margin for pairs with distinct responses and a smaller one for those with similar responses. There are two variants for setting the margin function. See the table below.</li>
 </ul>
-</li>
-<li><strong>Safety RM</strong>:<ul>
-<li>All Meta Safety data</li>
-<li>All Anthropic Harmless data</li>
-<li>Mixed with Meta Helpfulness and open-source helpfulness data in a 90&#x2F;10 proportion.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<img src="/images/llama2/CleanShot2023-08-10at001305.png" width=500px/>
+- The final training data composition for both reward models:
+    - **Helpfulness RM**:
+        - All Meta Helpfulness data
+        - Equal parts of the remaining data were uniformly sampled from Meta Safety and the open-source datasets.
+    - **Safety RM**:
+        - All Meta Safety data
+        - All Anthropic Harmless data
+        - Mixed with Meta Helpfulness and open-source helpfulness data in a 90/10 proportion.
+
 <h5 id="RLHF-Reward-Model-Training-Details"><a href="#RLHF-Reward-Model-Training-Details" class="headerlink" title="RLHF Reward Model Training Details"></a>RLHF Reward Model Training Details</h5><ul>
 <li>Train for one epoch over the training data</li>
 <li>Use the same optimizer parameters as for the base model:<ul>
