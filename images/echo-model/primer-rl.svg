@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Reinforcement learning with GRPO: sample a group of answers, score them, and weight each answer's tokens by its advantage">
+<title>Reinforcement learning with GRPO: sample a group of answers, score them, and weight each answer's tokens by its advantage</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #898781; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .line { fill: none; }
+  }
+</style>
+<rect class="surface" x="0" y="0" width="760" height="420"/>
+<defs>
+  <marker id="flowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="flowhead" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<style>
+  .tk-ce { fill: #6250d6; } .tk-adv { fill: #e87ba4; } .tk-env { fill: #eda100; }
+  .tk-off { fill: none; stroke: #c3c2b7; stroke-width: 1; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .band { fill: #f0efec; stroke: #c3c2b7; stroke-width: 1; } .focus { fill: #f0efec; }
+  .flow { stroke: #898781; stroke-width: 1.5; fill: none; } .flowhead { fill: #898781; }
+  @media (prefers-color-scheme: dark) {
+    .tk-ce { fill: #9085e9; } .tk-adv { fill: #d55181; } .tk-env { fill: #c98500; }
+    .tk-off { stroke: #52514e; } .band { fill: #2c2c2a; stroke: #383835; } .focus { fill: #2c2c2a; }
+  }
+</style>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">Reinforcement learning (GRPO): the model's own answers, weighted by how they scored</text>
+<text class="ink2" x="24.0" y="42.0" font-size="12" text-anchor="start" font-weight="normal">No demonstration: the model answers each prompt several times, and a verifier scores the answers.</text>
+<rect class="tk-adv" x="24" y="55" width="22" height="14" rx="3"/>
+<text class="ink2" x="52.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">in the loss, weighted by the advantage A</text>
+<rect class="tk-off" x="330.0" y="55" width="22" height="14" rx="3"/>
+<text class="ink2" x="358.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">not in the loss</text>
+<rect class="band" x="24" y="92" width="170" height="84" rx="6"/>
+<text class="ink" x="36.0" y="112.0" font-size="13" text-anchor="start" font-weight="600">Sampler (vLLM)</text>
+<text class="ink2" x="36.0" y="130.0" font-size="11.5" text-anchor="start" font-weight="normal">runs the current model:</text>
+<text class="ink2" x="36.0" y="146.0" font-size="11.5" text-anchor="start" font-weight="normal">answers “Japan&#x27;s capital?”</text>
+<text class="ink2" x="36.0" y="162.0" font-size="11.5" text-anchor="start" font-weight="normal">several times</text>
+<line class="flow" x1="196" y1="134" x2="238" y2="134" marker-end="url(#flowhead)"/>
+<text class="ink" x="246.0" y="100.0" font-size="12" text-anchor="start" font-weight="600">one prompt's group of answers</text>
+<text class="muted" x="246.0" y="118.0" font-size="11" text-anchor="start" font-weight="normal">answer</text>
+<text class="muted" x="350.0" y="118.0" font-size="11" text-anchor="start" font-weight="normal">reward</text>
+<text class="muted" x="414.0" y="118.0" font-size="11" text-anchor="start" font-weight="normal">advantage</text>
+<text class="ink mono" x="246" y="138" font-size="11">Tokyo.</text>
+<text class="ink" x="350.0" y="138.0" font-size="11" text-anchor="start" font-weight="normal">1</text>
+<text class="ink" x="414.0" y="138.0" font-size="11" text-anchor="start" font-weight="normal">A &gt; 0</text>
+<text class="ink mono" x="246" y="156" font-size="11">Kyoto.</text>
+<text class="ink" x="350.0" y="156.0" font-size="11" text-anchor="start" font-weight="normal">0</text>
+<text class="ink" x="414.0" y="156.0" font-size="11" text-anchor="start" font-weight="normal">A &lt; 0</text>
+<text class="ink mono" x="246" y="174" font-size="11">Tokyo.</text>
+<text class="ink" x="350.0" y="174.0" font-size="11" text-anchor="start" font-weight="normal">1</text>
+<text class="ink" x="414.0" y="174.0" font-size="11" text-anchor="start" font-weight="normal">A &gt; 0</text>
+<text class="ink mono" x="246" y="192" font-size="11">Osaka.</text>
+<text class="ink" x="350.0" y="192.0" font-size="11" text-anchor="start" font-weight="normal">0</text>
+<text class="ink" x="414.0" y="192.0" font-size="11" text-anchor="start" font-weight="normal">A &lt; 0</text>
+<text class="muted" x="246.0" y="220.0" font-size="11" text-anchor="start" font-weight="normal">A compares each reward with the group's: above its mean is positive.</text>
+<text class="muted" x="246.0" y="234.0" font-size="11" text-anchor="start" font-weight="normal">This study: 8 answers per prompt, 4 shown.</text>
+<line class="flow" x1="500" y1="134" x2="560" y2="134" marker-end="url(#flowhead)"/>
+<rect class="band" x="566" y="92" width="170" height="84" rx="6"/>
+<text class="ink" x="578.0" y="112.0" font-size="13" text-anchor="start" font-weight="600">Trainer (Megatron)</text>
+<text class="ink2" x="578.0" y="130.0" font-size="11.5" text-anchor="start" font-weight="normal">the same model: scores</text>
+<text class="ink2" x="578.0" y="146.0" font-size="11.5" text-anchor="start" font-weight="normal">each answer&#x27;s tokens</text>
+<text class="ink2" x="578.0" y="162.0" font-size="11.5" text-anchor="start" font-weight="normal">and updates its weights</text>
+<path class="flow" d="M651,176 V256 H109 V180" marker-end="url(#flowhead)"/>
+<text class="ink2" x="380.0" y="250.0" font-size="11" text-anchor="middle" font-weight="normal">the updated weights go back to the sampler, and the loop repeats</text>
+<text class="ink" x="24.0" y="292.0" font-size="12" text-anchor="start" font-weight="600">What the trainer's loss sees, for two of the answers</text>
+<rect class="tk-off" x="24.0" y="304" width="49.6" height="22" rx="4"><title>&lt;user&gt;: not in the loss</title></rect>
+<text class="muted mono" x="48.8" y="319" font-size="11" text-anchor="middle">&lt;user&gt;</text>
+<rect class="tk-off" x="77.6" y="304" width="56.2" height="22" rx="4"><title>Japan&#x27;s: not in the loss</title></rect>
+<text class="muted mono" x="105.7" y="319" font-size="11" text-anchor="middle">Japan&#x27;s</text>
+<rect class="tk-off" x="137.8" y="304" width="62.8" height="22" rx="4"><title>capital?: not in the loss</title></rect>
+<text class="muted mono" x="169.2" y="319" font-size="11" text-anchor="middle">capital?</text>
+<rect class="tk-off" x="204.6" y="304" width="56.2" height="22" rx="4"><title>&lt;agent&gt;: not in the loss</title></rect>
+<text class="muted mono" x="232.7" y="319" font-size="11" text-anchor="middle">&lt;agent&gt;</text>
+<rect class="tk-adv" x="264.8" y="304" width="43.0" height="22" rx="4"><title>Tokyo: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="286.3" y="319" font-size="11" text-anchor="middle">Tokyo</text>
+<rect class="tk-adv" x="311.8" y="304" width="16.6" height="22" rx="4"><title>.: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="320.1" y="319" font-size="11" text-anchor="middle">.</text>
+<rect class="tk-adv" x="332.4" y="304" width="43.0" height="22" rx="4"><title>&lt;end&gt;: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="353.9" y="319" font-size="11" text-anchor="middle">&lt;end&gt;</text>
+<text class="ink2" x="387.4" y="319.0" font-size="12" text-anchor="start" font-weight="normal">A &gt; 0: each token made more likely</text>
+<rect class="tk-off" x="24.0" y="334" width="49.6" height="22" rx="4"><title>&lt;user&gt;: not in the loss</title></rect>
+<text class="muted mono" x="48.8" y="349" font-size="11" text-anchor="middle">&lt;user&gt;</text>
+<rect class="tk-off" x="77.6" y="334" width="56.2" height="22" rx="4"><title>Japan&#x27;s: not in the loss</title></rect>
+<text class="muted mono" x="105.7" y="349" font-size="11" text-anchor="middle">Japan&#x27;s</text>
+<rect class="tk-off" x="137.8" y="334" width="62.8" height="22" rx="4"><title>capital?: not in the loss</title></rect>
+<text class="muted mono" x="169.2" y="349" font-size="11" text-anchor="middle">capital?</text>
+<rect class="tk-off" x="204.6" y="334" width="56.2" height="22" rx="4"><title>&lt;agent&gt;: not in the loss</title></rect>
+<text class="muted mono" x="232.7" y="349" font-size="11" text-anchor="middle">&lt;agent&gt;</text>
+<rect class="tk-adv" x="264.8" y="334" width="43.0" height="22" rx="4"><title>Kyoto: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="286.3" y="349" font-size="11" text-anchor="middle">Kyoto</text>
+<rect class="tk-adv" x="311.8" y="334" width="16.6" height="22" rx="4"><title>.: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="320.1" y="349" font-size="11" text-anchor="middle">.</text>
+<rect class="tk-adv" x="332.4" y="334" width="43.0" height="22" rx="4"><title>&lt;end&gt;: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="353.9" y="349" font-size="11" text-anchor="middle">&lt;end&gt;</text>
+<text class="ink2" x="387.4" y="349.0" font-size="12" text-anchor="start" font-weight="normal">A &lt; 0: each token made less likely</text>
+<text class="ink2" x="24.0" y="386.0" font-size="12" text-anchor="start" font-weight="normal">Per token, the loss is in effect fine-tuning's −log p scaled by A, so a negative A pushes the token down.</text>
+<text class="ink2" x="24.0" y="404.0" font-size="12" text-anchor="start" font-weight="normal">A group whose answers all score the same has A = 0 and teaches nothing.</text>
+</svg>

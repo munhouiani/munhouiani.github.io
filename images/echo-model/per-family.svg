@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 316" width="760" height="316" role="img" aria-label="Per-family pass@1 at step 90 for S0 and the three arms, on dev and test-ood-hard">
+<title>Per-family pass@1 at step 90 for S0 and the three arms, on dev and test-ood-hard</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #898781; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .line { fill: none; }
+  }
+</style>
+<rect class="surface" x="0" y="0" width="760" height="316"/>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">Where the arms differ: E and C, then A out of distribution</text>
+<circle class="s2" cx="29" cy="42" r="5"/>
+<text class="ink2" x="39.0" y="46.0" font-size="12" text-anchor="start" font-weight="normal">GRPO</text>
+<circle class="s3" cx="95.8" cy="42" r="5"/>
+<text class="ink2" x="105.8" y="46.0" font-size="12" text-anchor="start" font-weight="normal">ECHO λ 0.005</text>
+<circle class="s1" cx="220.2" cy="42" r="5"/>
+<text class="ink2" x="230.2" y="46.0" font-size="12" text-anchor="start" font-weight="normal">ECHO λ 0.02</text>
+<circle class="ref" cx="337.4" cy="42" r="5"/>
+<text class="ink2" x="347.4" y="46.0" font-size="12" text-anchor="start" font-weight="normal">S0</text>
+<text class="ink" x="136.0" y="76.0" font-size="13" text-anchor="start" font-weight="600">dev, step 90</text>
+<line class="grid" x1="136.0" x2="136.0" y1="82" y2="274"/>
+<text class="muted" x="136.0" y="290.0" font-size="11" text-anchor="middle" font-weight="normal">0.0</text>
+<line class="grid" x1="261.0" x2="261.0" y1="82" y2="274"/>
+<text class="muted" x="261.0" y="290.0" font-size="11" text-anchor="middle" font-weight="normal">0.5</text>
+<line class="grid" x1="386.0" x2="386.0" y1="82" y2="274"/>
+<text class="muted" x="386.0" y="290.0" font-size="11" text-anchor="middle" font-weight="normal">1.0</text>
+<text class="ink2" x="24.0" y="104.0" font-size="12" text-anchor="start" font-weight="normal">A  time travel</text>
+<line class="link" x1="271.4" x2="383.4" y1="100" y2="100"/>
+<circle class="ref ring" cx="271.4" cy="100.0" r="4"><title>dev, A: S0 0.54</title></circle>
+<circle class="s2 ring" cx="383.4" cy="94.0" r="4.5"><title>dev, A: GRPO 0.99</title></circle>
+<circle class="s3 ring" cx="320.9" cy="100.0" r="4.5"><title>dev, A: ECHO λ 0.005 0.74</title></circle>
+<circle class="s1 ring" cx="383.4" cy="106.0" r="4.5"><title>dev, A: ECHO λ 0.02 0.99</title></circle>
+<text class="ink2" x="24.0" y="144.0" font-size="12" text-anchor="start" font-weight="normal">B  MERGE</text>
+<line class="link" x1="206.3" x2="380.8" y1="140" y2="140"/>
+<circle class="ref ring" cx="206.3" cy="140.0" r="4"><title>dev, B: S0 0.28</title></circle>
+<circle class="s2 ring" cx="375.6" cy="134.0" r="4.5"><title>dev, B: GRPO 0.96</title></circle>
+<circle class="s3 ring" cx="370.4" cy="140.0" r="4.5"><title>dev, B: ECHO λ 0.005 0.94</title></circle>
+<circle class="s1 ring" cx="380.8" cy="146.0" r="4.5"><title>dev, B: ECHO λ 0.02 0.98</title></circle>
+<text class="ink2" x="24.0" y="184.0" font-size="12" text-anchor="start" font-weight="normal">C  schema</text>
+<line class="link" x1="211.5" x2="328.7" y1="180" y2="180"/>
+<circle class="ref ring" cx="211.5" cy="180.0" r="4"><title>dev, C: S0 0.30</title></circle>
+<circle class="s2 ring" cx="227.1" cy="174.0" r="4.5"><title>dev, C: GRPO 0.36</title></circle>
+<circle class="s3 ring" cx="320.9" cy="180.0" r="4.5"><title>dev, C: ECHO λ 0.005 0.74</title></circle>
+<circle class="s1 ring" cx="328.7" cy="186.0" r="4.5"><title>dev, C: ECHO λ 0.02 0.77</title></circle>
+<text class="ink2" x="24.0" y="224.0" font-size="12" text-anchor="start" font-weight="normal">D  clustering</text>
+<line class="link" x1="138.6" x2="250.6" y1="220" y2="220"/>
+<circle class="ref ring" cx="138.6" cy="220.0" r="4"><title>dev, D: S0 0.01</title></circle>
+<circle class="s2 ring" cx="250.6" cy="214.0" r="4.5"><title>dev, D: GRPO 0.46</title></circle>
+<circle class="s3 ring" cx="242.8" cy="220.0" r="4.5"><title>dev, D: ECHO λ 0.005 0.43</title></circle>
+<circle class="s1 ring" cx="248.0" cy="226.0" r="4.5"><title>dev, D: ECHO λ 0.02 0.45</title></circle>
+<text class="ink2" x="24.0" y="264.0" font-size="12" text-anchor="start" font-weight="normal">E  data quality</text>
+<line class="link" x1="149.0" x2="383.4" y1="260" y2="260"/>
+<circle class="ref ring" cx="151.6" cy="260.0" r="4"><title>dev, E: S0 0.06</title></circle>
+<circle class="s2 ring" cx="149.0" cy="254.0" r="4.5"><title>dev, E: GRPO 0.05</title></circle>
+<circle class="s3 ring" cx="383.4" cy="260.0" r="4.5"><title>dev, E: ECHO λ 0.005 0.99</title></circle>
+<circle class="s1 ring" cx="313.1" cy="266.0" r="4.5"><title>dev, E: ECHO λ 0.02 0.71</title></circle>
+<text class="ink" x="450.0" y="76.0" font-size="13" text-anchor="start" font-weight="600">test-ood-hard, step 90</text>
+<line class="grid" x1="450.0" x2="450.0" y1="82" y2="274"/>
+<text class="muted" x="450.0" y="290.0" font-size="11" text-anchor="middle" font-weight="normal">0.0</text>
+<line class="grid" x1="575.0" x2="575.0" y1="82" y2="274"/>
+<text class="muted" x="575.0" y="290.0" font-size="11" text-anchor="middle" font-weight="normal">0.5</text>
+<line class="grid" x1="700.0" x2="700.0" y1="82" y2="274"/>
+<text class="muted" x="700.0" y="290.0" font-size="11" text-anchor="middle" font-weight="normal">1.0</text>
+<line class="link" x1="491.7" x2="627.1" y1="100" y2="100"/>
+<circle class="ref ring" cx="491.7" cy="100.0" r="4"><title>test-ood-hard, A: S0 0.17</title></circle>
+<circle class="s2 ring" cx="572.4" cy="94.0" r="4.5"><title>test-ood-hard, A: GRPO 0.49</title></circle>
+<circle class="s3 ring" cx="588.0" cy="100.0" r="4.5"><title>test-ood-hard, A: ECHO λ 0.005 0.55</title></circle>
+<circle class="s1 ring" cx="627.1" cy="106.0" r="4.5"><title>test-ood-hard, A: ECHO λ 0.02 0.71</title></circle>
+<line class="link" x1="504.7" x2="697.4" y1="140" y2="140"/>
+<circle class="ref ring" cx="504.7" cy="140.0" r="4"><title>test-ood-hard, B: S0 0.22</title></circle>
+<circle class="s2 ring" cx="697.4" cy="134.0" r="4.5"><title>test-ood-hard, B: GRPO 0.99</title></circle>
+<circle class="s3 ring" cx="681.8" cy="140.0" r="4.5"><title>test-ood-hard, B: ECHO λ 0.005 0.93</title></circle>
+<circle class="s1 ring" cx="694.8" cy="146.0" r="4.5"><title>test-ood-hard, B: ECHO λ 0.02 0.98</title></circle>
+<line class="link" x1="502.1" x2="593.2" y1="180" y2="180"/>
+<circle class="ref ring" cx="502.1" cy="180.0" r="4"><title>test-ood-hard, C: S0 0.21</title></circle>
+<circle class="s2 ring" cx="512.5" cy="174.0" r="4.5"><title>test-ood-hard, C: GRPO 0.25</title></circle>
+<circle class="s3 ring" cx="593.2" cy="180.0" r="4.5"><title>test-ood-hard, C: ECHO λ 0.005 0.57</title></circle>
+<circle class="s1 ring" cx="593.2" cy="186.0" r="4.5"><title>test-ood-hard, C: ECHO λ 0.02 0.57</title></circle>
+<line class="link" x1="457.8" x2="577.6" y1="220" y2="220"/>
+<circle class="ref ring" cx="457.8" cy="220.0" r="4"><title>test-ood-hard, D: S0 0.03</title></circle>
+<circle class="s2 ring" cx="572.4" cy="214.0" r="4.5"><title>test-ood-hard, D: GRPO 0.49</title></circle>
+<circle class="s3 ring" cx="577.6" cy="220.0" r="4.5"><title>test-ood-hard, D: ECHO λ 0.005 0.51</title></circle>
+<circle class="s1 ring" cx="567.2" cy="226.0" r="4.5"><title>test-ood-hard, D: ECHO λ 0.02 0.47</title></circle>
+<line class="link" x1="452.6" x2="697.4" y1="260" y2="260"/>
+<circle class="ref ring" cx="483.9" cy="260.0" r="4"><title>test-ood-hard, E: S0 0.14</title></circle>
+<circle class="s2 ring" cx="452.6" cy="254.0" r="4.5"><title>test-ood-hard, E: GRPO 0.01</title></circle>
+<circle class="s3 ring" cx="697.4" cy="260.0" r="4.5"><title>test-ood-hard, E: ECHO λ 0.005 0.99</title></circle>
+<circle class="s1 ring" cx="650.5" cy="266.0" r="4.5"><title>test-ood-hard, E: ECHO λ 0.02 0.80</title></circle>
+</svg>

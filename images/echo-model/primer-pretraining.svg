@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Pretraining: each position predicts the next token, and every prediction is in the loss">
+<title>Pretraining: each position predicts the next token, and every prediction is in the loss</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #898781; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .line { fill: none; }
+  }
+</style>
+<rect class="surface" x="0" y="0" width="760" height="300"/>
+<defs>
+  <marker id="flowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="flowhead" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<style>
+  .tk-ce { fill: #6250d6; } .tk-adv { fill: #e87ba4; } .tk-env { fill: #eda100; }
+  .tk-off { fill: none; stroke: #c3c2b7; stroke-width: 1; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .band { fill: #f0efec; stroke: #c3c2b7; stroke-width: 1; } .focus { fill: #f0efec; }
+  .flow { stroke: #898781; stroke-width: 1.5; fill: none; } .flowhead { fill: #898781; }
+  @media (prefers-color-scheme: dark) {
+    .tk-ce { fill: #9085e9; } .tk-adv { fill: #d55181; } .tk-env { fill: #c98500; }
+    .tk-off { stroke: #52514e; } .band { fill: #2c2c2a; stroke: #383835; } .focus { fill: #2c2c2a; }
+  }
+</style>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">Pretraining: predict every next token</text>
+<text class="ink2" x="24.0" y="42.0" font-size="12" text-anchor="start" font-weight="normal">At each position the model predicts the token after it, and every prediction is scored.</text>
+<rect class="tk-ce" x="24" y="55" width="22" height="14" rx="3"/>
+<text class="ink2" x="52.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">in the loss: cross-entropy, −log p</text>
+<rect class="band" x="120" y="140" width="616" height="30" rx="6"/>
+<text class="ink2" x="132.0" y="159.0" font-size="11" text-anchor="start" font-weight="normal">the language model: each position sees only the tokens to its left</text>
+<rect class="tk-ce" x="205.9" y="92" width="39.8" height="22" rx="4"><title>The: in the loss: cross-entropy, −log p</title></rect>
+<text class="mono" fill="#ffffff" x="225.8" y="107" font-size="11" text-anchor="middle">The</text>
+<rect class="tk-ce" x="249.7" y="92" width="66.2" height="22" rx="4"><title>capital: in the loss: cross-entropy, −log p</title></rect>
+<text class="mono" fill="#ffffff" x="282.8" y="107" font-size="11" text-anchor="middle">capital</text>
+<rect class="tk-ce" x="319.9" y="92" width="66.2" height="22" rx="4"><title>of: in the loss: cross-entropy, −log p</title></rect>
+<text class="mono" fill="#ffffff" x="353.0" y="107" font-size="11" text-anchor="middle">of</text>
+<rect class="tk-ce" x="390.1" y="92" width="53.0" height="22" rx="4"><title>Japan: in the loss: cross-entropy, −log p</title></rect>
+<text class="mono" fill="#ffffff" x="416.6" y="107" font-size="11" text-anchor="middle">Japan</text>
+<rect class="tk-ce" x="447.1" y="92" width="53.0" height="22" rx="4"><title>is: in the loss: cross-entropy, −log p</title></rect>
+<text class="mono" fill="#ffffff" x="473.6" y="107" font-size="11" text-anchor="middle">is</text>
+<rect class="tk-ce" x="504.1" y="92" width="53.0" height="22" rx="4"><title>Tokyo: in the loss: cross-entropy, −log p</title></rect>
+<text class="mono" fill="#ffffff" x="530.6" y="107" font-size="11" text-anchor="middle">Tokyo</text>
+<rect class="tk-ce" x="561.1" y="92" width="53.0" height="22" rx="4"><title>.: in the loss: cross-entropy, −log p</title></rect>
+<text class="mono" fill="#ffffff" x="587.6" y="107" font-size="11" text-anchor="middle">.</text>
+<rect class="band" x="205.9" y="196" width="39.8" height="22" rx="4"><title>&lt;s&gt;: read by the model</title></rect>
+<text class="ink mono" x="225.8" y="211" font-size="11" text-anchor="middle">&lt;s&gt;</text>
+<rect class="band" x="249.7" y="196" width="66.2" height="22" rx="4"><title>The: read by the model</title></rect>
+<text class="ink mono" x="282.8" y="211" font-size="11" text-anchor="middle">The</text>
+<rect class="band" x="319.9" y="196" width="66.2" height="22" rx="4"><title>capital: read by the model</title></rect>
+<text class="ink mono" x="353.0" y="211" font-size="11" text-anchor="middle">capital</text>
+<rect class="band" x="390.1" y="196" width="53.0" height="22" rx="4"><title>of: read by the model</title></rect>
+<text class="ink mono" x="416.6" y="211" font-size="11" text-anchor="middle">of</text>
+<rect class="band" x="447.1" y="196" width="53.0" height="22" rx="4"><title>Japan: read by the model</title></rect>
+<text class="ink mono" x="473.6" y="211" font-size="11" text-anchor="middle">Japan</text>
+<rect class="band" x="504.1" y="196" width="53.0" height="22" rx="4"><title>is: read by the model</title></rect>
+<text class="ink mono" x="530.6" y="211" font-size="11" text-anchor="middle">is</text>
+<rect class="band" x="561.1" y="196" width="53.0" height="22" rx="4"><title>Tokyo: read by the model</title></rect>
+<text class="ink mono" x="587.6" y="211" font-size="11" text-anchor="middle">Tokyo</text>
+<rect class="leader" style="stroke-width: 1.5" x="499.1" y="86" width="63.0" height="138" rx="6"/>
+<line class="flow" x1="225.8" y1="196" x2="225.8" y2="172" marker-end="url(#flowhead)"/>
+<line class="flow" x1="225.8" y1="140" x2="225.8" y2="116" marker-end="url(#flowhead)"/>
+<line class="flow" x1="282.8" y1="196" x2="282.8" y2="172" marker-end="url(#flowhead)"/>
+<line class="flow" x1="282.8" y1="140" x2="282.8" y2="116" marker-end="url(#flowhead)"/>
+<line class="flow" x1="353.0" y1="196" x2="353.0" y2="172" marker-end="url(#flowhead)"/>
+<line class="flow" x1="353.0" y1="140" x2="353.0" y2="116" marker-end="url(#flowhead)"/>
+<line class="flow" x1="416.6" y1="196" x2="416.6" y2="172" marker-end="url(#flowhead)"/>
+<line class="flow" x1="416.6" y1="140" x2="416.6" y2="116" marker-end="url(#flowhead)"/>
+<line class="flow" x1="473.6" y1="196" x2="473.6" y2="172" marker-end="url(#flowhead)"/>
+<line class="flow" x1="473.6" y1="140" x2="473.6" y2="116" marker-end="url(#flowhead)"/>
+<line class="flow" x1="530.6" y1="196" x2="530.6" y2="172" marker-end="url(#flowhead)"/>
+<line class="flow" x1="530.6" y1="140" x2="530.6" y2="116" marker-end="url(#flowhead)"/>
+<line class="flow" x1="587.6" y1="196" x2="587.6" y2="172" marker-end="url(#flowhead)"/>
+<line class="flow" x1="587.6" y1="140" x2="587.6" y2="116" marker-end="url(#flowhead)"/>
+<text class="ink2" x="24.0" y="107.0" font-size="12" text-anchor="start" font-weight="normal">predicts</text>
+<text class="ink2" x="24.0" y="211.0" font-size="12" text-anchor="start" font-weight="normal">reads</text>
+<text class="ink2" x="24.0" y="252.0" font-size="12" text-anchor="start" font-weight="normal">Outlined: having read up to “is”, the model is scored on the probability it gave “Tokyo”,</text>
+<text class="ink2" x="24.0" y="270.0" font-size="12" text-anchor="start" font-weight="normal">−log p(Tokyo | &lt;s&gt; The capital of Japan is). The loss averages this over every position.</text>
+<text class="muted" x="24.0" y="290.0" font-size="11" text-anchor="start" font-weight="normal">Tokens are shown as words; a real tokenizer splits text into word pieces.</text>
+</svg>

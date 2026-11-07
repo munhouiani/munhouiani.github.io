@@ -14,9 +14,9 @@
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha256-4Lad8m4ZWW1Lgb9+sMVLYEfnIh7BjV1NQMEe79Pviks=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Mun Hou&#39;s Blog">
@@ -84,12 +84,7 @@
   <main class="main">
     <div class="column">
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
+  <div class="site-nav-search popup-trigger" aria-label="Search" role="button">
   </div>
 
   <div class="site-meta">
@@ -101,9 +96,8 @@
     </a>
   </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
-    </div>
+  <div class="site-nav-toggle" aria-label="Toggle navigation bar" role="button">
+      <i class="fa fa-ellipsis fa-fw fa-lg"></i>
   </div>
 </div>
 
@@ -147,7 +141,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -181,6 +175,104 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mun Hou">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/" class="post-title-link" itemprop="url">World Modeling for LLM Agent - Predicting or Acting in the Environment</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-11-07 08:42:04 / Modified: 09:00:49" itemprop="dateCreated datePublished" datetime="2026-11-07T08:42:04+08:00">2026-11-07</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Agentic reinforcement learning usually trains only on the agent’s own tokens: the commands itwrites. The tool outputs it reads, such as query results, error messages and table histories, are masked out. The learning signal is one scalar reward per episode.</p>
+<p>ECHO (<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2605.24517">Shrivastava et al., 2026</a>) and related work (<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2606.02388">PaW</a>) add a second signal. They put a cross-entropy loss on the observation tokens, so the model also learns to predict what the environment will say. They claim for</p>
+<ul>
+<li>faster learning</li>
+<li>better generalization</li>
+<li>less need for expert demonstrations</li>
+</ul>
+<p>The intuition is that an agent that knows what a command will do should choose commands better.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -226,7 +318,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-10-20 03:48:58" itemprop="dateModified" datetime="2026-10-20T03:48:58+08:00">2026-10-20</time>
+      <time title="Modified: 2026-11-07 09:00:49" itemprop="dateModified" datetime="2026-11-07T09:00:49+08:00">2026-11-07</time>
     </span>
 
   
@@ -256,85 +348,14 @@
           <p>I’m writing this post mostly as a reminder to myself. Even though I learned this concept a long time ago, I still find myself coming back to these fundamentals whenever a new training technique comes along.</p>
 <h2 id="The-Gap"><a href="#The-Gap" class="headerlink" title="The Gap"></a>The Gap</h2><p><img src="/images/the-raw-output-of-llm-is-a-sequence/p1-sequence-in-sequence-out.svg"></p>
 <p>Most tutorials illustrate next-token prediction like the picture on the left: text in, one token out. That’s fine as a mental model, but it doesn’t match what we see in the actual architecture and its outputs.</p>
-<p>The actual input and output of an LLM are both sequences. Take the input “I love”. To keep things simple, one word is one token. The model returns two rows of logits:</p>
-<ul>
-<li><strong>Row 1</strong> sees only “I” and predicts what comes after “I”.</li>
-<li><strong>Row 2</strong> sees “I love” and predicts what comes after “I love”.</li>
-</ul>
-<p>The causal mask makes this work. Position $t$ can attend only to positions $\le t$, so every row makes a prediction without looking at the answer.</p>
-<p>Also note what the raw output is: <strong>logits</strong>, not tokens. Softmax turns each row into a probability distribution. Choosing a token, by argmax or by sampling, is a separate step that happens outside the model.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">logits = model(ids)          <span class="comment"># ids: [1, 2]  -&gt;  logits: [1, 2, V]</span></span><br><span class="line">probs = logits.softmax(-<span class="number">1</span>)   <span class="comment"># one distribution per position</span></span><br></pre></td></tr></table></figure>
-
-<p>Let’s demonstrate with actual code.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoModelForCausalLM, AutoTokenizer</span><br><span class="line"></span><br><span class="line"><span class="comment"># load tokenizer and model from huggingface</span></span><br><span class="line">model_name = <span class="string">&quot;nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16&quot;</span></span><br><span class="line"></span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(model_name)</span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(model_name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># the input text</span></span><br><span class="line">input_text = <span class="string">&quot;The capital of France is Paris, and the capital of Japan is&quot;</span></span><br><span class="line">input_ids = tokenizer(text=input_text, return_tensors=<span class="string">&quot;pt&quot;</span>).input_ids</span><br><span class="line">token_to_string = [tokenizer.decode(token_id) <span class="keyword">for</span> token_id <span class="keyword">in</span> input_ids[<span class="number">0</span>]]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;The input: <span class="subst">&#123;input_text&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;input tokens: <span class="subst">&#123;input_ids&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;input tokens shape: <span class="subst">&#123;input_ids.shape&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;string to token mapping&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> t, (i, s) <span class="keyword">in</span> <span class="built_in">enumerate</span>(<span class="built_in">zip</span>(input_ids[<span class="number">0</span>].tolist(), token_to_string)):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;    [<span class="subst">&#123;t:&gt;<span class="number">2</span>&#125;</span>] <span class="subst">&#123;s:&lt;<span class="number">16</span>&#125;</span> <span class="subst">&#123;<span class="string">f&#x27;id=<span class="subst">&#123;i&#125;</span>&#x27;</span>&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># the output</span></span><br><span class="line">logits = model(input_ids=input_ids).logits.<span class="built_in">float</span>()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The output (one forward pass):&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;input tokens shape: <span class="subst">&#123;input_ids.shape&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(</span><br><span class="line">    <span class="string">f&quot;output logits shape: <span class="subst">&#123;logits.shape&#125;</span> &lt;- [batch, T=<span class="subst">&#123;input_ids.shape[<span class="number">1</span>]&#125;</span>, vocab V=<span class="subst">&#123;logits.shape[-<span class="number">1</span>]&#125;</span>]&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(</span><br><span class="line">    <span class="string">f&quot;<span class="subst">&#123;input_ids.shape[<span class="number">1</span>]&#125;</span> tokens in, <span class="subst">&#123;logits.shape[<span class="number">1</span>]&#125;</span> tokens out. Each row is a score for every one of the <span class="subst">&#123;tokenizer.vocab_size&#125;</span> vocab entries: the model&#x27;s guess for the token that comes AFTER that position.&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># decode every row</span></span><br><span class="line">probs = logits[<span class="number">0</span>].softmax(-<span class="number">1</span>)</span><br><span class="line">p_top, pred = probs.<span class="built_in">max</span>(-<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Every row = next-token prediction for its prefix&quot;</span>)</span><br><span class="line">head = <span class="string">f&quot;  <span class="subst">&#123;<span class="string">&#x27;t&#x27;</span>:&gt;<span class="number">3</span>&#125;</span>  <span class="subst">&#123;<span class="string">&#x27;model sees input[0..t]&#x27;</span>:&lt;&#123;<span class="built_in">len</span>(input_text)&#125;</span>&#125;  <span class="subst">&#123;<span class="string">&#x27;predicts&#x27;</span>:&lt;<span class="number">14</span>&#125;</span> <span class="subst">&#123;<span class="string">&#x27;p&#x27;</span>:&gt;<span class="number">5</span>&#125;</span>   actual input[t+1]&quot;</span></span><br><span class="line">hits = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(input_ids.shape[<span class="number">1</span>]):</span><br><span class="line">    seen = tokenizer.decode(input_ids[<span class="number">0</span>, : t + <span class="number">1</span>])</span><br><span class="line">    guess = tokenizer.decode(pred[t])</span><br><span class="line">    line = (</span><br><span class="line">        <span class="string">f&quot;  <span class="subst">&#123;t:&gt;<span class="number">3</span>&#125;</span>  <span class="subst">&#123;seen:&lt;&#123;<span class="built_in">len</span>(input_text)&#125;</span>&#125;  <span class="subst">&#123;guess:&lt;<span class="number">14</span>&#125;</span> <span class="subst">&#123;p_top[t].item():&gt;<span class="number">5.2</span>f&#125;</span>   &quot;</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">if</span> t &lt; input_ids.shape[<span class="number">1</span>] - <span class="number">1</span>:</span><br><span class="line">        ok = pred[t].item() == input_ids[<span class="number">0</span>, t + <span class="number">1</span>].item()</span><br><span class="line">        hits += ok</span><br><span class="line">        line += (<span class="string">&quot;✓ &quot;</span> <span class="keyword">if</span> ok <span class="keyword">else</span> <span class="string">&quot;✗ &quot;</span>) + token_to_string[t + <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> t == input_ids.shape[<span class="number">1</span>] - <span class="number">1</span>:</span><br><span class="line">        line = line + <span class="string">&quot;   &lt;- the &#x27;one next word&#x27;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(line)</span><br><span class="line"><span class="built_in">print</span>(</span><br><span class="line">    <span class="string">f&quot;\n  <span class="subst">&#123;hits&#125;</span>/<span class="subst">&#123;input_ids.shape[<span class="number">1</span>] - <span class="number">1</span>&#125;</span> rows guessed the token that really comes next in the input.&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(</span><br><span class="line">    <span class="string">&quot;The &#x27;one next word&#x27; everybody expects is only the LAST row. Training grades ALL rows at once (labels = input shifted left by one).&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">The input: The capital of France is Paris, and the capital of Japan is</span><br><span class="line">input tokens: tensor([[1784, 8961, 1307, 5498, 1395, 6993, 1044, 1321, 1278, 8961, 1307, 6777,</span><br><span class="line">         1395]])</span><br><span class="line">input tokens shape: torch.Size([1, 13])</span><br><span class="line">string to token mapping</span><br><span class="line">    [ 0] The              id=1784</span><br><span class="line">    [ 1]  capital         id=8961</span><br><span class="line">    [ 2]  of              id=1307</span><br><span class="line">    [ 3]  France          id=5498</span><br><span class="line">    [ 4]  is              id=1395</span><br><span class="line">    [ 5]  Paris           id=6993</span><br><span class="line">    [ 6] ,                id=1044</span><br><span class="line">    [ 7]  and             id=1321</span><br><span class="line">    [ 8]  the             id=1278</span><br><span class="line">    [ 9]  capital         id=8961</span><br><span class="line">    [10]  of              id=1307</span><br><span class="line">    [11]  Japan           id=6777</span><br><span class="line">    [12]  is              id=1395</span><br><span class="line"></span><br><span class="line">The output (one forward pass):</span><br><span class="line">input tokens shape: torch.Size([1, 13])</span><br><span class="line">output logits shape: torch.Size([1, 13, 131072]) &lt;- [batch, T=13, vocab V=131072]</span><br><span class="line">13 tokens in, 13 tokens out. Each row is a score for every one of the 131072 vocab entries: the model&#x27;s guess for the token that comes AFTER that position.</span><br><span class="line"></span><br><span class="line">Every row = next-token prediction for its prefix</span><br><span class="line">    0  The                                                          ,               0.23   ✗  capital</span><br><span class="line">    1  The capital                                                   of             0.35   ✓  of</span><br><span class="line">    2  The capital of                                                the            0.20   ✗  France</span><br><span class="line">    3  The capital of France                                         is             0.98   ✓  is</span><br><span class="line">    4  The capital of France is                                      Paris          0.86   ✓  Paris</span><br><span class="line">    5  The capital of France is Paris                               .&quot;              0.54   ✗ ,</span><br><span class="line">    6  The capital of France is Paris,                               which          0.26   ✗  and</span><br><span class="line">    7  The capital of France is Paris, and                           the            0.49   ✓  the</span><br><span class="line">    8  The capital of France is Paris, and the                       capital        0.33   ✓  capital</span><br><span class="line">    9  The capital of France is Paris, and the capital               of             0.99   ✓  of</span><br><span class="line">   10  The capital of France is Paris, and the capital of            Germany        0.17   ✗  Japan</span><br><span class="line">   11  The capital of France is Paris, and the capital of Japan      is             1.00   ✓  is</span><br><span class="line">   12  The capital of France is Paris, and the capital of Japan is   Tokyo          0.99      &lt;- the &#x27;one next word&#x27;</span><br><span class="line"></span><br><span class="line">  7/12 rows guessed the token that really comes next in the input.</span><br><span class="line">The &#x27;one next word&#x27; everybody expects is only the LAST row. Training grades ALL rows at once (labels = input shifted left by one).</span><br></pre></td></tr></table></figure>
-
-<h2 id="Training-Uses-Every-Row"><a href="#Training-Uses-Every-Row" class="headerlink" title="Training Uses Every Row"></a>Training Uses Every Row</h2><p>During training the targets are simply the input shifted by one position. Each row is scored against the token that really comes next in the data:</p>
-<table>
-<thead>
-<tr>
-<th>Position</th>
-<th>What it sees</th>
-<th>Its target</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>I</td>
-<td>love</td>
-</tr>
-<tr>
-<td>2</td>
-<td>I love</td>
-<td>the next word in the data, e.g. “cats”</td>
-</tr>
-</tbody></table>
-<p>So one forward pass over $T$ tokens gives $T$ training signals, all computed in parallel. Every position is a training example. This is why transformers train so efficiently.</p>
-<p>We can see this actual code at HuggingFace’s <a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers/blob/eeed120a20c46df4bda9d955014d29114f521849/src/transformers/loss/loss_utils.py#L32-L71"><code>transformers</code></a> library:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ForCausalLMLoss at src/transformers/loss/loss_utils.py</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> shift_labels <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="comment"># Shift so that tokens &lt; n predict n</span></span><br><span class="line">        labels = nn.functional.pad(labels, (<span class="number">0</span>, <span class="number">1</span>), value=ignore_index)</span><br><span class="line">        shift_labels = labels[..., <span class="number">1</span>:].contiguous()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Flatten the tokens</span></span><br><span class="line">    logits = logits.view(-<span class="number">1</span>, vocab_size)</span><br><span class="line">    shift_labels = shift_labels.view(-<span class="number">1</span>)</span><br><span class="line">    ...</span><br><span class="line">    loss = fixed_cross_entropy(logits, shift_labels, num_items_in_batch, ignore_index, **kwargs)</span><br></pre></td></tr></table></figure>
-
-<p>On an older version of <code>transfomers</code> library, before the loss was moved into a shared function, the lines are even more readable. The following snippet is taken from <code>modeling_llama.py</code> of version <a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers/blob/v4.44.2/src/transformers/models/llama/modeling_llama.py#L1213-L1222"><code>4.44.2</code></a>:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Shift so that tokens &lt; n predict n</span></span><br><span class="line">shift_logits = logits[..., :-<span class="number">1</span>, :].contiguous()</span><br><span class="line">shift_labels = labels[..., <span class="number">1</span>:].contiguous()</span><br><span class="line">loss_fct = CrossEntropyLoss()</span><br><span class="line">...</span><br><span class="line">loss = loss_fct(shift_logits, shift_labels)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Everything-Else-is-a-Variation"><a href="#Everything-Else-is-a-Variation" class="headerlink" title="Everything Else is a Variation"></a>Everything Else is a Variation</h2><p>Every other stage, be it SFT, knowlege distillation or RL, does the same thing: feed a sequence in, get one distribution per position back, apply cross entropy. The only change is which positions count, what the target is, and how much each position weighs.</p>
-<table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Positions that count</th>
-<th>Target at each position</th>
-<th>Weight</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Pretraining, mid-training</td>
-<td>All</td>
-<td>Next token in the data</td>
-<td>1</td>
-</tr>
-<tr>
-<td>SFT</td>
-<td>Assistant tokens</td>
-<td>Next token in the data</td>
-<td>1</td>
-</tr>
-<tr>
-<td>Knowledge distillation</td>
-<td>Assistant tokens</td>
-<td>The teacher’s full distribution</td>
-<td>1</td>
-</tr>
-<tr>
-<td>RL (GRPO)</td>
-<td>Tokens the model generated</td>
-<td>The token the model sampled</td>
-<td>The rollout’s advantage $A$</td>
-</tr>
-</tbody></table>
-<p>If you think this post is helpful please share on the comment section.</p>
-<p>Thanks.</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/10/19/The-Raw-Output-of-LLM-is-a-Sequence/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1161,106 +1182,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Mun Hou">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mun Hou's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mun Hou's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/" class="post-title-link" itemprop="url">Detecting Out-of-Distribution Samples with kNN</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-02 00:17:48" itemprop="dateCreated datePublished" datetime="2022-12-02T00:17:48+08:00">2022-12-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-10-20 01:39:43" itemprop="dateModified" datetime="2026-10-20T01:39:43+08:00">2026-10-20</time>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/12/01/Detecting Out-of-Distribution Samples with Knn/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-is-Out-of-Distribution-OOD-Detection-and-Why-is-it-Important"><a href="#What-is-Out-of-Distribution-OOD-Detection-and-Why-is-it-Important" class="headerlink" title="What is Out-of-Distribution (OOD) Detection and Why is it Important?"></a>What is Out-of-Distribution (OOD) Detection and Why is it Important?</h2><p>Most machine learning models are trained based on the closed-world assumption, meaning that the test data is assumed to have the same distribution as the training data. When we train a model, we usually form our training and testing data by randomly splitting the data we have into two sets, in which both datasets have the same label distribution. However, in the real-world scenario, this assumption doesn’t necessarily hold. For example, a model trained to classify cats and dogs may receive an image of a dolphin. Even worse, it might highly confident classify such inputs into in-distribution classes. </p>
-<img src="/images/ood-knn/2022-12-01T170823.png" alt="OOD Example" style="zoom:40%;" /> 
-
-<p>Detecting if the received model inputs have the same distribution as the training data is called out-of-distribution detection. </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1291,7 +1212,6 @@
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
   </div>
-  <div class="sidebar-dimmer"></div>
   <div class="back-to-top" role="button" aria-label="Back to top">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>

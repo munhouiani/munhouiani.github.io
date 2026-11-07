@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" width="760" height="280" role="img" aria-label="ECHO: the same episode under GRPO and under ECHO; ECHO adds cross-entropy on the tool output's tokens">
+<title>ECHO: the same episode under GRPO and under ECHO; ECHO adds cross-entropy on the tool output's tokens</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #898781; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .line { fill: none; }
+  }
+</style>
+<rect class="surface" x="0" y="0" width="760" height="280"/>
+<defs>
+  <marker id="flowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="flowhead" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<style>
+  .tk-ce { fill: #6250d6; } .tk-adv { fill: #e87ba4; } .tk-env { fill: #eda100; }
+  .tk-off { fill: none; stroke: #c3c2b7; stroke-width: 1; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .band { fill: #f0efec; stroke: #c3c2b7; stroke-width: 1; } .focus { fill: #f0efec; }
+  .flow { stroke: #898781; stroke-width: 1.5; fill: none; } .flowhead { fill: #898781; }
+  @media (prefers-color-scheme: dark) {
+    .tk-ce { fill: #9085e9; } .tk-adv { fill: #d55181; } .tk-env { fill: #c98500; }
+    .tk-off { stroke: #52514e; } .band { fill: #2c2c2a; stroke: #383835; } .focus { fill: #2c2c2a; }
+  }
+</style>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">ECHO: GRPO, plus learning to predict what the environment returns</text>
+<text class="ink2" x="24.0" y="42.0" font-size="12" text-anchor="start" font-weight="normal">One episode with a tool call, and how each token counts under each method.</text>
+<rect class="tk-adv" x="24" y="55" width="22" height="14" rx="3"/>
+<text class="ink2" x="52.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">in the loss, weighted by the advantage A</text>
+<rect class="tk-env" x="330.0" y="55" width="22" height="14" rx="3"/>
+<text class="ink2" x="358.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">in the loss: cross-entropy × λ</text>
+<rect class="tk-off" x="573.0" y="55" width="22" height="14" rx="3"/>
+<text class="ink2" x="601.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">not in the loss</text>
+<rect class="tk-off" x="24.0" y="124" width="49.6" height="22" rx="4"><title>&lt;user&gt;: not in the loss</title></rect>
+<text class="muted mono" x="48.8" y="139" font-size="11" text-anchor="middle">&lt;user&gt;</text>
+<rect class="tk-off" x="77.6" y="124" width="56.2" height="22" rx="4"><title>Japan&#x27;s: not in the loss</title></rect>
+<text class="muted mono" x="105.7" y="139" font-size="11" text-anchor="middle">Japan&#x27;s</text>
+<rect class="tk-off" x="137.8" y="124" width="62.8" height="22" rx="4"><title>capital?: not in the loss</title></rect>
+<text class="muted mono" x="169.2" y="139" font-size="11" text-anchor="middle">capital?</text>
+<rect class="tk-off" x="204.6" y="124" width="56.2" height="22" rx="4"><title>&lt;agent&gt;: not in the loss</title></rect>
+<text class="muted mono" x="232.7" y="139" font-size="11" text-anchor="middle">&lt;agent&gt;</text>
+<rect class="tk-adv" x="264.8" y="124" width="95.8" height="22" rx="4"><title>lookup(Japan): in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="312.7" y="139" font-size="11" text-anchor="middle">lookup(Japan)</text>
+<rect class="tk-off" x="364.6" y="124" width="49.6" height="22" rx="4"><title>&lt;tool&gt;: not in the loss</title></rect>
+<text class="muted mono" x="389.4" y="139" font-size="11" text-anchor="middle">&lt;tool&gt;</text>
+<rect class="tk-off" x="418.2" y="124" width="62.8" height="22" rx="4"><title>capital:: not in the loss</title></rect>
+<text class="muted mono" x="449.6" y="139" font-size="11" text-anchor="middle">capital:</text>
+<rect class="tk-off" x="485.0" y="124" width="43.0" height="22" rx="4"><title>Tokyo: not in the loss</title></rect>
+<text class="muted mono" x="506.5" y="139" font-size="11" text-anchor="middle">Tokyo</text>
+<rect class="tk-off" x="532.0" y="124" width="56.2" height="22" rx="4"><title>&lt;agent&gt;: not in the loss</title></rect>
+<text class="muted mono" x="560.1" y="139" font-size="11" text-anchor="middle">&lt;agent&gt;</text>
+<rect class="tk-adv" x="592.2" y="124" width="43.0" height="22" rx="4"><title>Tokyo: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="613.7" y="139" font-size="11" text-anchor="middle">Tokyo</text>
+<rect class="tk-adv" x="639.2" y="124" width="16.6" height="22" rx="4"><title>.: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="647.5" y="139" font-size="11" text-anchor="middle">.</text>
+<rect class="tk-adv" x="659.8" y="124" width="43.0" height="22" rx="4"><title>&lt;end&gt;: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="681.3" y="139" font-size="11" text-anchor="middle">&lt;end&gt;</text>
+<text class="ink" x="712.8" y="139.0" font-size="12" text-anchor="start" font-weight="600">GRPO</text>
+<rect class="tk-off" x="24.0" y="164" width="49.6" height="22" rx="4"><title>&lt;user&gt;: not in the loss</title></rect>
+<text class="muted mono" x="48.8" y="179" font-size="11" text-anchor="middle">&lt;user&gt;</text>
+<rect class="tk-off" x="77.6" y="164" width="56.2" height="22" rx="4"><title>Japan&#x27;s: not in the loss</title></rect>
+<text class="muted mono" x="105.7" y="179" font-size="11" text-anchor="middle">Japan&#x27;s</text>
+<rect class="tk-off" x="137.8" y="164" width="62.8" height="22" rx="4"><title>capital?: not in the loss</title></rect>
+<text class="muted mono" x="169.2" y="179" font-size="11" text-anchor="middle">capital?</text>
+<rect class="tk-off" x="204.6" y="164" width="56.2" height="22" rx="4"><title>&lt;agent&gt;: not in the loss</title></rect>
+<text class="muted mono" x="232.7" y="179" font-size="11" text-anchor="middle">&lt;agent&gt;</text>
+<rect class="tk-adv" x="264.8" y="164" width="95.8" height="22" rx="4"><title>lookup(Japan): in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="312.7" y="179" font-size="11" text-anchor="middle">lookup(Japan)</text>
+<rect class="tk-off" x="364.6" y="164" width="49.6" height="22" rx="4"><title>&lt;tool&gt;: not in the loss</title></rect>
+<text class="muted mono" x="389.4" y="179" font-size="11" text-anchor="middle">&lt;tool&gt;</text>
+<rect class="tk-env" x="418.2" y="164" width="62.8" height="22" rx="4"><title>capital:: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="449.6" y="179" font-size="11" text-anchor="middle">capital:</text>
+<rect class="tk-env" x="485.0" y="164" width="43.0" height="22" rx="4"><title>Tokyo: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="506.5" y="179" font-size="11" text-anchor="middle">Tokyo</text>
+<rect class="tk-off" x="532.0" y="164" width="56.2" height="22" rx="4"><title>&lt;agent&gt;: not in the loss</title></rect>
+<text class="muted mono" x="560.1" y="179" font-size="11" text-anchor="middle">&lt;agent&gt;</text>
+<rect class="tk-adv" x="592.2" y="164" width="43.0" height="22" rx="4"><title>Tokyo: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="613.7" y="179" font-size="11" text-anchor="middle">Tokyo</text>
+<rect class="tk-adv" x="639.2" y="164" width="16.6" height="22" rx="4"><title>.: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="647.5" y="179" font-size="11" text-anchor="middle">.</text>
+<rect class="tk-adv" x="659.8" y="164" width="43.0" height="22" rx="4"><title>&lt;end&gt;: in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="681.3" y="179" font-size="11" text-anchor="middle">&lt;end&gt;</text>
+<text class="ink" x="712.8" y="179.0" font-size="12" text-anchor="start" font-weight="600">ECHO</text>
+<path class="leader" d="M25.0,119 V114 H259.8 V119"/>
+<text class="ink2" x="142.4" y="108.0" font-size="11" text-anchor="middle" font-weight="normal">prompt</text>
+<path class="leader" d="M265.8,119 V114 H359.6 V119"/>
+<text class="ink2" x="312.7" y="108.0" font-size="11" text-anchor="middle" font-weight="normal">agent</text>
+<path class="leader" d="M365.6,119 V114 H527.0 V119"/>
+<text class="ink2" x="446.3" y="108.0" font-size="11" text-anchor="middle" font-weight="normal">environment</text>
+<path class="leader" d="M533.0,119 V114 H701.8 V119"/>
+<text class="ink2" x="617.4" y="108.0" font-size="11" text-anchor="middle" font-weight="normal">agent</text>
+<text class="ink" x="24.0" y="222.0" font-size="12" text-anchor="start" font-weight="normal">ECHO's loss = GRPO's loss on the agent's tokens + λ · (1/|O|) · Σ −log p(each tool-output token)</text>
+<text class="ink2" x="24.0" y="242.0" font-size="12" text-anchor="start" font-weight="normal">|O| is the episode's observation length. The logits come from the same forward pass: no extra rollouts.</text>
+<text class="muted" x="24.0" y="262.0" font-size="11" text-anchor="start" font-weight="normal">This study: λ = 0.005 and 0.02, on every token of every tool output&#x27;s body (not the &lt;tool&gt; marker).</text>
+</svg>

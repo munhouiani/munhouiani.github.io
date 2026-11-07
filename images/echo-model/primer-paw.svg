@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 446" width="760" height="446" role="img" aria-label="PaW: ECHO's observation loss restricted to uncertain calls and under-predicted tokens, with a bounded cost per token">
+<title>PaW: ECHO's observation loss restricted to uncertain calls and under-predicted tokens, with a bounded cost per token</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #898781; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .line { fill: none; }
+  }
+</style>
+<rect class="surface" x="0" y="0" width="760" height="446"/>
+<defs>
+  <marker id="flowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="flowhead" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<style>
+  .tk-ce { fill: #6250d6; } .tk-adv { fill: #e87ba4; } .tk-env { fill: #eda100; }
+  .tk-off { fill: none; stroke: #c3c2b7; stroke-width: 1; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .band { fill: #f0efec; stroke: #c3c2b7; stroke-width: 1; } .focus { fill: #f0efec; }
+  .flow { stroke: #898781; stroke-width: 1.5; fill: none; } .flowhead { fill: #898781; }
+  @media (prefers-color-scheme: dark) {
+    .tk-ce { fill: #9085e9; } .tk-adv { fill: #d55181; } .tk-env { fill: #c98500; }
+    .tk-off { stroke: #52514e; } .band { fill: #2c2c2a; stroke: #383835; } .focus { fill: #2c2c2a; }
+  }
+</style>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">PaW: ECHO's loss on uncertain calls, clipped, and scaled by the group's return</text>
+<text class="ink2" x="24.0" y="42.0" font-size="12" text-anchor="start" font-weight="normal">The tool calls of Figure 4, with a fuller output and a second call. Probabilities are illustrative.</text>
+<rect class="tk-adv" x="24" y="55" width="22" height="14" rx="3"/>
+<text class="ink2" x="52.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">in the loss, weighted by the advantage A</text>
+<rect class="tk-env" x="330.0" y="55" width="22" height="14" rx="3"/>
+<text class="ink2" x="358.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">in the observation loss</text>
+<rect class="tk-off" x="573.0" y="55" width="22" height="14" rx="3"/>
+<text class="ink2" x="601.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">not in the loss</text>
+<text class="ink" x="24.0" y="100.0" font-size="12" text-anchor="start" font-weight="600">ECHO, as in Figure 4</text>
+<rect class="tk-adv" x="24.0" y="110" width="95.8" height="22" rx="4"><title>lookup(Japan): in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="71.9" y="125" font-size="11" text-anchor="middle">lookup(Japan)</text>
+<rect class="tk-off" x="123.8" y="110" width="49.6" height="22" rx="4"><title>&lt;tool&gt;: not in the loss</title></rect>
+<text class="muted mono" x="148.6" y="125" font-size="11" text-anchor="middle">&lt;tool&gt;</text>
+<rect class="tk-env" x="177.4" y="110" width="62.8" height="22" rx="4"><title>country:: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="208.8" y="125" font-size="11" text-anchor="middle">country:</text>
+<rect class="tk-env" x="244.2" y="110" width="43.0" height="22" rx="4"><title>Japan: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="265.7" y="125" font-size="11" text-anchor="middle">Japan</text>
+<rect class="tk-env" x="291.2" y="110" width="62.8" height="22" rx="4"><title>capital:: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="322.6" y="125" font-size="11" text-anchor="middle">capital:</text>
+<rect class="tk-env" x="358.0" y="110" width="43.0" height="22" rx="4"><title>Tokyo: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="379.5" y="125" font-size="11" text-anchor="middle">Tokyo</text>
+<rect class="tk-env" x="405.0" y="110" width="43.0" height="22" rx="4"><title>time:: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="426.5" y="125" font-size="11" text-anchor="middle">time:</text>
+<rect class="tk-env" x="452.0" y="110" width="43.0" height="22" rx="4"><title>10:42: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="473.5" y="125" font-size="11" text-anchor="middle">10:42</text>
+<text class="ink2" x="507.0" y="125.0" font-size="12" text-anchor="start" font-weight="normal">every output token: −log p × λ</text>
+<rect class="tk-adv" x="24.0" y="140" width="95.8" height="22" rx="4"><title>submit(Tokyo): in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="71.9" y="155" font-size="11" text-anchor="middle">submit(Tokyo)</text>
+<rect class="tk-off" x="123.8" y="140" width="49.6" height="22" rx="4"><title>&lt;tool&gt;: not in the loss</title></rect>
+<text class="muted mono" x="148.6" y="155" font-size="11" text-anchor="middle">&lt;tool&gt;</text>
+<rect class="tk-env" x="177.4" y="140" width="76.0" height="22" rx="4"><title>submitted:: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="215.4" y="155" font-size="11" text-anchor="middle">submitted:</text>
+<rect class="tk-env" x="257.4" y="140" width="43.0" height="22" rx="4"><title>Tokyo: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="278.9" y="155" font-size="11" text-anchor="middle">Tokyo</text>
+<text class="ink" x="24.0" y="192.0" font-size="12" text-anchor="start" font-weight="600">PaW</text>
+<rect class="tk-adv" x="24.0" y="212" width="95.8" height="22" rx="4"><title>lookup(Japan): in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="71.9" y="227" font-size="11" text-anchor="middle">lookup(Japan)</text>
+<rect class="tk-off" x="123.8" y="212" width="49.6" height="22" rx="4"><title>&lt;tool&gt;: not in the loss</title></rect>
+<text class="muted mono" x="148.6" y="227" font-size="11" text-anchor="middle">&lt;tool&gt;</text>
+<rect class="tk-off" x="177.4" y="212" width="62.8" height="22" rx="4"><title>country:: not in the loss</title></rect>
+<text class="muted mono" x="208.8" y="227" font-size="11" text-anchor="middle">country:</text>
+<rect class="tk-off" x="244.2" y="212" width="43.0" height="22" rx="4"><title>Japan: not in the loss</title></rect>
+<text class="muted mono" x="265.7" y="227" font-size="11" text-anchor="middle">Japan</text>
+<rect class="tk-off" x="291.2" y="212" width="62.8" height="22" rx="4"><title>capital:: not in the loss</title></rect>
+<text class="muted mono" x="322.6" y="227" font-size="11" text-anchor="middle">capital:</text>
+<rect class="tk-off" x="358.0" y="212" width="43.0" height="22" rx="4"><title>Tokyo: not in the loss</title></rect>
+<text class="muted mono" x="379.5" y="227" font-size="11" text-anchor="middle">Tokyo</text>
+<rect class="tk-off" x="405.0" y="212" width="43.0" height="22" rx="4"><title>time:: not in the loss</title></rect>
+<text class="muted mono" x="426.5" y="227" font-size="11" text-anchor="middle">time:</text>
+<rect class="tk-env" x="452.0" y="212" width="43.0" height="22" rx="4"><title>10:42: in the loss: cross-entropy × λ</title></rect>
+<text class="mono" fill="#0b0b0b" x="473.5" y="227" font-size="11" text-anchor="middle">10:42</text>
+<text class="muted" x="148.6" y="206.0" font-size="10.5" text-anchor="middle" font-weight="normal">p =</text>
+<text class="muted" x="208.8" y="206.0" font-size="10.5" text-anchor="middle" font-weight="normal">.97</text>
+<text class="muted" x="265.7" y="206.0" font-size="10.5" text-anchor="middle" font-weight="normal">.98</text>
+<text class="muted" x="322.6" y="206.0" font-size="10.5" text-anchor="middle" font-weight="normal">.95</text>
+<text class="muted" x="379.5" y="206.0" font-size="10.5" text-anchor="middle" font-weight="normal">.70</text>
+<text class="muted" x="426.5" y="206.0" font-size="10.5" text-anchor="middle" font-weight="normal">.90</text>
+<text class="ink2" x="473.5" y="206.0" font-size="10.5" text-anchor="middle" font-weight="normal">.01</text>
+<text class="ink2" x="473.5" y="248.0" font-size="10.5" text-anchor="middle" font-weight="normal">1 − p = 0.99</text>
+<text class="ink2" x="507.0" y="227.0" font-size="12" text-anchor="start" font-weight="normal">the policy was unsure of this call: kept</text>
+<rect class="tk-adv" x="24.0" y="258" width="95.8" height="22" rx="4"><title>submit(Tokyo): in the loss, weighted by the advantage A</title></rect>
+<text class="mono" fill="#0b0b0b" x="71.9" y="273" font-size="11" text-anchor="middle">submit(Tokyo)</text>
+<rect class="tk-off" x="123.8" y="258" width="49.6" height="22" rx="4"><title>&lt;tool&gt;: not in the loss</title></rect>
+<text class="muted mono" x="148.6" y="273" font-size="11" text-anchor="middle">&lt;tool&gt;</text>
+<rect class="tk-off" x="177.4" y="258" width="76.0" height="22" rx="4"><title>submitted:: not in the loss</title></rect>
+<text class="muted mono" x="215.4" y="273" font-size="11" text-anchor="middle">submitted:</text>
+<rect class="tk-off" x="257.4" y="258" width="43.0" height="22" rx="4"><title>Tokyo: not in the loss</title></rect>
+<text class="muted mono" x="278.9" y="273" font-size="11" text-anchor="middle">Tokyo</text>
+<text class="ink2" x="312.4" y="273.0" font-size="12" text-anchor="start" font-weight="normal">sure of this one: dropped</text>
+<text class="ink2" x="24.0" y="312.0" font-size="12" text-anchor="start" font-weight="normal">Which: across an update, the 25% of calls with the lowest action entropy, the ones the policy was surest of,</text>
+<text class="ink2" x="24.0" y="331.0" font-size="12" text-anchor="start" font-weight="normal">add nothing to the observation loss. Their actions stay in the RL loss.</text>
+<text class="ink2" x="24.0" y="350.0" font-size="12" text-anchor="start" font-weight="normal">How: a token counts only if the model gave it p ≤ 0.2, and costs 1 − p, never more than 1. Here only the</text>
+<text class="ink2" x="24.0" y="369.0" font-size="12" text-anchor="start" font-weight="normal">clock counts, which ECHO would charge −log 0.01 = 4.6.</text>
+<text class="ink2" x="24.0" y="388.0" font-size="12" text-anchor="start" font-weight="normal">How much: the weight is 1 − the group&#x27;s mean return / the maximum, so a group that always succeeds adds none.</text>
+<text class="ink" x="24.0" y="415.0" font-size="12" text-anchor="start" font-weight="normal">PaW&#x27;s loss = RL loss + weight · mean over kept calls of (1/|o|) · Σ (1 − p), over tokens with p ≤ 0.2</text>
+<text class="muted" x="24.0" y="434.0" font-size="11" text-anchor="start" font-weight="normal">|o|: the output's length in tokens.</text>
+</svg>
