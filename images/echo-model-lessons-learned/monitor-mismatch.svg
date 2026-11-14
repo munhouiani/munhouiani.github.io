@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Sampler-trainer disagreement per step, and the share of corrupted rollouts under each vLLM setting">
+<title>Sampler-trainer disagreement per step, and the share of corrupted rollouts under each vLLM setting</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #898781; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .line { fill: none; }
+  }
+</style>
+<rect class="surface" x="0" y="0" width="760" height="380"/>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">Do the sampler and the trainer agree? Only without CUDA graphs</text>
+<text class="ink2" x="24.0" y="42.0" font-size="12" text-anchor="start" font-weight="normal">Left: the worst sequence's sampler/trainer probability ratio per step. Right: corrupted rollouts per vLLM setting.</text>
+<text class="ink" x="70.0" y="78.0" font-size="13" text-anchor="start" font-weight="600">worst sequence's probability ratio</text>
+<line class="grid" x1="70" x2="300" y1="302.0" y2="302.0"/>
+<text class="muted" x="62.0" y="306.0" font-size="11" text-anchor="end" font-weight="normal">1</text>
+<line class="grid" x1="70" x2="300" y1="260.0" y2="260.0"/>
+<text class="muted" x="62.0" y="264.0" font-size="11" text-anchor="end" font-weight="normal">1e5</text>
+<line class="grid" x1="70" x2="300" y1="218.0" y2="218.0"/>
+<text class="muted" x="62.0" y="222.0" font-size="11" text-anchor="end" font-weight="normal">1e10</text>
+<line class="grid" x1="70" x2="300" y1="176.0" y2="176.0"/>
+<text class="muted" x="62.0" y="180.0" font-size="11" text-anchor="end" font-weight="normal">1e15</text>
+<line class="grid" x1="70" x2="300" y1="134.0" y2="134.0"/>
+<text class="muted" x="62.0" y="138.0" font-size="11" text-anchor="end" font-weight="normal">1e20</text>
+<line class="grid" x1="70" x2="300" y1="92.0" y2="92.0"/>
+<text class="muted" x="62.0" y="96.0" font-size="11" text-anchor="end" font-weight="normal">1e25</text>
+<line class="axis" x1="70" x2="300" y1="302" y2="302"/>
+<text class="muted" x="70.0" y="318.0" font-size="11" text-anchor="middle" font-weight="normal">1</text>
+<text class="muted" x="132.7" y="318.0" font-size="11" text-anchor="middle" font-weight="normal">4</text>
+<text class="muted" x="216.4" y="318.0" font-size="11" text-anchor="middle" font-weight="normal">8</text>
+<text class="muted" x="300.0" y="318.0" font-size="11" text-anchor="middle" font-weight="normal">12</text>
+<text class="ink2" x="185.0" y="336.0" font-size="11" text-anchor="middle" font-weight="normal">training step</text>
+<path class="s2 line" d="M70.0,302.0 L90.9,302.0 L111.8,128.1 L132.7,301.9 L153.6,125.6 L174.5,100.3 L195.5,301.9 L216.4,301.9 L237.3,302.0 L258.2,302.0" stroke-dasharray="6 4"><title>first launch (graphs on)</title></path>
+<circle class="s2" cx="70.0" cy="302.0" r="3"><title>first launch (graphs on), step 1: 1.01</title></circle>
+<circle class="s2" cx="90.9" cy="302.0" r="3"><title>first launch (graphs on), step 2: 1.01</title></circle>
+<circle class="s2" cx="111.8" cy="128.1" r="3"><title>first launch (graphs on), step 3: 5.02e+20</title></circle>
+<circle class="s2" cx="132.7" cy="301.9" r="3"><title>first launch (graphs on), step 4: 1.02</title></circle>
+<circle class="s2" cx="153.6" cy="125.6" r="3"><title>first launch (graphs on), step 5: 1e+21</title></circle>
+<circle class="s2" cx="174.5" cy="100.3" r="3"><title>first launch (graphs on), step 6: 1.03e+24</title></circle>
+<circle class="s2" cx="195.5" cy="301.9" r="3"><title>first launch (graphs on), step 7: 1.02</title></circle>
+<circle class="s2" cx="216.4" cy="301.9" r="3"><title>first launch (graphs on), step 8: 1.02</title></circle>
+<circle class="s2" cx="237.3" cy="302.0" r="3"><title>first launch (graphs on), step 9: 1.01</title></circle>
+<circle class="s2" cx="258.2" cy="302.0" r="3"><title>first launch (graphs on), step 10: 1.01</title></circle>
+<path class="s2 line" d="M70.0,302.0 L90.9,302.0 L111.8,301.9 L132.7,301.9 L153.6,301.9 L174.5,301.9 L195.5,301.9 L216.4,302.0 L237.3,301.9 L258.2,301.9 L279.1,302.0 L300.0,301.9"><title>the GRPO arm (eager)</title></path>
+<circle class="s2" cx="70.0" cy="302.0" r="3"><title>the GRPO arm (eager), step 1: 1.01</title></circle>
+<circle class="s2" cx="90.9" cy="302.0" r="3"><title>the GRPO arm (eager), step 2: 1.01</title></circle>
+<circle class="s2" cx="111.8" cy="301.9" r="3"><title>the GRPO arm (eager), step 3: 1.02</title></circle>
+<circle class="s2" cx="132.7" cy="301.9" r="3"><title>the GRPO arm (eager), step 4: 1.01</title></circle>
+<circle class="s2" cx="153.6" cy="301.9" r="3"><title>the GRPO arm (eager), step 5: 1.02</title></circle>
+<circle class="s2" cx="174.5" cy="301.9" r="3"><title>the GRPO arm (eager), step 6: 1.01</title></circle>
+<circle class="s2" cx="195.5" cy="301.9" r="3"><title>the GRPO arm (eager), step 7: 1.01</title></circle>
+<circle class="s2" cx="216.4" cy="302.0" r="3"><title>the GRPO arm (eager), step 8: 1.01</title></circle>
+<circle class="s2" cx="237.3" cy="301.9" r="3"><title>the GRPO arm (eager), step 9: 1.02</title></circle>
+<circle class="s2" cx="258.2" cy="301.9" r="3"><title>the GRPO arm (eager), step 10: 1.01</title></circle>
+<circle class="s2" cx="279.1" cy="302.0" r="3"><title>the GRPO arm (eager), step 11: 1.01</title></circle>
+<circle class="s2" cx="300.0" cy="301.9" r="3"><title>the GRPO arm (eager), step 12: 1.01</title></circle>
+<text class="ink2" x="182.5" y="104.4" font-size="11" text-anchor="start" font-weight="normal">first launch</text>
+<text class="ink2" x="298.0" y="294.0" font-size="11" text-anchor="end" font-weight="normal">eager</text>
+<text class="ink" x="400.0" y="78.0" font-size="13" text-anchor="start" font-weight="600">corrupted rollouts</text>
+<text class="ink2" x="400.0" y="92.0" font-size="11" text-anchor="start" font-weight="normal">first launch: prefix caching on, CUDA graphs on</text>
+<rect class="s4" x="400" y="97" width="12.2" height="12" rx="2"><title>first launch: prefix caching on, CUDA graphs on: 33/512 (6%)</title></rect>
+<text class="ink" x="418.2" y="107.0" font-size="11" text-anchor="start" font-weight="normal">6% (33/512)</text>
+<text class="ink2" x="400.0" y="130.0" font-size="11" text-anchor="start" font-weight="normal">prefix caching off, 2,048-token pre-fill chunks</text>
+<rect class="s4" x="400" y="135" width="98.3" height="12" rx="2"><title>prefix caching off, 2,048-token pre-fill chunks: 265/512 (52%)</title></rect>
+<text class="ink" x="504.3" y="145.0" font-size="11" text-anchor="start" font-weight="normal">52% (265/512)</text>
+<text class="ink2" x="400.0" y="168.0" font-size="11" text-anchor="start" font-weight="normal">... and 8,192-token chunks</text>
+<rect class="s4" x="400" y="173" width="9.6" height="12" rx="2"><title>... and 8,192-token chunks: 13/256 (5%)</title></rect>
+<text class="ink" x="415.6" y="183.0" font-size="11" text-anchor="start" font-weight="normal">5% (13/256)</text>
+<text class="ink2" x="400.0" y="206.0" font-size="11" text-anchor="start" font-weight="normal">... graphs on decode only</text>
+<rect class="s4" x="400" y="211" width="131.4" height="12" rx="2"><title>... graphs on decode only: 177/256 (69%)</title></rect>
+<text class="ink" x="537.4" y="221.0" font-size="11" text-anchor="start" font-weight="normal">69% (177/256)</text>
+<text class="ink2" x="400.0" y="244.0" font-size="11" text-anchor="start" font-weight="normal">... graphs kept, eager compile backend</text>
+<rect class="s4" x="400" y="249" width="75.7" height="12" rx="2"><title>... graphs kept, eager compile backend: 102/256 (40%)</title></rect>
+<text class="ink" x="481.7" y="259.0" font-size="11" text-anchor="start" font-weight="normal">40% (102/256)</text>
+<text class="ink2" x="400.0" y="282.0" font-size="11" text-anchor="start" font-weight="normal">... no CUDA graphs (enforce_eager)</text>
+<rect class="s4" x="400" y="287" width="0.5" height="12" rx="2"><title>... no CUDA graphs (enforce_eager): 0/256 (0%)</title></rect>
+<text class="ink" x="406.5" y="297.0" font-size="11" text-anchor="start" font-weight="normal">0% (0/256)</text>
+<text class="muted" x="400.0" y="320.0" font-size="11" text-anchor="start" font-weight="normal">4-8 steps each; CUDA graphs on unless stated</text>
+</svg>

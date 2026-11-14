@@ -141,7 +141,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -184,6 +184,106 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mun Hou">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Mun Hou's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/" class="post-title-link" itemprop="url">Lessons Learned During World Model Training for LLM Agent</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-11-14 00:49:11 / Modified: 09:43:13" itemprop="dateCreated datePublished" datetime="2026-11-14T00:49:11+08:00">2026-11-14</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In my <a href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment">previous post</a>, I trained an LLM agent on Delta Lake tasks with GRPO and with ECHO. I compared how well each model predicts its tool outputs and how many tasks it solves. That post was already long, so I left out most of what happened on the way to those results. This post covers the problems I ran into, the training metrics that pointed to them, why I read them the way I did, and what I changed.</p>
+<p>The setup, briefly:</p>
+<ul>
+<li>Policy: NVIDIA Nemotron 3 Nano 4B, non-thinking. It is a hybrid model that keeps most of its state in Mamba-2 layers and has four attention layers.</li>
+<li>Training: NeMo RL 0.7 on the Megatron backend, with vLLM as the sampler. GRPO with 8 prompts × 8 rollouts per step, for 90 steps.</li>
+<li>Arms: GRPO, ECHO with $\lambda&#x3D;0.005$ and ECHO with $\lambda&#x3D;0.02$, one seed each.</li>
+<li>Hardware: each arm ran on one H200 on Modal. A run took about 4 hours and cost about $23.</li>
+<li>Environment: a Databricks-style simulator built on Spark Connect and Delta Lake. The agent has three tools, <code>run_sql</code>, <code>run_python</code> and <code>submit</code>, and a verifier checks the final state of the tables.</li>
+</ul>
+<p>The code is at <a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_world">munhouiani&#x2F;delta_world</a>.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -212,9 +312,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2026-11-07 08:42:04 / Modified: 09:14:07" itemprop="dateCreated datePublished" datetime="2026-11-07T08:42:04+08:00">2026-11-07</time>
+      <time title="Created: 2026-11-07 08:42:04" itemprop="dateCreated datePublished" datetime="2026-11-07T08:42:04+08:00">2026-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-11-14 08:47:07" itemprop="dateModified" datetime="2026-11-14T08:47:07+08:00">2026-11-14</time>
     </span>
 
   
@@ -318,7 +424,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-07 09:14:07" itemprop="dateModified" datetime="2026-11-07T09:14:07+08:00">2026-11-07</time>
+      <time title="Modified: 2026-11-14 08:47:07" itemprop="dateModified" datetime="2026-11-14T08:47:07+08:00">2026-11-14</time>
     </span>
 
   
@@ -1063,103 +1169,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/03/01/Policy-Gradient-Methods/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/03/01/Importance-Sampling/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Mun Hou">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mun Hou's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mun Hou's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/03/01/Importance-Sampling/" class="post-title-link" itemprop="url">Importance Sampling</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-03-01 20:39:00" itemprop="dateCreated datePublished" datetime="2023-03-01T20:39:00+08:00">2023-03-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-10-20 01:39:43" itemprop="dateModified" datetime="2026-10-20T01:39:43+08:00">2026-10-20</time>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2023/03/01/Importance-Sampling/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/01/Importance-Sampling/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/01/Importance-Sampling/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>

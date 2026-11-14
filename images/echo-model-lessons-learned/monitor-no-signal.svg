@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 370" width="760" height="370" role="img" aria-label="Share of GRPO groups with no success, and with mixed outcomes, per 10 steps">
+<title>Share of GRPO groups with no success, and with mixed outcomes, per 10 steps</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #898781; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .line { fill: none; }
+  }
+</style>
+<rect class="surface" x="0" y="0" width="760" height="370"/>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">Is there anything to learn from? Groups with and without signal</text>
+<text class="ink2" x="24.0" y="42.0" font-size="12" text-anchor="start" font-weight="normal">10-step means. Only a group with mixed outcomes gives GRPO a gradient.</text>
+<line class="s2 line" x1="24" x2="46" y1="70" y2="70"/>
+<text class="ink2" x="52.0" y="74.0" font-size="12" text-anchor="start" font-weight="normal">GRPO</text>
+<line class="s3 line" x1="102.8" x2="124.8" y1="70" y2="70"/>
+<text class="ink2" x="130.8" y="74.0" font-size="12" text-anchor="start" font-weight="normal">ECHO λ 0.005</text>
+<line class="s1 line" x1="239.2" x2="261.2" y1="70" y2="70"/>
+<text class="ink2" x="267.2" y="74.0" font-size="12" text-anchor="start" font-weight="normal">ECHO λ 0.02</text>
+<text class="ink" x="56.0" y="100.0" font-size="13" text-anchor="start" font-weight="600">groups where all 8 rollouts failed (%)</text>
+<line class="grid" x1="56.0" x2="288.0" y1="324.0" y2="324.0"/>
+<text class="muted" x="48.0" y="328.0" font-size="11" text-anchor="end" font-weight="normal">0</text>
+<line class="grid" x1="56.0" x2="288.0" y1="254.0" y2="254.0"/>
+<text class="muted" x="48.0" y="258.0" font-size="11" text-anchor="end" font-weight="normal">20</text>
+<line class="grid" x1="56.0" x2="288.0" y1="184.0" y2="184.0"/>
+<text class="muted" x="48.0" y="188.0" font-size="11" text-anchor="end" font-weight="normal">40</text>
+<line class="grid" x1="56.0" x2="288.0" y1="114.0" y2="114.0"/>
+<text class="muted" x="48.0" y="118.0" font-size="11" text-anchor="end" font-weight="normal">60</text>
+<line class="axis" x1="56.0" x2="288.0" y1="324" y2="324"/>
+<text class="muted" x="56.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">10</text>
+<text class="muted" x="114.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">30</text>
+<text class="muted" x="172.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">50</text>
+<text class="muted" x="230.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">70</text>
+<text class="muted" x="288.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">90</text>
+<text class="ink2" x="172.0" y="358.0" font-size="11" text-anchor="middle" font-weight="normal">training step</text>
+<path class="s2 line" d="M56.0,182.9 L85.0,195.5 L114.0,224.5 L143.0,210.2 L172.0,191.7 L201.0,204.2 L230.0,252.9 L259.0,226.7 L288.0,201.5"><title>GRPO</title></path>
+<circle class="s2" cx="56.0" cy="182.9" r="3"><title>GRPO, step 10: 40</title></circle>
+<circle class="s2" cx="85.0" cy="195.5" r="3"><title>GRPO, step 20: 37</title></circle>
+<circle class="s2" cx="114.0" cy="224.5" r="3"><title>GRPO, step 30: 28</title></circle>
+<circle class="s2" cx="143.0" cy="210.2" r="3"><title>GRPO, step 40: 32</title></circle>
+<circle class="s2" cx="172.0" cy="191.7" r="3"><title>GRPO, step 50: 38</title></circle>
+<circle class="s2" cx="201.0" cy="204.2" r="3"><title>GRPO, step 60: 34</title></circle>
+<circle class="s2" cx="230.0" cy="252.9" r="3"><title>GRPO, step 70: 20</title></circle>
+<circle class="s2" cx="259.0" cy="226.7" r="3"><title>GRPO, step 80: 28</title></circle>
+<circle class="s2" cx="288.0" cy="201.5" r="3"><title>GRPO, step 90: 35</title></circle>
+<path class="s3 line" d="M56.0,174.7 L85.0,211.9 L114.0,268.8 L143.0,280.2 L172.0,284.1 L201.0,252.4 L230.0,262.8 L259.0,262.8 L288.0,267.1"><title>ECHO λ 0.005</title></path>
+<circle class="s3" cx="56.0" cy="174.7" r="3"><title>ECHO λ 0.005, step 10: 43</title></circle>
+<circle class="s3" cx="85.0" cy="211.9" r="3"><title>ECHO λ 0.005, step 20: 32</title></circle>
+<circle class="s3" cx="114.0" cy="268.8" r="3"><title>ECHO λ 0.005, step 30: 16</title></circle>
+<circle class="s3" cx="143.0" cy="280.2" r="3"><title>ECHO λ 0.005, step 40: 12</title></circle>
+<circle class="s3" cx="172.0" cy="284.1" r="3"><title>ECHO λ 0.005, step 50: 11</title></circle>
+<circle class="s3" cx="201.0" cy="252.4" r="3"><title>ECHO λ 0.005, step 60: 20</title></circle>
+<circle class="s3" cx="230.0" cy="262.8" r="3"><title>ECHO λ 0.005, step 70: 18</title></circle>
+<circle class="s3" cx="259.0" cy="262.8" r="3"><title>ECHO λ 0.005, step 80: 18</title></circle>
+<circle class="s3" cx="288.0" cy="267.1" r="3"><title>ECHO λ 0.005, step 90: 16</title></circle>
+<path class="s1 line" d="M56.0,188.9 L85.0,180.2 L114.0,249.1 L143.0,275.3 L172.0,288.5 L201.0,262.2 L230.0,262.8 L259.0,266.6 L288.0,267.1"><title>ECHO λ 0.02</title></path>
+<circle class="s1" cx="56.0" cy="188.9" r="3"><title>ECHO λ 0.02, step 10: 39</title></circle>
+<circle class="s1" cx="85.0" cy="180.2" r="3"><title>ECHO λ 0.02, step 20: 41</title></circle>
+<circle class="s1" cx="114.0" cy="249.1" r="3"><title>ECHO λ 0.02, step 30: 21</title></circle>
+<circle class="s1" cx="143.0" cy="275.3" r="3"><title>ECHO λ 0.02, step 40: 14</title></circle>
+<circle class="s1" cx="172.0" cy="288.5" r="3"><title>ECHO λ 0.02, step 50: 10</title></circle>
+<circle class="s1" cx="201.0" cy="262.2" r="3"><title>ECHO λ 0.02, step 60: 18</title></circle>
+<circle class="s1" cx="230.0" cy="262.8" r="3"><title>ECHO λ 0.02, step 70: 18</title></circle>
+<circle class="s1" cx="259.0" cy="266.6" r="3"><title>ECHO λ 0.02, step 80: 16</title></circle>
+<circle class="s1" cx="288.0" cy="267.1" r="3"><title>ECHO λ 0.02, step 90: 16</title></circle>
+<text class="ink2" x="295.0" y="205.5" font-size="11" text-anchor="start" font-weight="normal">GRPO</text>
+<text class="ink2" x="295.0" y="271.1" font-size="11" text-anchor="start" font-weight="normal">λ 0.005</text>
+<text class="ink2" x="295.0" y="284.1" font-size="11" text-anchor="start" font-weight="normal">λ 0.02</text>
+<text class="ink" x="408.0" y="100.0" font-size="13" text-anchor="start" font-weight="600">groups with mixed outcomes (%)</text>
+<line class="grid" x1="408.0" x2="640.0" y1="324.0" y2="324.0"/>
+<text class="muted" x="400.0" y="328.0" font-size="11" text-anchor="end" font-weight="normal">0</text>
+<line class="grid" x1="408.0" x2="640.0" y1="271.5" y2="271.5"/>
+<text class="muted" x="400.0" y="275.5" font-size="11" text-anchor="end" font-weight="normal">20</text>
+<line class="grid" x1="408.0" x2="640.0" y1="219.0" y2="219.0"/>
+<text class="muted" x="400.0" y="223.0" font-size="11" text-anchor="end" font-weight="normal">40</text>
+<line class="grid" x1="408.0" x2="640.0" y1="166.5" y2="166.5"/>
+<text class="muted" x="400.0" y="170.5" font-size="11" text-anchor="end" font-weight="normal">60</text>
+<line class="grid" x1="408.0" x2="640.0" y1="114.0" y2="114.0"/>
+<text class="muted" x="400.0" y="118.0" font-size="11" text-anchor="end" font-weight="normal">80</text>
+<line class="axis" x1="408.0" x2="640.0" y1="324" y2="324"/>
+<text class="muted" x="408.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">10</text>
+<text class="muted" x="466.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">30</text>
+<text class="muted" x="524.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">50</text>
+<text class="muted" x="582.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">70</text>
+<text class="muted" x="640.0" y="340.0" font-size="11" text-anchor="middle" font-weight="normal">90</text>
+<text class="ink2" x="524.0" y="358.0" font-size="11" text-anchor="middle" font-weight="normal">training step</text>
+<path class="s2 line" d="M408.0,167.7 L437.0,187.4 L466.0,223.9 L495.0,251.8 L524.0,269.0 L553.0,266.2 L582.0,232.5 L611.0,226.0 L640.0,259.6"><title>GRPO</title></path>
+<circle class="s2" cx="408.0" cy="167.7" r="3"><title>GRPO, step 10: 60</title></circle>
+<circle class="s2" cx="437.0" cy="187.4" r="3"><title>GRPO, step 20: 52</title></circle>
+<circle class="s2" cx="466.0" cy="223.9" r="3"><title>GRPO, step 30: 38</title></circle>
+<circle class="s2" cx="495.0" cy="251.8" r="3"><title>GRPO, step 40: 28</title></circle>
+<circle class="s2" cx="524.0" cy="269.0" r="3"><title>GRPO, step 50: 21</title></circle>
+<circle class="s2" cx="553.0" cy="266.2" r="3"><title>GRPO, step 60: 22</title></circle>
+<circle class="s2" cx="582.0" cy="232.5" r="3"><title>GRPO, step 70: 35</title></circle>
+<circle class="s2" cx="611.0" cy="226.0" r="3"><title>GRPO, step 80: 37</title></circle>
+<circle class="s2" cx="640.0" cy="259.6" r="3"><title>GRPO, step 90: 25</title></circle>
+<path class="s3 line" d="M408.0,178.0 L437.0,175.5 L466.0,170.2 L495.0,228.0 L524.0,261.2 L553.0,238.3 L582.0,278.9 L611.0,225.6 L640.0,250.6"><title>ECHO λ 0.005</title></path>
+<circle class="s3" cx="408.0" cy="178.0" r="3"><title>ECHO λ 0.005, step 10: 56</title></circle>
+<circle class="s3" cx="437.0" cy="175.5" r="3"><title>ECHO λ 0.005, step 20: 57</title></circle>
+<circle class="s3" cx="466.0" cy="170.2" r="3"><title>ECHO λ 0.005, step 30: 59</title></circle>
+<circle class="s3" cx="495.0" cy="228.0" r="3"><title>ECHO λ 0.005, step 40: 37</title></circle>
+<circle class="s3" cx="524.0" cy="261.2" r="3"><title>ECHO λ 0.005, step 50: 24</title></circle>
+<circle class="s3" cx="553.0" cy="238.3" r="3"><title>ECHO λ 0.005, step 60: 33</title></circle>
+<circle class="s3" cx="582.0" cy="278.9" r="3"><title>ECHO λ 0.005, step 70: 17</title></circle>
+<circle class="s3" cx="611.0" cy="225.6" r="3"><title>ECHO λ 0.005, step 80: 38</title></circle>
+<circle class="s3" cx="640.0" cy="250.6" r="3"><title>ECHO λ 0.005, step 90: 28</title></circle>
+<path class="s1 line" d="M408.0,164.4 L437.0,173.5 L466.0,155.8 L495.0,159.5 L524.0,189.1 L553.0,242.8 L582.0,271.1 L611.0,214.5 L640.0,264.1"><title>ECHO λ 0.02</title></path>
+<circle class="s1" cx="408.0" cy="164.4" r="3"><title>ECHO λ 0.02, step 10: 61</title></circle>
+<circle class="s1" cx="437.0" cy="173.5" r="3"><title>ECHO λ 0.02, step 20: 57</title></circle>
+<circle class="s1" cx="466.0" cy="155.8" r="3"><title>ECHO λ 0.02, step 30: 64</title></circle>
+<circle class="s1" cx="495.0" cy="159.5" r="3"><title>ECHO λ 0.02, step 40: 63</title></circle>
+<circle class="s1" cx="524.0" cy="189.1" r="3"><title>ECHO λ 0.02, step 50: 51</title></circle>
+<circle class="s1" cx="553.0" cy="242.8" r="3"><title>ECHO λ 0.02, step 60: 31</title></circle>
+<circle class="s1" cx="582.0" cy="271.1" r="3"><title>ECHO λ 0.02, step 70: 20</title></circle>
+<circle class="s1" cx="611.0" cy="214.5" r="3"><title>ECHO λ 0.02, step 80: 42</title></circle>
+<circle class="s1" cx="640.0" cy="264.1" r="3"><title>ECHO λ 0.02, step 90: 23</title></circle>
+<text class="ink2" x="647.0" y="254.6" font-size="11" text-anchor="start" font-weight="normal">λ 0.005</text>
+<text class="ink2" x="647.0" y="267.6" font-size="11" text-anchor="start" font-weight="normal">GRPO</text>
+<text class="ink2" x="647.0" y="280.6" font-size="11" text-anchor="start" font-weight="normal">λ 0.02</text>
+</svg>
