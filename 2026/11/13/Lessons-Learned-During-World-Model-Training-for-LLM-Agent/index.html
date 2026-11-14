@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://blog.munhou.com/images/echo-model-lessons-learned/monitor-mismatch.svg">
 <meta property="og:image" content="https://blog.munhou.com/images/echo-model-lessons-learned/monitor-no-signal.svg">
 <meta property="article:published_time" content="2026-11-13T16:49:11.000Z">
-<meta property="article:modified_time" content="2026-11-14T01:48:07.608Z">
+<meta property="article:modified_time" content="2026-11-14T02:00:39.767Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Large Language Model">
@@ -222,7 +222,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2026-11-14 00:49:11 / Modified: 09:48:07" itemprop="dateCreated datePublished" datetime="2026-11-14T00:49:11+08:00">2026-11-14</time>
+      <time title="Created: 2026-11-14 00:49:11 / Modified: 10:00:39" itemprop="dateCreated datePublished" datetime="2026-11-14T00:49:11+08:00">2026-11-14</time>
     </span>
 
   
@@ -265,7 +265,7 @@
 
 <p>The verifier reads the table’s final state and ignores what the agent says it did, so this episode scores 0. That is what a verifier should do, but it left RL with nothing to learn from. When all 8 rollouts in a group fail, every advantage in the group is zero, and the group contributes no gradient.</p>
 <p>I first tried few-shot examples of the agent loop in the system prompt. That made things worse: family C (schema evolution) fell from 0.15 to 0.02.</p>
-<p>What worked was a light supervised fine-tune on verified episodes from a teacher model, Claude Haiku 5.5, trained on the assistant’s tokens only. The amount of data has significant impact:</p>
+<p>What worked was a light supervised fine-tune on verified episodes from a teacher model, Claude Haiku 5.5, trained on the assistant’s tokens only. The amount of data has a significant impact:</p>
 <table>
 <thead>
 <tr>
@@ -286,11 +286,11 @@
 <td>0.77 on dev, which leaves little room for RL to show anything</td>
 </tr>
 </tbody></table>
-<p>I used 25 per family, which then referred as model S0. It scores 0.240 on dev and is the starting point for all three arms.</p>
-<p><strong>Lesson: Don’t rush into RL. Measure if your base model can produce meaningful signal and have headroom to learn.</strong></p>
+<p>I used 25 per family, which I call S0. It scores 0.240 on dev and is the starting point for all three arms.</p>
+<p><strong>Lesson: Don’t rush into RL. Check that your base model produces a learning signal and has room to improve.</strong></p>
 <h3 id="Slow-Simulator"><a href="#Slow-Simulator" class="headerlink" title="Slow Simulator"></a>Slow Simulator</h3><p>A training step waits for all 64 episodes, so at first the simulator’s speed set the cost of the whole experiment. Delta commits took most of the time: a <code>MERGE</code> costs about 1s and a <code>RESTORE</code> about 2s. Setting up and verifying a task took 65% of an episode’s time. Under load, the Spark JVM was CPU-bound, because it compiled generated code for every new query plan.</p>
-<p>I ended up turning off Spark’s code generation and using Hadoop’s raw local filesystem. One episode went from 8.3 s to 4.5 s, and throughput at 8 concurrent episodes rose from 0.26 to 0.58 episodes per second. These changes are invisible to the agent, but the reinforcement learning cycle runs faster (and save me a lot of money).</p>
-<p><strong>Lesson: The bottleneck of a RL cycle might not from GPU training. Identify and solve the bottleneck saves a lot of money.</strong></p>
+<p>I ended up turning off Spark’s code generation and using Hadoop’s raw local filesystem. One episode went from 8.3 s to 4.5 s, and throughput at 8 concurrent episodes rose from 0.26 to 0.58 episodes per second. These changes were meant to be invisible to the agent, but the reinforcement learning cycle runs faster (and saves me a lot of money).</p>
+<p><strong>Lesson: The bottleneck of an RL cycle might not be GPU training. Finding and fixing it saves a lot of money.</strong></p>
 <h2 id="During-Training"><a href="#During-Training" class="headerlink" title="During Training"></a>During Training</h2><p>Every run logged about a hundred metrics to Weights &amp; Biases at each step. The default dashboard shows reward and loss, and those were rarely where a problem showed first. These are the signals that told me something:</p>
 <table>
 <thead>
@@ -352,7 +352,7 @@
 <p>A few sequences carried each spike. In the per-step sample dumps, their generation turned to garbage right after a tool result:</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; A Find E проекта E ![ E cereal gam A In The&quot;</span><br></pre></td></tr></table></figure>
 
-<p>vLLM had sampled those tokens at a log-probability of about -0.7, and Megatron scored them at -35 to -56. 33 of GRPO’s first 512 rollouts (6.4%) were corrupted like this. Nearly all of them scored 0, so the trainer was learning from sampler garbage as if it were the policy’s own failures, and the group baselines shifted with it. I stopped all three arms at steps 10 - 13.</p>
+<p>vLLM had sampled those tokens at a log-probability of about -0.7, and Megatron scored them at -35 to -56. 33 of GRPO’s first 512 rollouts (6.4%) were corrupted like this. Nearly all of them scored 0, so the trainer was learning from sampler garbage as if it were the policy’s own failures, and the group baselines shifted with it. I stopped all three arms at steps 10-13.</p>
 <p>My first diagnosis was wrong. vLLM’s start-up log warned that prefix caching on this hybrid model caches the Mamba state in an experimental mode. Multi-turn rollouts reuse prefixes all the time, so prefix caching looked like the cause, and I turned it off. Corruption went from 6% of rollouts to 52%, on every step. Without the cache, every long prefill ran in 2,048-token chunks.</p>
 <p>So I stopped guessing and changed one setting at a time, in 4-step runs, counting corrupted rollouts directly from the sample dumps. A rollout counted as corrupted if any of its tokens differed between the two engines by more than 10 nats.</p>
 <table>
@@ -408,13 +408,13 @@
 </tr>
 </tbody></table>
 <p>The cause is vLLM’s CUDA graphs. With graphs on, every faster setting I tried corrupted rollouts. Graphs on decoding alone were the worst, so graph-captured decoding itself corrupts the Mamba state. Larger chunks and prefix caching only made bad batches rarer, which is why the first launch saw 6% and not 50%. In eager mode no rollout was corrupted, and the largest gap between the engines on any token was 0.90 nats.</p>
-<p>Running in eager mode costs speed. During my diagnosis, steps were about 60% slower with eager mode. I have no choice but to relaunch the three arms in eager mode, and make eager the default for every vLLM in the project, in exchange for training accuracy.</p>
+<p>Running in eager mode costs speed. During my diagnosis, steps were about 60% slower with eager mode. I had no choice but to relaunch the three arms in eager mode, and made eager the default for every vLLM in the project, to keep training correct.</p>
 <p><strong>Lesson: Capture, sample, and watch the worst sequence in each batch.</strong></p>
 <h3 id="Groups-With-Nothing-To-Learn-From"><a href="#Groups-With-Nothing-To-Learn-From" class="headerlink" title="Groups With Nothing To Learn From"></a>Groups With Nothing To Learn From</h3><p>GRPO’s advantage is each rollout’s reward minus its group’s mean. A group whose 8 rollouts all fail, or all succeed, contributes no gradient. NeMo RL logs the share of each kind, and I expected the all-fail share to fall as the policy improved.</p>
 <p><img src="/images/echo-model-lessons-learned/monitor-no-signal.svg" alt="Share of groups where all rollouts failed, and of groups with mixed outcomes"></p>
 <p>The ECHO arms followed that path, from 39-43% of groups over steps 1-10 to 10-21% from step 21 on. GRPO’s fell to 28% over steps 21-30, then rose again and ended at 35%. Groups with mixed outcomes were common from the start: 50-72% at step 1.</p>
 <p>I learned three things from this. First, GRPO had a learning signal from step 1. That is not the sparse-reward setting that motivates ECHO, where most groups fail and the observation loss becomes the main teacher. Second, GRPO’s late rise came from a family it had lost, not from tasks it never learned. When I broke the share down by family, using NeMo RL’s per-sample logs, GRPO’s family-E groups failed outright in every batch I sampled from step 30 to step 60. The batch mean doesn’t show that. Third, the ECHO arms’ all-fail share settled at 16-20% from step 51. That floor is close to the share of training prompts that no model ever solved.</p>
-<p><strong>Lesson: Understand the RL algorithm</strong></p>
+<p><strong>Lesson: Understand the RL algorithm.</strong></p>
 <h2 id="After-Training-Tasks-No-Model-Learned"><a href="#After-Training-Tasks-No-Model-Learned" class="headerlink" title="After Training: Tasks No Model Learned"></a>After Training: Tasks No Model Learned</h2><p>After training, I checked the instances that no model ever solved: 16 on dev and 28 on test-ood-hard, unsolved in 16 samples across S0 and the three step-90 arms. My first worry was broken tasks, but the scripted solver solves all 44. Most of them belong to two kinds of task that no model learned, before or after training:</p>
 <table>
 <thead>
@@ -443,7 +443,7 @@
 </tbody></table>
 <p>Their neighbours were learned. Renamed columns went from 2 of 32 for S0 to 27-30 of 32 for the trained arms, and unclustered tables went from 1 of 48 to 41-47 of 48. Each of the two failing kinds needs one Delta feature that the models almost never used. The environment gives no hint, just as Databricks doesn’t: the rejected <code>ALTER</code> returns the workspace’s own message, “ALTER TABLE CHANGE COLUMN is not supported for changing column value from INT to BIGINT”, which doesn’t mention type widening.</p>
 <p>Neither loss can reach these tasks. A group whose 8 rollouts all fail gives GRPO no gradient. ECHO’s observation loss can’t help either: the missing step almost never runs, so its output is almost never there to be predicted. These tasks are 16.4% of the training prompts, and they cap every arm at about 0.86 on dev and 0.82 on test-ood-hard.</p>
-<p><strong>Lesson: Understand the failure and design a better guide for the model</strong></p>
+<p><strong>Lesson: Understand the failure and design a better guide for the model.</strong></p>
 <h2 id="What-I-Would-Put-On-the-Dashboard-From-The-Start"><a href="#What-I-Would-Put-On-the-Dashboard-From-The-Start" class="headerlink" title="What I Would Put On the Dashboard From The Start"></a>What I Would Put On the Dashboard From The Start</h2><p>If I ran this again, these are the panels I would set up before step 1, in order:</p>
 <ol>
 <li>Step-1 reward against the starting model’s evaluation.</li>
