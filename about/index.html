@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css?v=mwjur21v">
+<link rel="stylesheet" href="/css/main.css?v=mwjval0b">
 
 
 
@@ -27,7 +27,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog.munhou.com/images/echo-model/learning-curve.svg">
 <meta property="article:published_time" content="2026-11-16T07:00:00.000Z">
-<meta property="article:modified_time" content="2026-11-16T22:34:24.187Z">
+<meta property="article:modified_time" content="2026-11-16T23:00:52.328Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Anomaly Detection">
 <meta property="article:tag" content="Deep Learning">
@@ -204,13 +204,13 @@
       <div class="post-body">
           <div class="about-intro">
 <p class="about-lead">Hi, I'm Mun Hou. I build and study machine learning systems, and I write here about what I learn along the way.</p>
-<p>My recent work is on <strong>LLM agents and reinforcement learning</strong>: training small models to act in tool environments and checking whether a model that predicts its environment better also acts better. Before that I spent a lot of time on <strong>ML for network security</strong> (encrypted traffic classification, network anomaly detection, malware detection) and on the <strong>data and serving systems</strong> that ML runs on, mostly with PyTorch and PySpark.</p>
+<p>My recent work is on <strong>LLM agents and reinforcement learning</strong>: training small models to act in tool environments and checking whether a model that predicts its environment better also acts better. Before that I spent a lot of time on <strong>ML for network security</strong> (encrypted traffic classification, intrusion and anomaly detection, malware detection) and on the <strong>data and serving systems</strong> that ML runs on, mostly with PyTorch and PySpark.</p>
 <p>I like reimplementing papers to see what holds up. Most of the projects below started that way, and the write-ups say where my results matched the paper and where they didn't.</p>
 </div>
 
 <div class="about-focus">
 <div class="about-focus-item"><i class="fa fa-robot"></i><div class="about-focus-title">LLM agents &amp; RL</div><p>GRPO, world-model objectives, policy gradient methods, PPO and its successors.</p></div>
-<div class="about-focus-item"><i class="fa fa-shield-halved"></i><div class="about-focus-title">Security ML</div><p>Traffic classification, streaming anomaly detection, out-of-distribution detection, malware.</p></div>
+<div class="about-focus-item"><i class="fa fa-shield-halved"></i><div class="about-focus-title">Security ML</div><p>Traffic classification, intrusion detection, streaming anomaly detection, out-of-distribution detection, malware.</p></div>
 <div class="about-focus-item"><i class="fa fa-gears"></i><div class="about-focus-title">ML systems</div><p>Spark-to-PyTorch pipelines, batch inference, stream-first model serving.</p></div>
 </div>
 
@@ -235,6 +235,12 @@
 <p>PyTorch reimplementation of a CNN that classifies encrypted network traffic by application and traffic type, with a PySpark preprocessing pipeline over the ISCX VPN-nonVPN captures.</p>
 <p class="about-tags"><span>PyTorch</span><span>PySpark</span><span>Traffic classification</span></p>
 <p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/Deep-Packet"><i class="fab fa-github"></i> Code</a><a href="/2020/04/05/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Tra%EF%AC%83c-Classi%EF%AC%81cation-Using-Deep-Learning/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+</div>
+<div class="about-card">
+<h3>LuNet</h3>
+<p>PyTorch Lightning implementation of LuNet, which stacks convolution and LSTM blocks to detect network intrusions, trained on the UNSW-NB15 dataset.</p>
+<p class="about-tags"><span>PyTorch Lightning</span><span>CNN + LSTM</span><span>Intrusion detection</span></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/LuNet"><i class="fab fa-github"></i> Code</a></p>
 </div>
 <div class="about-card">
 <h3>GEE</h3>
