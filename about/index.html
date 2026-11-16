@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha256-4Lad8m4ZWW1Lgb9+sMVLYEfnIh7BjV1NQMEe79Pviks=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.munhou.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Hi, I&#39;m Mun Hou. I build and study machine learning systems, and I write here about what I learn along the way. My recent work is on LLM agents and reinforcement learning: training small models to ac">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About">
+<meta property="og:url" content="https://blog.munhou.com/about/index.html">
+<meta property="og:site_name" content="Mun Hou&#39;s Blog">
+<meta property="og:description" content="Hi, I&#39;m Mun Hou. I build and study machine learning systems, and I write here about what I learn along the way. My recent work is on LLM agents and reinforcement learning: training small models to ac">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.munhou.com/images/echo-model/learning-curve.svg">
+<meta property="article:published_time" content="2026-11-16T07:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-16T22:34:24.187Z">
+<meta property="article:author" content="Mun Hou">
+<meta property="article:tag" content="Anomaly Detection">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Machine Learning">
+<meta property="article:tag" content="Malware Detection">
+<meta property="article:tag" content="Pytorch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.munhou.com/images/echo-model/learning-curve.svg">
+
+
+<link rel="canonical" href="https://blog.munhou.com/about/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":"","permalink":"https://blog.munhou.com/about/index.html","path":"about/index.html","title":"About"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>About | Mun Hou's Blog
+</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-345528590"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-345528590","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js" defer></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-search popup-trigger" aria-label="Search" role="button">
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mun Hou's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-toggle" aria-label="Toggle navigation bar" role="button">
+      <i class="fa fa-ellipsis fa-fw fa-lg"></i>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Featured-Project"><span class="nav-number">1.</span> <span class="nav-text">Featured Project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Projects"><span class="nav-number">2.</span> <span class="nav-text">Projects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Writing"><span class="nav-number">3.</span> <span class="nav-text">Writing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-in-Touch"><span class="nav-number">4.</span> <span class="nav-text">Get in Touch</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Mun Hou</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/munhouetic/" title="LinkedIn → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;munhouetic&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-linkedin fa-fw"></i>LinkedIn</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/munhouiani" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;munhouiani" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:munhou2022+blog@gmail.com" title="E-Mail → mailto:munhou2022+blog@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">About
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="about-intro">
+<p class="about-lead">Hi, I'm Mun Hou. I build and study machine learning systems, and I write here about what I learn along the way.</p>
+<p>My recent work is on <strong>LLM agents and reinforcement learning</strong>: training small models to act in tool environments and checking whether a model that predicts its environment better also acts better. Before that I spent a lot of time on <strong>ML for network security</strong> (encrypted traffic classification, network anomaly detection, malware detection) and on the <strong>data and serving systems</strong> that ML runs on, mostly with PyTorch and PySpark.</p>
+<p>I like reimplementing papers to see what holds up. Most of the projects below started that way, and the write-ups say where my results matched the paper and where they didn't.</p>
+</div>
+
+<div class="about-focus">
+<div class="about-focus-item"><i class="fa fa-robot"></i><div class="about-focus-title">LLM agents &amp; RL</div><p>GRPO, world-model objectives, policy gradient methods, PPO and its successors.</p></div>
+<div class="about-focus-item"><i class="fa fa-shield-halved"></i><div class="about-focus-title">Security ML</div><p>Traffic classification, streaming anomaly detection, out-of-distribution detection, malware.</p></div>
+<div class="about-focus-item"><i class="fa fa-gears"></i><div class="about-focus-title">ML systems</div><p>Spark-to-PyTorch pipelines, batch inference, stream-first model serving.</p></div>
+</div>
+
+<h2 id="Featured-Project"><a href="#Featured-Project" class="headerlink" title="Featured Project"></a>Featured Project</h2><div class="about-featured">
+<div class="about-featured-body">
+<h3><a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_world">delta_world</a>: world modeling for an LLM agent</h3>
+<p>An agent that works on Delta Lake tables in a Databricks-style workspace, trained with GRPO and with ECHO, which adds a loss on predicting tool outputs. Policy: NVIDIA Nemotron 3 Nano 4B, trained with NeMo RL on Megatron with vLLM sampling.</p>
+<ul>
+<li>ECHO-trained models predicted the facts in tool outputs 0.64–0.77 nats per token better than the GRPO model on held-out episodes.</li>
+<li>ECHO models solved about 0.2 more of the tasks than GRPO (CI +0.12 to +0.29).</li>
+<li>A better world model did not always mean a better agent, and debugging the training run took most of the effort.</li>
+</ul>
+<p class="about-tags"><span>LLM agents</span><span>GRPO</span><span>NeMo RL</span><span>vLLM</span><span>Delta Lake</span></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_world"><i class="fab fa-github"></i> Code</a><a href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/"><i class="fa fa-file-lines"></i> Results</a><a href="/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/"><i class="fa fa-file-lines"></i> Lessons learned</a></p>
+</div>
+<figure class="about-featured-figure"><a href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/"><img src="/images/echo-model/learning-curve.svg" alt="Dev pass@1 at training steps 0 to 90 for GRPO and two ECHO settings" loading="lazy"></a><figcaption>Dev pass@1 during training. With task family E left out, the three curves stay close.</figcaption></figure>
+</div>
+
+<h2 id="Projects"><a href="#Projects" class="headerlink" title="Projects"></a>Projects</h2><div class="about-grid">
+<div class="about-card">
+<h3>Deep Packet</h3>
+<p>PyTorch reimplementation of a CNN that classifies encrypted network traffic by application and traffic type, with a PySpark preprocessing pipeline over the ISCX VPN-nonVPN captures.</p>
+<p class="about-tags"><span>PyTorch</span><span>PySpark</span><span>Traffic classification</span></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/Deep-Packet"><i class="fab fa-github"></i> Code</a><a href="/2020/04/05/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Tra%EF%AC%83c-Classi%EF%AC%81cation-Using-Deep-Learning/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+</div>
+<div class="about-card">
+<h3>GEE</h3>
+<p>Variational autoencoder for network anomaly detection, trained on noisy, unlabeled flow features and scored by reconstruction error, following the GEE paper.</p>
+<p class="about-tags"><span>PyTorch</span><span>VAE</span><span>Anomaly detection</span></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/GEE"><i class="fab fa-github"></i> Code</a><a href="/2020/07/12/Pytorch-Implementation-of-GEE-A-Gradient-based-Explainable-Variational-Autoencoder-for-Network-Anomaly-Detection/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+</div>
+<div class="about-card">
+<h3>MIDAS</h3>
+<p>Pip-installable Python build of MIDAS, MIDAS-R and MIDAS-F for streaming edge anomaly detection, with an example notebook on a real dataset.</p>
+<p class="about-tags"><span>Python</span><span>C++</span><span>Streaming</span></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/MIDAS"><i class="fab fa-github"></i> Code</a><a href="/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+</div>
+<div class="about-card">
+<h3>OOD detection with kNN</h3>
+<p>Out-of-distribution detection from ResNet-18 embeddings on CIFAR-10, using FAISS nearest-neighbor distances as the score.</p>
+<p class="about-tags"><span>PyTorch</span><span>FAISS</span><span>OOD</span></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/ood-knn"><i class="fab fa-github"></i> Code</a><a href="/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+</div>
+<div class="about-card">
+<h3>Rendezvous architecture</h3>
+<p>Stream-first model serving with production, canary and decoy models behind one front end, message passing over Pulsar, and logs shipped to Elasticsearch.</p>
+<p class="about-tags"><span>Pulsar</span><span>Elasticsearch</span><span>Docker</span></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/rendezvous-arch"><i class="fab fa-github"></i> Code</a><a href="/2022/02/09/Simple-Implementation-of-Rendevzous-Architecture-for-Machine-Learning-Services/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+</div>
+<div class="about-card">
+<h3>Drug Listings Dataset</h3>
+<p>A cleaned CSV of drug listings extracted from Gwern's darknet market archives, covering eight marketplaces including Agora, Evolution and Silk Road 2.</p>
+<p class="about-tags"><span>Dataset</span><span>Data cleaning</span></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/Drug-Listings-Dataset"><i class="fab fa-github"></i> Data</a><a href="/2021/09/29/Drug-Listing-Dataset/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+</div>
+<div class="about-card">
+<h3>Petastorm demo</h3>
+<p>Feeding Parquet files written by PySpark straight into a PyTorch training loop with Uber's Petastorm.</p>
+<p class="about-tags"><span>PySpark</span><span>PyTorch</span><span>Petastorm</span></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/petastorm-demo"><i class="fab fa-github"></i> Code</a><a href="/2020/01/16/Data-Pipeline-From-Pyspark-to-Pytorch/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+</div>
+</div>
+
+<h2 id="Writing"><a href="#Writing" class="headerlink" title="Writing"></a>Writing</h2><div class="about-series">
+<div class="about-series-item">
+<h3>Reinforcement learning, from the ground up</h3>
+<ol>
+<li><a href="/2023/03/01/Importance-Sampling/">Importance Sampling</a></li>
+<li><a href="/2023/03/01/Policy-Gradient-Methods/">Policy Gradient Methods</a></li>
+<li><a href="/2023/03/01/Off-Policy-Gradient-Methods/">Off-Policy Gradient Methods</a></li>
+<li><a href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/">PPO and PPO2</a></li>
+<li><a href="/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/">From PPO to GDPO</a></li>
+</ol>
+</div>
+<div class="about-series-item">
+<h3>Language models</h3>
+<ul>
+<li><a href="/2026/10/19/The-Raw-Output-of-LLM-is-a-Sequence/">The Raw Output of LLM is a Sequence</a></li>
+<li><a href="/2023/08/14/Byte-Pair-Encoding-BPE/">Byte-Pair Encoding (BPE)</a></li>
+<li><a href="/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/">Paper study: LLaMA</a></li>
+<li><a href="/2023/08/11/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/">Paper study: LLaMA 2</a></li>
+</ul>
+</div>
+</div>
+
+<p class="about-more">Everything else is in the <a href="/archives/">archive</a> and under <a href="/tags/">tags</a>.</p>
+
+<h2 id="Get-in-Touch"><a href="#Get-in-Touch" class="headerlink" title="Get in Touch"></a>Get in Touch</h2><p class="about-contact"><a target="_blank" rel="noopener" href="https://github.com/munhouiani"><i class="fab fa-github"></i> GitHub</a><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/munhouetic/"><i class="fab fa-linkedin"></i> LinkedIn</a><a href="mailto:munhou2022+blog@gmail.com"><i class="fa fa-envelope"></i> Email</a></p>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mun Hou</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/munhouiani" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"munhousblog","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>
