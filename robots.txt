@@ -1,6 +1,35 @@
 # robots.txt for https://blog.munhou.com
 # Format: RFC 9309 (https://www.rfc-editor.org/rfc/rfc9309)
+#
+# A crawler obeys only the most specific group that names it, so each AI
+# group below fully defines that crawler's access.
 
+# AI search crawlers: fetch pages that AI assistants cite in their answers.
+User-agent: OAI-SearchBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+Allow: /
+
+# User-triggered fetchers: retrieve a page when a person asks an assistant to.
+User-agent: ChatGPT-User
+User-agent: Claude-User
+User-agent: Perplexity-User
+Allow: /
+
+# AI training crawlers: collect content to train models. Blocking these does
+# not affect appearing in AI search results. To opt out of training, change
+# "Allow: /" below to "Disallow: /".
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: Amazonbot
+Allow: /
+
+# Everyone else, including traditional search engines.
 User-agent: *
 Allow: /
 
