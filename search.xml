@@ -112,37 +112,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Drug Listing Dataset</title>
-    <url>/2021/09/29/Drug-Listing-Dataset/</url>
-    <content><![CDATA[<p><a href="https://www.gwern.net/DNM-archives">Gwern published a collection of Darknet Market Archives in 2015</a>. While the dataset is comprehensive, a lot of works need to be done before we can start analyzing it. I put some effort to organize Gwern’s archives, extract only drug-related content, and construct a drug listing dataset in csv format.</p>
-<span id="more"></span>
-
-
-<h2 id="Link-to-Dataset"><a href="#Link-to-Dataset" class="headerlink" title="Link to Dataset"></a>Link to Dataset</h2><p>Feel free to check out my repo <a href="https://github.com/munhouiani/Drug-Listings-Dataset">here</a>.</p>
-<h2 id="Coverage"><a href="#Coverage" class="headerlink" title="Coverage"></a>Coverage</h2><p>Drug listing data are parsed from the following marketplaces.</p>
-<ul>
-<li>1776</li>
-<li>Abraxas</li>
-<li>Agora</li>
-<li>Evolution</li>
-<li>Nucleus</li>
-<li>Outlaw Market</li>
-<li>Silk Road 2</li>
-<li>The Marketplace</li>
-</ul>
-<h2 id="Data-Field"><a href="#Data-Field" class="headerlink" title="Data Field"></a>Data Field</h2><ul>
-<li><code>product_title</code>: The title of the item.</li>
-<li><code>product_description</code>: The description of the item. This field could be null as some of the listing archives are damaged.</li>
-<li><code>ship_from</code>: The place where the item is shipped from. This field could be null as shipping information isn’t required for certain marketplaces.</li>
-<li><code>ship_to</code>: The place where the item is shipped to. This field could be null as shipping information isn’t required for certain marketplaces.</li>
-<li><code>seller</code>: The seller of the item.</li>
-<li><code>price</code>: The price of the item, the currency is not yet unified.</li>
-<li><code>source</code>: The name of the marketplace where this item is posted.</li>
-</ul>
-<h2 id="Possible-Research"><a href="#Possible-Research" class="headerlink" title="Possible Research"></a>Possible Research</h2><h3 id="Drug-Slang-Detection"><a href="#Drug-Slang-Detection" class="headerlink" title="Drug Slang Detection"></a>Drug Slang Detection</h3><p><a href="https://arxiv.org/pdf/2103.16808.pdf">Wanzheng et al. (2021)</a> proposed an unsupervised method to detect and identify drug slang. By masking a drug name (e.g. heroin), they use a language model to fill in the mask with words other than the original drug name. Those predicted words are considered as drug slang. This dataset could be used to enhance their language model.</p>
-]]></content>
-  </entry>
-  <entry>
     <title>Detecting Out-of-Distribution Samples with kNN</title>
     <url>/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/</url>
     <content><![CDATA[<h2 id="What-is-Out-of-Distribution-OOD-Detection-and-Why-is-it-Important"><a href="#What-is-Out-of-Distribution-OOD-Detection-and-Why-is-it-Important" class="headerlink" title="What is Out-of-Distribution (OOD) Detection and Why is it Important?"></a>What is Out-of-Distribution (OOD) Detection and Why is it Important?</h2><p>Most machine learning models are trained based on the closed-world assumption, meaning that the test data is assumed to have the same distribution as the training data. When we train a model, we usually form our training and testing data by randomly splitting the data we have into two sets, in which both datasets have the same label distribution. However, in the real-world scenario, this assumption doesn’t necessarily hold. For example, a model trained to classify cats and dogs may receive an image of a dolphin. Even worse, it might highly confident classify such inputs into in-distribution classes. </p>
@@ -208,6 +177,37 @@
         <tag>PyTorch</tag>
         <tag>Machine Learning</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Drug Listing Dataset</title>
+    <url>/2021/09/29/Drug-Listing-Dataset/</url>
+    <content><![CDATA[<p><a href="https://www.gwern.net/DNM-archives">Gwern published a collection of Darknet Market Archives in 2015</a>. While the dataset is comprehensive, a lot of works need to be done before we can start analyzing it. I put some effort to organize Gwern’s archives, extract only drug-related content, and construct a drug listing dataset in csv format.</p>
+<span id="more"></span>
+
+
+<h2 id="Link-to-Dataset"><a href="#Link-to-Dataset" class="headerlink" title="Link to Dataset"></a>Link to Dataset</h2><p>Feel free to check out my repo <a href="https://github.com/munhouiani/Drug-Listings-Dataset">here</a>.</p>
+<h2 id="Coverage"><a href="#Coverage" class="headerlink" title="Coverage"></a>Coverage</h2><p>Drug listing data are parsed from the following marketplaces.</p>
+<ul>
+<li>1776</li>
+<li>Abraxas</li>
+<li>Agora</li>
+<li>Evolution</li>
+<li>Nucleus</li>
+<li>Outlaw Market</li>
+<li>Silk Road 2</li>
+<li>The Marketplace</li>
+</ul>
+<h2 id="Data-Field"><a href="#Data-Field" class="headerlink" title="Data Field"></a>Data Field</h2><ul>
+<li><code>product_title</code>: The title of the item.</li>
+<li><code>product_description</code>: The description of the item. This field could be null as some of the listing archives are damaged.</li>
+<li><code>ship_from</code>: The place where the item is shipped from. This field could be null as shipping information isn’t required for certain marketplaces.</li>
+<li><code>ship_to</code>: The place where the item is shipped to. This field could be null as shipping information isn’t required for certain marketplaces.</li>
+<li><code>seller</code>: The seller of the item.</li>
+<li><code>price</code>: The price of the item, the currency is not yet unified.</li>
+<li><code>source</code>: The name of the marketplace where this item is posted.</li>
+</ul>
+<h2 id="Possible-Research"><a href="#Possible-Research" class="headerlink" title="Possible Research"></a>Possible Research</h2><h3 id="Drug-Slang-Detection"><a href="#Drug-Slang-Detection" class="headerlink" title="Drug Slang Detection"></a>Drug Slang Detection</h3><p><a href="https://arxiv.org/pdf/2103.16808.pdf">Wanzheng et al. (2021)</a> proposed an unsupervised method to detect and identify drug slang. By masking a drug name (e.g. heroin), they use a language model to fill in the mask with words other than the original drug name. Those predicted words are considered as drug slang. This dataset could be used to enhance their language model.</p>
+]]></content>
   </entry>
   <entry>
     <title>From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms</title>
@@ -1576,92 +1576,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F</title>
-    <url>/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/</url>
-    <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>Anomaly detection has always been a challenging research field. An anomaly indicates a sudden and short-lived pattern change, while a detection algorithm aims to identify anomalies promptly. Detecting anomaly on networks levels up the problem as network monitoring devices usually collect data at high rates, which means a network anomaly detection algorithm should handle high-dimension, noisy, and massive data under power and communication constraints. We should also acknowledge that different anomalies exhibit themselves in network statistics in a different manner. A general anomaly detection model often does not exist. A model that detects surprising edges in a network is probably cannot detect micro cluster anomalies.</p>
-<span id="more"></span>
-
-<p>There are multiple ways to formulate a network anomaly detection problem. The simplest method is to calculate the mean and variance of any connection IP pairs and raise an alert once the connection count is away from 3 standard deviations of the means. This method holds an assumption: the connection count follows a Gaussian distribution. This assumption is strict and often false in a real-world situation.</p>
-<p><img src="/images/midas/distribution-of-connections.png" alt="Distribution of some connections"></p>
-<p>Pic 1. Distribution of connection counts from a real-world dataset, which is not a normal distribution.</p>
-<p>Researchers had studied various machine learning approaches to this network anomaly detection problem. To represent a net flow, one either extracts hand-crafted features, such as ﬂow packet size, amount of specific signals, or build the representation automatically with deep neural networks, such as CNN. Afterwards, they either build an unsupervised model with an Isolation Forest, One-class SVM, or a Deep Autoencoder with these representations.</p>
-<p>MIDAS authors formulated this problem differently. Instead of net flow, they model the network connections a graph, which kind of the networks’ nature. Their algorithm is a graph anomaly detection algorithm that works on a dynamic graph, a sweet capability where the current graph anomaly detection algorithms lack. Current graph algorithms only process a graph snapshot at specific intervals. They do not consider the temporal characteristics, in which everything happening at the current snapshot is somehow related to the past. Here are two graph snapshots from the same network at two different times. They are related to each other, yet their snapshots tell an entirely different story.</p>
-<img src="/images/midas/network-graph-day1.png" alt="Network Graph Day 1" style="zoom:50%;" /> 
-Pic 2. Network Graph from Day 1
-<img src="/images/midas/network-graph-day2.png" alt="Network Graph Day 2" style="zoom:50%;" />
-Pic 3. Network Graph from Day 2
-
-<h2 id="Properties-of-MIDAS"><a href="#Properties-of-MIDAS" class="headerlink" title="Properties of MIDAS"></a>Properties of MIDAS</h2><p>MIDAS has the following properties:</p>
-<ul>
-<li>It can detect micro-cluster anomalies, which are suddenly arriving groups of suspiciously similar edge.</li>
-<li>It processes each incoming edge within constant time and constant memory.</li>
-</ul>
-<p>In general, MIDAS records the counts of every single edge with a Count-Min-Sketch data structure. Before we dive into their methodology, we should figure out what count-min-sketch is and why they use it.</p>
-<h3 id="Count-Min-Sketch-CMS"><a href="#Count-Min-Sketch-CMS" class="headerlink" title="Count-Min-Sketch (CMS)"></a>Count-Min-Sketch (CMS)</h3><p>We often use a hash map to maintain a counter:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">d = &#123;&#125;</span><br><span class="line"></span><br><span class="line">d[some_key] = d.get(some_key, <span class="number">0</span>) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>To retrieve the count of <code>some_key</code>, we use <code>d[some_key]</code>. This method does not scale as the number of keys in a hash map could be huge. Therefore, count-min-sketch (CMS) aims to serve as a frequency table that consumes only constant memory. In other words, the required memory of CMS does not increase when the number of keys increases.</p>
-<img src="/images/midas/cms.png" alt="CMS Data Structure" style="zoom:30%;" />
-
-<p>To use a CMS, we prepare $d$  different hash functions and the number of buckets of each hash function $w$. Then we initialise an matrix of size $d \times w$ with 0.</p>
-<img src="/images/midas/cms-add-count.gif" alt="CMS Increment Count" style="zoom:70%;" />
-
-<p>To update a count of <code>some_key</code>, we first hash <code>some_key</code> with a hash function $h_i$, and then increment the number at $cell(i, h_i(\text{some_key}))$. We continue this process until all $d$ hash functions have been used.</p>
-<img src="/images/midas/cms-retrieve-count.gif" alt="CMS Retrieve Count" style="zoom:70%;" />
-
-<p>Of course, hash functions may conflict with each other due to the limited number of buckets. To retrieve the count of <code>some_key</code>, we get all counts of <code>some_key</code> from each row with $h_i(\text{some_key})$, then return the minimum value.</p>
-<h2 id="MIDAS"><a href="#MIDAS" class="headerlink" title="MIDAS"></a>MIDAS</h2><p>MIDAS will maintain two CMS, one for the total number of edges from $u$ to $v$ until the current time tick, denoted as $\hat{s} _{uv}$, and the number of edge from $u$ to $v$ at the current time tick, denoted as $\hat{a} _{uv}$. The time ticks mentioned here are discrete, for example, $t&#x3D;10$. Since $\hat{a} _{uv}$ is used to count the edge from $u$ to $v$ at the current time tick, it will be reset every time MIDAS transition to the next time tick. For example, let us say we are at $t &#x3D; 10$ and $\hat{a} _{uv} &#x3D; 19$. Before we move to $t&#x3D;11$, we will reset  $\hat{a} _{uv}$ to $0$.</p>
-<p>MIDAS assumes that the mean level (i.e. the average rate at which edges appear) in the current time tick (e.g. $t &#x3D; 10$) is the same as the mean level before the current time tick ($t &lt; 10$). Compare to the Gaussian mentioned we stated before, their assumption is weaker as they do not assume any distribution at each time tick.</p>
-<p>With the chi-square goodness of fit test, they score any newly arriving edge $(u, v, t)$ with the following equation:</p>
-<p>$$<br>score((u,v,t)) &#x3D; (\hat{a} _{uv} - \frac{\hat{s} _{uv}}{t})^2 \frac{t^2}{\hat{s} _{uv}(t-1)}<br>$$</p>
-<p>Let us walk through the proof one by one:</p>
-<p><img src="/images/midas/midas-proof.png" alt="Proof"></p>
-<ol>
-<li>Recall that they have a CMS for the number of edge at the current time tick, therefore the observed count of edge $u \rightarrow v$ can be retrieved from $a_{uv}$.</li>
-<li>Recall that they also have a CMS for the total number of edge until the current tick, therefore the mean level of edge $u \rightarrow v$ is calculated as $\frac{s_{uv}}{t}$.</li>
-<li>To calculate the observed number of edge $u \rightarrow v$ before current time tick, we simply subtract $a_{uv}$ from $s_{uv}$.</li>
-<li>Finally, to get the mean level of the number of edge $u \rightarrow v$ before current time tick, we calculate $\frac{t-1}{t} s_{uv}$.</li>
-</ol>
-<p>Here is the pseudocode of MIDAS:</p>
-<img src="/images/midas/midas-code.png" alt="MIDAS Pseudocode" style="zoom:30%;" />
-
-<h2 id="MIDAS-R"><a href="#MIDAS-R" class="headerlink" title="MIDAS-R"></a>MIDAS-R</h2><p>The “R” in MIDAS-R stands for “relations”. MIDAS-R aims to group related edges.</p>
-<p>The first relation they incorporate is the temporal relation. Instead of resetting $a_{uv}$ before every transition, they reduce the count $a_{uv}$ by a fraction of $\alpha \in (0, 1)$. For example, let us say the $\alpha &#x3D; 0.5$ and $a_{uv} &#x3D; 20$. Before we transition to the next time tick, we reduce $a_{uv}$ to $10$ instead of resetting it to $0$.</p>
-<p><img src="/images/midas/dos.gif" alt="DOS Attack"></p>
-<p>Besides temporal relations, MIDAS-R would also like to catch large groups of spatially nearby edges. Imagine there are lots of different hosts connected to the same machine A suddenly at $t&#x3D;10$. MIDAS will probably not notice this anomaly as it scores the edges only. To tackle this problem, MIDAS-R creates four additional CMS structures, $a_u$, $s_u$, $a_v$, and $s_v$ to approximate the current and total edge counts adjacent to node $u$ and node $v$. Hence, for each incoming edge, MIDAS-R will compute three scores: one for edge $(u, v)$ as before, one for node $u$ and one for node $v$. Finally, it combines three scores by taking their maximum value.</p>
-<p>Here is the pseudocode of MIDAS-R:</p>
-<img src="/images/midas/midasr-code.png" alt="Midas-R Pseudocode" style="zoom:50%;" />
-
-<h2 id="MIDAS-F"><a href="#MIDAS-F" class="headerlink" title="MIDAS-F"></a>MIDAS-F</h2><p>MIDAS and MIDAS-R are designed to update their records into their internal CMS structure immediately. Let us consider a DOS attack where many edges arrive within a brief period. At first, MIDAS can detect these anomalies. However, the mean level ($\frac{s_{uv}}{t-1}$) of the score increases as the attack continues, which leads to the increasing of the expected count of anomalous edge. Finally, MIDAS can no longer identify these anomalous edges.</p>
-<p>MIDAS-F introduces a conditional merge method to decide whether the current count $a$ should be merged into $s$ to prevent this poising effect. It uses another CMS structure $c _{uv}$ to keep track of the anomaly score. Whenever the time tick changes, if $c _{uv}$ is less than a pre-determined threshold $\epsilon$, the $a _{uv}$ will be added to $s _{uv}$. Otherwise, the expected count ($\frac{s _{uv}}{t-1}$) will be added to $s _{uv}$ to keep the mean level unchanged.</p>
-<p>Here is the pseudocode of conditional merge:</p>
-<img src="/images/midas/merge-code.png" alt="Conditional Merge Pseudocode" style="zoom:50%;" />
-
-<p>MIDAS-F also redefined the $s_{uv}$ as the total number of edges from $u$ to $v$ until the previous time tick, not including the current edge count $a_{uv}$, leads to a minor change of scoring function:</p>
-<p>$$<br>score(u, v, t) &#x3D; \frac{(\hat{a} _{uv} + \hat{s} _{uv} - \hat{a} _{uv}t)^2}{\hat{s} _{uv}(t-1)}<br>$$</p>
-<p>Here is the pseudocode of MIDAS-F:</p>
-<img src="/images/midas/midasf-code.png" alt="MIDAS-F Pseudocode" style="zoom:60%;" />
-
-<h2 id="MIDAS-in-Action"><a href="#MIDAS-in-Action" class="headerlink" title="MIDAS in Action"></a>MIDAS in Action</h2><p>Before install, make sure you have Cmake &gt;3.5.</p>
-<p>To install MIDAS python, first clone this repo:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/munhouiani/MIDAS.git --branch v1.3.0 --recursive</span><br></pre></td></tr></table></figure>
-
-<p>Then change to the <code>MIDAS</code> directory and install:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd MIDAS</span><br><span class="line">pip install .</span><br></pre></td></tr></table></figure>
-
-<p>I wrote an example of using MIDAS on real-word dataset here: <a href="https://github.com/munhouiani/MIDAS/blob/v1.3.0/notebook/MIDASExample.ipynb">MIDAS Example.ipynb</a></p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>MIDAS is both a scalable and effective anomaly detection algorithm. There are several remaining problems we have to solve before deploying MIDAS into the production environment. </p>
-<p>There are two needed thresholds in this algorithm. One is the $\epsilon$ in MIDAS-F, while the other one is to determine an instance is an anomaly or not. Unlike other supervised learning algorithms, where we usually set the threshold at 0.5, MIDAS’s score is unbounded. A systematic method to find thresholds is in need.</p>
-<p>The other problem is whether we should update the MIDAS models. We know that a model drift phenomenon describes that the environment in which the model is operating is changing. A simple way to tackle the model drift problem is retraining our model periodically. MIDAS is an online learning algorithm by design, and we do not know yet if it is safe from the model drift problem.</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] <a href="https://arxiv.org/pdf/2009.08452.pdf">Real-Time Streaming Anomaly Detection in Dynamic Graphs</a></p>
-<p>[2] <a href="https://florian.github.io/count-min-sketch/">Count-Min Sketch</a></p>
-]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Anomaly Detection</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Off-Policy Gradient Methods</title>
     <url>/2023/03/01/Off-Policy-Gradient-Methods/</url>
     <content><![CDATA[<p>Recall that from <a href="/2023/03/01/Policy-Gradient-Methods/" title="Policy Gradient Methods">Policy Gradient Methods</a>, the calculation of gradient is</p>
@@ -1707,127 +1621,6 @@ Pic 3. Network Graph from Day 2
 ]]></content>
       <tags>
         <tag>Reinforcement Learning</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Paper Study: LLaMA Open and Efﬁcient Foundation Language Models</title>
-    <url>/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/</url>
-    <content><![CDATA[<h1 id="LLaMA-Open-and-Efﬁcient-Foundation-Language-Models"><a href="#LLaMA-Open-and-Efﬁcient-Foundation-Language-Models" class="headerlink" title="LLaMA Open and Efﬁcient Foundation Language Models"></a>LLaMA Open and Efﬁcient Foundation Language Models</h1><h2 id="📖-Abstract"><a href="#📖-Abstract" class="headerlink" title="📖 Abstract"></a>📖 Abstract</h2><p>We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively, without resorting to proprietary and inaccessible datasets. In particular, LLaMA-13B outperforms GPT-3 (175B) on most benchmarks, and LLaMA65B is competitive with the best models, Chinchilla-70B and PaLM-540B. We release all our models to the research community.</p>
-<span id="more"></span>
-
-<h2 id="🎯-Goal"><a href="#🎯-Goal" class="headerlink" title="🎯 Goal"></a>🎯 Goal</h2><ul>
-<li>To train a series of language models that achieve the best possible performance at various inference budgets.</li>
-</ul>
-<h2 id="🤔-Hypothesis"><a href="#🤔-Hypothesis" class="headerlink" title="🤔 Hypothesis"></a>🤔 Hypothesis</h2><ul>
-<li>Training relatively small language models with more data can yield better performance.</li>
-</ul>
-<h2 id="💡-Methodology"><a href="#💡-Methodology" class="headerlink" title="💡 Methodology"></a>💡 Methodology</h2><ul>
-<li>Use only publicly available data. The entire training dataset contains 1.4T tokens after tokenization.</li>
-</ul>
-<img src="/images/llama/CleanShot2023-08-07at231107.png" width=500px>
-- Tokenize the data with <a href="/2023/08/14/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">Byte-Pair Encoding</a> (<a href="/2023/08/14/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">BPE</a>) algorithm, with the implementation from [SentencePiece](https://github.com/google/sentencepiece).
-- Each token is used only once during training, except Wikipedia and Books, which are trained for approximately 2 epochs.
-- Architecture-wise, their network is based on the Transformer architecture, with the following differences:
-    - Pre-normalization:
-        - Normalize the input of each transformer sub-layer instead of the output.
-        - Use the RMSNorm normalizing function.
-    - SwiGLU activation function:
-        - Replace the ReLU with the SwiGLU activation function.
-        - SwiGLU has trainable parameters $W$ and $V$, they scale down the size of the hidden units with a factor of $\frac{2}{3}$.
-    - Rotary Embedding
-        - Replace absolute positional embedding with Rotary Positional Embedding(RoPE)
-- Use AdamW optimizer with the following hyperparemeters:
-    - $\beta_1 = 0.9$
-    - $\beta_2 = 0.95$
-    - Use a cosine learning rate schedule, where the final learning rate equals 10% of the maximal learning rate.
-    - Use weight decay of 0.1
-    - Use gradient clipping of 1.0
-    - use 2000 warmup steps
-    - Varying batch size and learning rate  
-   <img src="/images/llama/CleanShot2023-08-07at235133.png" width=500/>
-   - Use efficient implementation of the causal multi-head attention to reduce memory usage and runtime
-       - Use works from *Self-attention does not need O(n2) memory* and *Flashattention Fast and memory-efﬁcient exact attention with io-awareness*
-       - Available at the [xformers](https://github.com/facebookresearch/xformers) library.
-   - Reducing activation recomputation in large transformer models
-
-<h2 id="📊-Result-s"><a href="#📊-Result-s" class="headerlink" title="📊 Result(s)"></a>📊 Result(s)</h2><h3 id="Training-Loss"><a href="#Training-Loss" class="headerlink" title="Training Loss"></a>Training Loss</h3><img src="/images/llama/CleanShot2023-08-08at001349.png" width=500/>
-
-<h3 id="Evolution-of-Performance"><a href="#Evolution-of-Performance" class="headerlink" title="Evolution of Performance"></a>Evolution of Performance</h3><img src="/images/llama/CleanShot2023-08-08at002024.png" width=500/>
-
-<h3 id="Zero-Shot-and-Few-Shot-Performance"><a href="#Zero-Shot-and-Few-Shot-Performance" class="headerlink" title="Zero-Shot and Few-Shot Performance"></a>Zero-Shot and Few-Shot Performance</h3><img src="/images/llama/CleanShot2023-08-08at001437.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001547.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001621.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001639.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001710.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001740.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001831.png" width=500/>
-
-<h3 id="Instruction-Finetuning-Result"><a href="#Instruction-Finetuning-Result" class="headerlink" title="Instruction Finetuning Result"></a>Instruction Finetuning Result</h3><img src="/images/llama/CleanShot2023-08-08at001912.png" width=500/>
-
-<h3 id="Bias-Toxicity-and-Misinformation"><a href="#Bias-Toxicity-and-Misinformation" class="headerlink" title="Bias, Toxicity and Misinformation"></a>Bias, Toxicity and Misinformation</h3><img src="/images/llama/CleanShot2023-08-08at002122.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at002142.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at002204.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at002223.png" width=500/>
-
-<h2 id="🔑-Summary-of-Key-Points"><a href="#🔑-Summary-of-Key-Points" class="headerlink" title="🔑 Summary of Key Points"></a>🔑 Summary of Key Points</h2><ul>
-<li>Training with more data increases model Performance</li>
-</ul>
-<h2 id="❗-Significance"><a href="#❗-Significance" class="headerlink" title="❗ Significance"></a>❗ Significance</h2><ul>
-<li>Smaller models can perform better than a large language model by scaling up training data, drastically reducing the inference cost</li>
-</ul>
-<h2 id="🙋‍♂️-Questions-and-Answers"><a href="#🙋‍♂️-Questions-and-Answers" class="headerlink" title="🙋‍♂️ Questions and Answers"></a>🙋‍♂️ Questions and Answers</h2><p><strong>Q</strong>: Can you briefly summarize the key contributions of the LLaMA paper?</p>
-<p><strong>A</strong>: The LLaMA paper introduces a series of large language models ranging from 7B to 65B parameters. The key contributions are:</p>
-<ul>
-<li>Training large transformer models using publicly available data sources without relying on proprietary datasets. This makes the work more aligned with open sourcing.</li>
-<li>Showing competitive performance can be achieved by scaling up training data, even for smaller models. For example, their 13B parameter model outperforms the 175B parameter GPT-3 on many benchmarks.</li>
-<li>Releasing the pre-trained models openly to the research community. This will help democratize access to large language models for research.</li>
-</ul>
-<p><strong>Q</strong>: What was the motivation behind training the LLaMA models? How does this differ from previous work?</p>
-<p><strong>A</strong>: Most prior work focused on training the largest models possible for a given computing budget. LLaMA instead optimized for inference efficiency - training smaller models that can reach a target performance level with less inference cost. This is important since inference cost is a bottleneck when deploying models.</p>
-<p><strong>Q</strong>: Can you describe the model architecture, training data, and optimization process?</p>
-<p><strong>A</strong>: The LLaMA models are transformer networks incorporating improvements like pre-layer normalization and rotary embeddings. They were trained on a mixture of CommonCrawl, Wikipedia, Books, GitHub code, etc., amounting to 1-1.4 trillion tokens. Optimization was done with AdamW and cosine decay learning rates. Efficiency techniques like activation checkpointing were used.</p>
-<p><strong>Q</strong>: How did the LLaMA models compare to prior work on benchmark evaluations like GPT-3 and PaLM?</p>
-<p><strong>A</strong>: LLaMA-13B outperformed GPT-3 on most benchmarks despite being 10x smaller. LLaMA-65B was competitive and often better than similarly sized models like Chinchilla-70B and PaLM-540B. This demonstrates their approach of scaling data over model size can work.</p>
-<p><strong>Q</strong>: What limitations or potential risks did the authors describe for large language models like LLaMA?</p>
-<p><strong>A</strong>: They analyzed model biases and toxicity using probes like RealToxicityPrompts, finding issues that need more research. They also reported on the carbon emissions from training, which were quite high. More work is needed to address these problems.</p>
-<p><strong>Q</strong>: What directions for future work did the authors suggest?</p>
-<p><strong>A</strong>: They plan to release larger models trained on more data since performance kept improving with their scaling approach. They also want to investigate instruction tuning further as a way to improve abilities rapidly.</p>
-<p><strong>Q</strong>: How does the performance of LLaMA models evolve during training? Are there any interesting trends or observations?</p>
-<p><strong>A</strong>: The paper showed performance on benchmarks improved steadily over training, correlating with reductions in training perplexity. One observation was performance on WinoGrande didn’t improve much between the 33B and 65B models, suggesting potential issues with that benchmark.</p>
-<p><strong>Q</strong>: The authors propose training compute-optimal models that minimize inference costs. Can you expand on the benefits of this approach?</p>
-<p><strong>A</strong>: Most prior work focused only on minimizing training costs for a target performance level. But inference cost is also critical when deploying models. The LLaMA approach optimizes inference by training smaller models on more data to reach the target performance at a lower inference cost.</p>
-<p><strong>Q</strong>: Were the LLaMA models fine-tuned in any way? If not, how was strong performance achieved?</p>
-<p><strong>A</strong>: No finetuning was done except for one instruction-tuned variant called LLaMA-I. The models performed well on many NLP benchmarks from pretraining on the large and diverse dataset. This demonstrates the generalization ability of the scaling approach.</p>
-<p><strong>Q</strong>: The authors mention using techniques like activation checkpointing to improve training efficiency. Can you explain what this involves?</p>
-<p><strong>A</strong>: Activation checkpointing reduces the memory and computing needed during training by avoiding recomputing certain activations during the backward pass. This is done by saving only the necessary activations from the forward pass and releasing unused activations from memory.</p>
-<p><strong>Q</strong>: How did the authors evaluate model toxicity? What conclusions did they draw from this analysis?</p>
-<p><strong>A</strong>: They tested toxicity using RealToxicityPrompts by generating completions and scoring them with Perspective API. Toxicity increased with model size, especially on respectful prompts, indicating larger models can be more toxic. However, the evaluation methodology had limitations.</p>
-<p><strong>Q</strong>: What types of NLP tasks or applications do you think LLaMA models would suit well? Are there tasks where other models may be more appropriate?</p>
-<p><strong>A</strong>: LLaMA models could be useful for open domain dialog, question answering, summarization, and other text generation applications. Their strong language modeling and few-shot performance suggest versatility. For very specialized domains like biomedical, other models pretrained on domain text may be better.</p>
-<p><strong>Q</strong>: The authors propose training even larger LLaMA models. What potential concerns or limitations would this raise?</p>
-<p><strong>A</strong>: Larger models increase risks around safety, bias, toxicity, and misuse. The compute and carbon cost also scales up. Deployment costs grow as well. So, while performance may improve further, there are many non-technical factors to consider before scaling up model size even more.</p>
-<p><strong>Q</strong>: What are some key takeaways from this work that could guide future research on large language models?</p>
-<p><strong>A</strong>: Pretraining on diverse public data can remove the need for private datasets while achieving strong performance. Compute-optimal models can minimize inference costs. Many challenges around responsible LLM development still require more research and solutions.</p>
-<p><strong>Q</strong>: Were the LLaMA models tested in a chatbot or conversational agent setting? If not, how do you think they would perform such tasks?</p>
-<p><strong>A</strong>: The paper evaluated the models on NLP benchmarks but not conversational tasks. However, their strong language modeling and few-shot abilities suggest they could perform well in open-ended dialog. Testing on conversational benchmarks could be an interesting direction for future work.</p>
-<p><strong>Q</strong>: How could we improve diversity, mitigate bias, and address other ethical risks if we deployed these models in products and services?</p>
-<p><strong>A</strong>: Many bias mitigation research is needed - techniques like adversarial debiasing, personalized bias ratings, censoring toxic generations, etc. Diversifying and filtering the training data can help. Extensive testing for different biases is required. There should be a focus on ethics and inclusivity throughout the development process.</p>
-<p><strong>Q</strong>: What do you think could be promising directions for future work on more robust and beneficial language models?</p>
-<p><strong>A</strong>: Aligning models with human values through techniques like instruction following and reinforcement learning from feedback seems promising. Expanding capabilities beyond text, like reasoning, causality, and symbol manipulation, could make models more generally intelligent. Building oversight, auditability, and control mechanisms will be important. There are many open challenges to work on.</p>
-]]></content>
-      <tags>
-        <tag>Deep Learning</tag>
-        <tag>Large Language Model</tag>
-        <tag>Paper Study</tag>
       </tags>
   </entry>
   <entry>
@@ -2118,6 +1911,127 @@ Pic 3. Network Graph from Day 2
       </tags>
   </entry>
   <entry>
+    <title>Paper Study: LLaMA Open and Efﬁcient Foundation Language Models</title>
+    <url>/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/</url>
+    <content><![CDATA[<h1 id="LLaMA-Open-and-Efﬁcient-Foundation-Language-Models"><a href="#LLaMA-Open-and-Efﬁcient-Foundation-Language-Models" class="headerlink" title="LLaMA Open and Efﬁcient Foundation Language Models"></a>LLaMA Open and Efﬁcient Foundation Language Models</h1><h2 id="📖-Abstract"><a href="#📖-Abstract" class="headerlink" title="📖 Abstract"></a>📖 Abstract</h2><p>We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively, without resorting to proprietary and inaccessible datasets. In particular, LLaMA-13B outperforms GPT-3 (175B) on most benchmarks, and LLaMA65B is competitive with the best models, Chinchilla-70B and PaLM-540B. We release all our models to the research community.</p>
+<span id="more"></span>
+
+<h2 id="🎯-Goal"><a href="#🎯-Goal" class="headerlink" title="🎯 Goal"></a>🎯 Goal</h2><ul>
+<li>To train a series of language models that achieve the best possible performance at various inference budgets.</li>
+</ul>
+<h2 id="🤔-Hypothesis"><a href="#🤔-Hypothesis" class="headerlink" title="🤔 Hypothesis"></a>🤔 Hypothesis</h2><ul>
+<li>Training relatively small language models with more data can yield better performance.</li>
+</ul>
+<h2 id="💡-Methodology"><a href="#💡-Methodology" class="headerlink" title="💡 Methodology"></a>💡 Methodology</h2><ul>
+<li>Use only publicly available data. The entire training dataset contains 1.4T tokens after tokenization.</li>
+</ul>
+<img src="/images/llama/CleanShot2023-08-07at231107.png" width=500px>
+- Tokenize the data with <a href="/2023/08/14/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">Byte-Pair Encoding</a> (<a href="/2023/08/14/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">BPE</a>) algorithm, with the implementation from [SentencePiece](https://github.com/google/sentencepiece).
+- Each token is used only once during training, except Wikipedia and Books, which are trained for approximately 2 epochs.
+- Architecture-wise, their network is based on the Transformer architecture, with the following differences:
+    - Pre-normalization:
+        - Normalize the input of each transformer sub-layer instead of the output.
+        - Use the RMSNorm normalizing function.
+    - SwiGLU activation function:
+        - Replace the ReLU with the SwiGLU activation function.
+        - SwiGLU has trainable parameters $W$ and $V$, they scale down the size of the hidden units with a factor of $\frac{2}{3}$.
+    - Rotary Embedding
+        - Replace absolute positional embedding with Rotary Positional Embedding(RoPE)
+- Use AdamW optimizer with the following hyperparemeters:
+    - $\beta_1 = 0.9$
+    - $\beta_2 = 0.95$
+    - Use a cosine learning rate schedule, where the final learning rate equals 10% of the maximal learning rate.
+    - Use weight decay of 0.1
+    - Use gradient clipping of 1.0
+    - use 2000 warmup steps
+    - Varying batch size and learning rate  
+   <img src="/images/llama/CleanShot2023-08-07at235133.png" width=500/>
+   - Use efficient implementation of the causal multi-head attention to reduce memory usage and runtime
+       - Use works from *Self-attention does not need O(n2) memory* and *Flashattention Fast and memory-efﬁcient exact attention with io-awareness*
+       - Available at the [xformers](https://github.com/facebookresearch/xformers) library.
+   - Reducing activation recomputation in large transformer models
+
+<h2 id="📊-Result-s"><a href="#📊-Result-s" class="headerlink" title="📊 Result(s)"></a>📊 Result(s)</h2><h3 id="Training-Loss"><a href="#Training-Loss" class="headerlink" title="Training Loss"></a>Training Loss</h3><img src="/images/llama/CleanShot2023-08-08at001349.png" width=500/>
+
+<h3 id="Evolution-of-Performance"><a href="#Evolution-of-Performance" class="headerlink" title="Evolution of Performance"></a>Evolution of Performance</h3><img src="/images/llama/CleanShot2023-08-08at002024.png" width=500/>
+
+<h3 id="Zero-Shot-and-Few-Shot-Performance"><a href="#Zero-Shot-and-Few-Shot-Performance" class="headerlink" title="Zero-Shot and Few-Shot Performance"></a>Zero-Shot and Few-Shot Performance</h3><img src="/images/llama/CleanShot2023-08-08at001437.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001547.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001621.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001639.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001710.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001740.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001831.png" width=500/>
+
+<h3 id="Instruction-Finetuning-Result"><a href="#Instruction-Finetuning-Result" class="headerlink" title="Instruction Finetuning Result"></a>Instruction Finetuning Result</h3><img src="/images/llama/CleanShot2023-08-08at001912.png" width=500/>
+
+<h3 id="Bias-Toxicity-and-Misinformation"><a href="#Bias-Toxicity-and-Misinformation" class="headerlink" title="Bias, Toxicity and Misinformation"></a>Bias, Toxicity and Misinformation</h3><img src="/images/llama/CleanShot2023-08-08at002122.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at002142.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at002204.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at002223.png" width=500/>
+
+<h2 id="🔑-Summary-of-Key-Points"><a href="#🔑-Summary-of-Key-Points" class="headerlink" title="🔑 Summary of Key Points"></a>🔑 Summary of Key Points</h2><ul>
+<li>Training with more data increases model Performance</li>
+</ul>
+<h2 id="❗-Significance"><a href="#❗-Significance" class="headerlink" title="❗ Significance"></a>❗ Significance</h2><ul>
+<li>Smaller models can perform better than a large language model by scaling up training data, drastically reducing the inference cost</li>
+</ul>
+<h2 id="🙋‍♂️-Questions-and-Answers"><a href="#🙋‍♂️-Questions-and-Answers" class="headerlink" title="🙋‍♂️ Questions and Answers"></a>🙋‍♂️ Questions and Answers</h2><p><strong>Q</strong>: Can you briefly summarize the key contributions of the LLaMA paper?</p>
+<p><strong>A</strong>: The LLaMA paper introduces a series of large language models ranging from 7B to 65B parameters. The key contributions are:</p>
+<ul>
+<li>Training large transformer models using publicly available data sources without relying on proprietary datasets. This makes the work more aligned with open sourcing.</li>
+<li>Showing competitive performance can be achieved by scaling up training data, even for smaller models. For example, their 13B parameter model outperforms the 175B parameter GPT-3 on many benchmarks.</li>
+<li>Releasing the pre-trained models openly to the research community. This will help democratize access to large language models for research.</li>
+</ul>
+<p><strong>Q</strong>: What was the motivation behind training the LLaMA models? How does this differ from previous work?</p>
+<p><strong>A</strong>: Most prior work focused on training the largest models possible for a given computing budget. LLaMA instead optimized for inference efficiency - training smaller models that can reach a target performance level with less inference cost. This is important since inference cost is a bottleneck when deploying models.</p>
+<p><strong>Q</strong>: Can you describe the model architecture, training data, and optimization process?</p>
+<p><strong>A</strong>: The LLaMA models are transformer networks incorporating improvements like pre-layer normalization and rotary embeddings. They were trained on a mixture of CommonCrawl, Wikipedia, Books, GitHub code, etc., amounting to 1-1.4 trillion tokens. Optimization was done with AdamW and cosine decay learning rates. Efficiency techniques like activation checkpointing were used.</p>
+<p><strong>Q</strong>: How did the LLaMA models compare to prior work on benchmark evaluations like GPT-3 and PaLM?</p>
+<p><strong>A</strong>: LLaMA-13B outperformed GPT-3 on most benchmarks despite being 10x smaller. LLaMA-65B was competitive and often better than similarly sized models like Chinchilla-70B and PaLM-540B. This demonstrates their approach of scaling data over model size can work.</p>
+<p><strong>Q</strong>: What limitations or potential risks did the authors describe for large language models like LLaMA?</p>
+<p><strong>A</strong>: They analyzed model biases and toxicity using probes like RealToxicityPrompts, finding issues that need more research. They also reported on the carbon emissions from training, which were quite high. More work is needed to address these problems.</p>
+<p><strong>Q</strong>: What directions for future work did the authors suggest?</p>
+<p><strong>A</strong>: They plan to release larger models trained on more data since performance kept improving with their scaling approach. They also want to investigate instruction tuning further as a way to improve abilities rapidly.</p>
+<p><strong>Q</strong>: How does the performance of LLaMA models evolve during training? Are there any interesting trends or observations?</p>
+<p><strong>A</strong>: The paper showed performance on benchmarks improved steadily over training, correlating with reductions in training perplexity. One observation was performance on WinoGrande didn’t improve much between the 33B and 65B models, suggesting potential issues with that benchmark.</p>
+<p><strong>Q</strong>: The authors propose training compute-optimal models that minimize inference costs. Can you expand on the benefits of this approach?</p>
+<p><strong>A</strong>: Most prior work focused only on minimizing training costs for a target performance level. But inference cost is also critical when deploying models. The LLaMA approach optimizes inference by training smaller models on more data to reach the target performance at a lower inference cost.</p>
+<p><strong>Q</strong>: Were the LLaMA models fine-tuned in any way? If not, how was strong performance achieved?</p>
+<p><strong>A</strong>: No finetuning was done except for one instruction-tuned variant called LLaMA-I. The models performed well on many NLP benchmarks from pretraining on the large and diverse dataset. This demonstrates the generalization ability of the scaling approach.</p>
+<p><strong>Q</strong>: The authors mention using techniques like activation checkpointing to improve training efficiency. Can you explain what this involves?</p>
+<p><strong>A</strong>: Activation checkpointing reduces the memory and computing needed during training by avoiding recomputing certain activations during the backward pass. This is done by saving only the necessary activations from the forward pass and releasing unused activations from memory.</p>
+<p><strong>Q</strong>: How did the authors evaluate model toxicity? What conclusions did they draw from this analysis?</p>
+<p><strong>A</strong>: They tested toxicity using RealToxicityPrompts by generating completions and scoring them with Perspective API. Toxicity increased with model size, especially on respectful prompts, indicating larger models can be more toxic. However, the evaluation methodology had limitations.</p>
+<p><strong>Q</strong>: What types of NLP tasks or applications do you think LLaMA models would suit well? Are there tasks where other models may be more appropriate?</p>
+<p><strong>A</strong>: LLaMA models could be useful for open domain dialog, question answering, summarization, and other text generation applications. Their strong language modeling and few-shot performance suggest versatility. For very specialized domains like biomedical, other models pretrained on domain text may be better.</p>
+<p><strong>Q</strong>: The authors propose training even larger LLaMA models. What potential concerns or limitations would this raise?</p>
+<p><strong>A</strong>: Larger models increase risks around safety, bias, toxicity, and misuse. The compute and carbon cost also scales up. Deployment costs grow as well. So, while performance may improve further, there are many non-technical factors to consider before scaling up model size even more.</p>
+<p><strong>Q</strong>: What are some key takeaways from this work that could guide future research on large language models?</p>
+<p><strong>A</strong>: Pretraining on diverse public data can remove the need for private datasets while achieving strong performance. Compute-optimal models can minimize inference costs. Many challenges around responsible LLM development still require more research and solutions.</p>
+<p><strong>Q</strong>: Were the LLaMA models tested in a chatbot or conversational agent setting? If not, how do you think they would perform such tasks?</p>
+<p><strong>A</strong>: The paper evaluated the models on NLP benchmarks but not conversational tasks. However, their strong language modeling and few-shot abilities suggest they could perform well in open-ended dialog. Testing on conversational benchmarks could be an interesting direction for future work.</p>
+<p><strong>Q</strong>: How could we improve diversity, mitigate bias, and address other ethical risks if we deployed these models in products and services?</p>
+<p><strong>A</strong>: Many bias mitigation research is needed - techniques like adversarial debiasing, personalized bias ratings, censoring toxic generations, etc. Diversifying and filtering the training data can help. Extensive testing for different biases is required. There should be a focus on ethics and inclusivity throughout the development process.</p>
+<p><strong>Q</strong>: What do you think could be promising directions for future work on more robust and beneficial language models?</p>
+<p><strong>A</strong>: Aligning models with human values through techniques like instruction following and reinforcement learning from feedback seems promising. Expanding capabilities beyond text, like reasoning, causality, and symbol manipulation, could make models more generally intelligent. Building oversight, auditability, and control mechanisms will be important. There are many open challenges to work on.</p>
+]]></content>
+      <tags>
+        <tag>Deep Learning</tag>
+        <tag>Large Language Model</tag>
+        <tag>Paper Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Policy Gradient Methods</title>
     <url>/2023/03/01/Policy-Gradient-Methods/</url>
     <content><![CDATA[<h2 id="What-Are-Policy-Gradient-Methods"><a href="#What-Are-Policy-Gradient-Methods" class="headerlink" title="What Are Policy Gradient Methods"></a>What Are Policy Gradient Methods</h2><p>Policy gradient methods are a class of reinforcement learning algorithms used for <em>optimizing parametrized policies by gradient descent to maximize the expected return</em>, which is the cumulative reward received over a long-term horizon. These methods are based on updating the policy parameters such that the probabilities of actions leading to higher returns are increased. In comparison, the probabilities of actions leading to lower returns are decreased.</p>
@@ -2206,6 +2120,92 @@ Pic 3. Network Graph from Day 2
 ]]></content>
       <tags>
         <tag>Reinforcement Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F</title>
+    <url>/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/</url>
+    <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>Anomaly detection has always been a challenging research field. An anomaly indicates a sudden and short-lived pattern change, while a detection algorithm aims to identify anomalies promptly. Detecting anomaly on networks levels up the problem as network monitoring devices usually collect data at high rates, which means a network anomaly detection algorithm should handle high-dimension, noisy, and massive data under power and communication constraints. We should also acknowledge that different anomalies exhibit themselves in network statistics in a different manner. A general anomaly detection model often does not exist. A model that detects surprising edges in a network is probably cannot detect micro cluster anomalies.</p>
+<span id="more"></span>
+
+<p>There are multiple ways to formulate a network anomaly detection problem. The simplest method is to calculate the mean and variance of any connection IP pairs and raise an alert once the connection count is away from 3 standard deviations of the means. This method holds an assumption: the connection count follows a Gaussian distribution. This assumption is strict and often false in a real-world situation.</p>
+<p><img src="/images/midas/distribution-of-connections.png" alt="Distribution of some connections"></p>
+<p>Pic 1. Distribution of connection counts from a real-world dataset, which is not a normal distribution.</p>
+<p>Researchers had studied various machine learning approaches to this network anomaly detection problem. To represent a net flow, one either extracts hand-crafted features, such as ﬂow packet size, amount of specific signals, or build the representation automatically with deep neural networks, such as CNN. Afterwards, they either build an unsupervised model with an Isolation Forest, One-class SVM, or a Deep Autoencoder with these representations.</p>
+<p>MIDAS authors formulated this problem differently. Instead of net flow, they model the network connections a graph, which kind of the networks’ nature. Their algorithm is a graph anomaly detection algorithm that works on a dynamic graph, a sweet capability where the current graph anomaly detection algorithms lack. Current graph algorithms only process a graph snapshot at specific intervals. They do not consider the temporal characteristics, in which everything happening at the current snapshot is somehow related to the past. Here are two graph snapshots from the same network at two different times. They are related to each other, yet their snapshots tell an entirely different story.</p>
+<img src="/images/midas/network-graph-day1.png" alt="Network Graph Day 1" style="zoom:50%;" /> 
+Pic 2. Network Graph from Day 1
+<img src="/images/midas/network-graph-day2.png" alt="Network Graph Day 2" style="zoom:50%;" />
+Pic 3. Network Graph from Day 2
+
+<h2 id="Properties-of-MIDAS"><a href="#Properties-of-MIDAS" class="headerlink" title="Properties of MIDAS"></a>Properties of MIDAS</h2><p>MIDAS has the following properties:</p>
+<ul>
+<li>It can detect micro-cluster anomalies, which are suddenly arriving groups of suspiciously similar edge.</li>
+<li>It processes each incoming edge within constant time and constant memory.</li>
+</ul>
+<p>In general, MIDAS records the counts of every single edge with a Count-Min-Sketch data structure. Before we dive into their methodology, we should figure out what count-min-sketch is and why they use it.</p>
+<h3 id="Count-Min-Sketch-CMS"><a href="#Count-Min-Sketch-CMS" class="headerlink" title="Count-Min-Sketch (CMS)"></a>Count-Min-Sketch (CMS)</h3><p>We often use a hash map to maintain a counter:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">d = &#123;&#125;</span><br><span class="line"></span><br><span class="line">d[some_key] = d.get(some_key, <span class="number">0</span>) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>To retrieve the count of <code>some_key</code>, we use <code>d[some_key]</code>. This method does not scale as the number of keys in a hash map could be huge. Therefore, count-min-sketch (CMS) aims to serve as a frequency table that consumes only constant memory. In other words, the required memory of CMS does not increase when the number of keys increases.</p>
+<img src="/images/midas/cms.png" alt="CMS Data Structure" style="zoom:30%;" />
+
+<p>To use a CMS, we prepare $d$  different hash functions and the number of buckets of each hash function $w$. Then we initialise an matrix of size $d \times w$ with 0.</p>
+<img src="/images/midas/cms-add-count.gif" alt="CMS Increment Count" style="zoom:70%;" />
+
+<p>To update a count of <code>some_key</code>, we first hash <code>some_key</code> with a hash function $h_i$, and then increment the number at $cell(i, h_i(\text{some_key}))$. We continue this process until all $d$ hash functions have been used.</p>
+<img src="/images/midas/cms-retrieve-count.gif" alt="CMS Retrieve Count" style="zoom:70%;" />
+
+<p>Of course, hash functions may conflict with each other due to the limited number of buckets. To retrieve the count of <code>some_key</code>, we get all counts of <code>some_key</code> from each row with $h_i(\text{some_key})$, then return the minimum value.</p>
+<h2 id="MIDAS"><a href="#MIDAS" class="headerlink" title="MIDAS"></a>MIDAS</h2><p>MIDAS will maintain two CMS, one for the total number of edges from $u$ to $v$ until the current time tick, denoted as $\hat{s} _{uv}$, and the number of edge from $u$ to $v$ at the current time tick, denoted as $\hat{a} _{uv}$. The time ticks mentioned here are discrete, for example, $t&#x3D;10$. Since $\hat{a} _{uv}$ is used to count the edge from $u$ to $v$ at the current time tick, it will be reset every time MIDAS transition to the next time tick. For example, let us say we are at $t &#x3D; 10$ and $\hat{a} _{uv} &#x3D; 19$. Before we move to $t&#x3D;11$, we will reset  $\hat{a} _{uv}$ to $0$.</p>
+<p>MIDAS assumes that the mean level (i.e. the average rate at which edges appear) in the current time tick (e.g. $t &#x3D; 10$) is the same as the mean level before the current time tick ($t &lt; 10$). Compare to the Gaussian mentioned we stated before, their assumption is weaker as they do not assume any distribution at each time tick.</p>
+<p>With the chi-square goodness of fit test, they score any newly arriving edge $(u, v, t)$ with the following equation:</p>
+<p>$$<br>score((u,v,t)) &#x3D; (\hat{a} _{uv} - \frac{\hat{s} _{uv}}{t})^2 \frac{t^2}{\hat{s} _{uv}(t-1)}<br>$$</p>
+<p>Let us walk through the proof one by one:</p>
+<p><img src="/images/midas/midas-proof.png" alt="Proof"></p>
+<ol>
+<li>Recall that they have a CMS for the number of edge at the current time tick, therefore the observed count of edge $u \rightarrow v$ can be retrieved from $a_{uv}$.</li>
+<li>Recall that they also have a CMS for the total number of edge until the current tick, therefore the mean level of edge $u \rightarrow v$ is calculated as $\frac{s_{uv}}{t}$.</li>
+<li>To calculate the observed number of edge $u \rightarrow v$ before current time tick, we simply subtract $a_{uv}$ from $s_{uv}$.</li>
+<li>Finally, to get the mean level of the number of edge $u \rightarrow v$ before current time tick, we calculate $\frac{t-1}{t} s_{uv}$.</li>
+</ol>
+<p>Here is the pseudocode of MIDAS:</p>
+<img src="/images/midas/midas-code.png" alt="MIDAS Pseudocode" style="zoom:30%;" />
+
+<h2 id="MIDAS-R"><a href="#MIDAS-R" class="headerlink" title="MIDAS-R"></a>MIDAS-R</h2><p>The “R” in MIDAS-R stands for “relations”. MIDAS-R aims to group related edges.</p>
+<p>The first relation they incorporate is the temporal relation. Instead of resetting $a_{uv}$ before every transition, they reduce the count $a_{uv}$ by a fraction of $\alpha \in (0, 1)$. For example, let us say the $\alpha &#x3D; 0.5$ and $a_{uv} &#x3D; 20$. Before we transition to the next time tick, we reduce $a_{uv}$ to $10$ instead of resetting it to $0$.</p>
+<p><img src="/images/midas/dos.gif" alt="DOS Attack"></p>
+<p>Besides temporal relations, MIDAS-R would also like to catch large groups of spatially nearby edges. Imagine there are lots of different hosts connected to the same machine A suddenly at $t&#x3D;10$. MIDAS will probably not notice this anomaly as it scores the edges only. To tackle this problem, MIDAS-R creates four additional CMS structures, $a_u$, $s_u$, $a_v$, and $s_v$ to approximate the current and total edge counts adjacent to node $u$ and node $v$. Hence, for each incoming edge, MIDAS-R will compute three scores: one for edge $(u, v)$ as before, one for node $u$ and one for node $v$. Finally, it combines three scores by taking their maximum value.</p>
+<p>Here is the pseudocode of MIDAS-R:</p>
+<img src="/images/midas/midasr-code.png" alt="Midas-R Pseudocode" style="zoom:50%;" />
+
+<h2 id="MIDAS-F"><a href="#MIDAS-F" class="headerlink" title="MIDAS-F"></a>MIDAS-F</h2><p>MIDAS and MIDAS-R are designed to update their records into their internal CMS structure immediately. Let us consider a DOS attack where many edges arrive within a brief period. At first, MIDAS can detect these anomalies. However, the mean level ($\frac{s_{uv}}{t-1}$) of the score increases as the attack continues, which leads to the increasing of the expected count of anomalous edge. Finally, MIDAS can no longer identify these anomalous edges.</p>
+<p>MIDAS-F introduces a conditional merge method to decide whether the current count $a$ should be merged into $s$ to prevent this poising effect. It uses another CMS structure $c _{uv}$ to keep track of the anomaly score. Whenever the time tick changes, if $c _{uv}$ is less than a pre-determined threshold $\epsilon$, the $a _{uv}$ will be added to $s _{uv}$. Otherwise, the expected count ($\frac{s _{uv}}{t-1}$) will be added to $s _{uv}$ to keep the mean level unchanged.</p>
+<p>Here is the pseudocode of conditional merge:</p>
+<img src="/images/midas/merge-code.png" alt="Conditional Merge Pseudocode" style="zoom:50%;" />
+
+<p>MIDAS-F also redefined the $s_{uv}$ as the total number of edges from $u$ to $v$ until the previous time tick, not including the current edge count $a_{uv}$, leads to a minor change of scoring function:</p>
+<p>$$<br>score(u, v, t) &#x3D; \frac{(\hat{a} _{uv} + \hat{s} _{uv} - \hat{a} _{uv}t)^2}{\hat{s} _{uv}(t-1)}<br>$$</p>
+<p>Here is the pseudocode of MIDAS-F:</p>
+<img src="/images/midas/midasf-code.png" alt="MIDAS-F Pseudocode" style="zoom:60%;" />
+
+<h2 id="MIDAS-in-Action"><a href="#MIDAS-in-Action" class="headerlink" title="MIDAS in Action"></a>MIDAS in Action</h2><p>Before install, make sure you have Cmake &gt;3.5.</p>
+<p>To install MIDAS python, first clone this repo:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/munhouiani/MIDAS.git --branch v1.3.0 --recursive</span><br></pre></td></tr></table></figure>
+
+<p>Then change to the <code>MIDAS</code> directory and install:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd MIDAS</span><br><span class="line">pip install .</span><br></pre></td></tr></table></figure>
+
+<p>I wrote an example of using MIDAS on real-word dataset here: <a href="https://github.com/munhouiani/MIDAS/blob/v1.3.0/notebook/MIDASExample.ipynb">MIDAS Example.ipynb</a></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>MIDAS is both a scalable and effective anomaly detection algorithm. There are several remaining problems we have to solve before deploying MIDAS into the production environment. </p>
+<p>There are two needed thresholds in this algorithm. One is the $\epsilon$ in MIDAS-F, while the other one is to determine an instance is an anomaly or not. Unlike other supervised learning algorithms, where we usually set the threshold at 0.5, MIDAS’s score is unbounded. A systematic method to find thresholds is in need.</p>
+<p>The other problem is whether we should update the MIDAS models. We know that a model drift phenomenon describes that the environment in which the model is operating is changing. A simple way to tackle the model drift problem is retraining our model periodically. MIDAS is an online learning algorithm by design, and we do not know yet if it is safe from the model drift problem.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] <a href="https://arxiv.org/pdf/2009.08452.pdf">Real-Time Streaming Anomaly Detection in Dynamic Graphs</a></p>
+<p>[2] <a href="https://florian.github.io/count-min-sketch/">Count-Min Sketch</a></p>
+]]></content>
+      <tags>
+        <tag>Machine Learning</tag>
+        <tag>Anomaly Detection</tag>
       </tags>
   </entry>
   <entry>
@@ -2303,6 +2303,71 @@ Pic 3. Network Graph from Day 2
       </tags>
   </entry>
   <entry>
+    <title>Pytorch Implementation of GEE: A Gradient-based Explainable Variational Autoencoder for Network Anomaly Detection</title>
+    <url>/2020/07/12/Pytorch-Implementation-of-GEE-A-Gradient-based-Explainable-Variational-Autoencoder-for-Network-Anomaly-Detection/</url>
+    <content><![CDATA[<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>Recently I have been studying on varies methods of anomaly detection, ranging from the traditional methods, such as Isolation Forest to the latest deep-neural-network-based methods. All these methods have their beauty and shortcoming. The reason why I selected and implemented this paper, <a href="https://arxiv.org/abs/1903.06661">GEE: A Gradient-based Explainable Variational Autoencoder for Network Anomaly Detection</a>, is because it used an autoencoder trained with incomplete and noisy data for an anomaly detection task.</p>
+<span id="more"></span>
+
+<p><img src="/images/gee/autoencoder.png"><br>Image by Arden Dertat via <a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798">Toward Data Science</a></p>
+<p>The news which an autoencoder can be used for anomaly detection has been circulating on the internet for a while. Autoencoder was originally designed to learn the latent representation of a bunch of data. It consists of two parts, the encoder and decoder. Autoencoder will first encode the input data to a lower dimension of representation, it then decodes the representation back to its original form. Therefore, ones may suggest that if the difference between the reconstruction of a sample and its original form is big, then that sample could be an anomaly. Many internet articles suggested this idea, but only a few of them realised it. Therefore, I would like to implement this idea myself. By the way, <a href="https://towardsdatascience.com/understanding-variational-autoencoders-vaes-f70510919f73">Joseph Rocca wrote an exceptionally well introductory of autoencoders</a>. If you are not familiar with the idea of an autoencoder, you are welcomed to read it.</p>
+<p><img src="/images/gee/richard_feynman.png"><br>Image by Riza Fahmi via <a href="https://twitter.com/rizafahmi22/status/1000008342859894784">Twitter</a>.</p>
+<p>The other reason I implemented this is that the data it used wasn’t audio-like or image-like data. We’ve seen so many successful stories of deep learning applying on image or audio data via end-to-end learning, i.e., without human-involved feature engineering. I wonder if a deep neural network can be applied on traditional table-like data as well. This paper used NetFlow data, which already discard much raw information of a packet. Furthermore, it grouped these NetFlow data with a specified time window and source IP then performed feature extraction on the grouped data. It would be interesting to see how a deep neural network performs on this kind of feature engineered data.</p>
+<h2 id="Feature-Extraction"><a href="#Feature-Extraction" class="headerlink" title="Feature Extraction"></a>Feature Extraction</h2><p>As mentioned in the paper, the authors first group the NetFlow records into 3-minute sliding windows based on the source IP address and compute the aggregated features. Here is the list of features extracted:</p>
+<ul>
+<li>mean and standard deviation of ﬂow durations, number of packets, number of bytes, packet rate, and byte rate;</li>
+<li>entropy of protocol type, destination IP addresses, source ports, destination ports, and TCP ﬂags; and</li>
+<li>proportion of ports used for common applications.<br>For the ports of common applications, as they didn’t mention which exact ports they chose, I selected these ports:<ul>
+<li>DHCP</li>
+<li>DNS</li>
+<li>FTP</li>
+<li>HTTP</li>
+<li>HTTPS</li>
+<li>IMAP</li>
+<li>IPSec</li>
+<li>LDAP</li>
+<li>NetBios</li>
+<li>NNTP</li>
+<li>NTP</li>
+<li>POP3</li>
+<li>RDP</li>
+<li>RPC</li>
+<li>SMTP</li>
+<li>SNMP</li>
+<li>SSH</li>
+<li>Telnet</li>
+<li>TFTP</li>
+<li>Other</li>
+</ul>
+</li>
+</ul>
+<p>The final number of features will be 69 instead of the original 53 (5 mean-related + 5 std-related + 5 entropy-related + 22 source-port-proportion + 22 dest-port-proportion).</p>
+<p>I used PySpark to accelerate the extraction process.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extract_features</span>(<span class="params">self</span>) -&gt; pyspark.sql.dataframe:</span><br><span class="line">    df = (</span><br><span class="line">        <span class="variable language_">self</span>.df</span><br><span class="line">            <span class="comment"># group by src_ip and time_window as in paper</span></span><br><span class="line">            .groupby(<span class="string">&#x27;time_window&#x27;</span>, <span class="string">&#x27;src_ip&#x27;</span>)</span><br><span class="line">            <span class="comment"># start extracting feature</span></span><br><span class="line">            .agg(</span><br><span class="line">            <span class="variable language_">self</span>.extract_num_flow_udf(lit(<span class="number">1</span>)).alias(<span class="string">&#x27;num_flow&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;duration&#x27;</span>).alias(<span class="string">&#x27;mean_duration&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;packet&#x27;</span>).alias(<span class="string">&#x27;mean_packet&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;num_of_bytes&#x27;</span>).alias(<span class="string">&#x27;mean_num_of_bytes&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;packet_rate&#x27;</span>).alias(<span class="string">&#x27;mean_packet_rate&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;byte_rate&#x27;</span>).alias(<span class="string">&#x27;mean_byte_rate&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;duration&#x27;</span>).alias(<span class="string">&#x27;std_duration&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;packet&#x27;</span>).alias(<span class="string">&#x27;std_packet&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;num_of_bytes&#x27;</span>).alias(<span class="string">&#x27;std_num_of_bytes&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;packet_rate&#x27;</span>).alias(<span class="string">&#x27;std_packet_rate&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;byte_rate&#x27;</span>).alias(<span class="string">&#x27;std_byte_rate&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;protocol&#x27;</span>).alias(<span class="string">&#x27;entropy_protocol&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;dst_ip&#x27;</span>).alias(<span class="string">&#x27;entropy_dst_ip&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;src_port&#x27;</span>).alias(<span class="string">&#x27;entropy_src_port&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;dst_port&#x27;</span>).alias(<span class="string">&#x27;entropy_dst_port&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;flags&#x27;</span>).alias(<span class="string">&#x27;entropy_flags&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.port_proportion_udf(<span class="string">&#x27;src_port&#x27;</span>).alias(<span class="string">&#x27;proportion_src_port&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.port_proportion_udf(<span class="string">&#x27;dst_port&#x27;</span>).alias(<span class="string">&#x27;proportion_dst_port&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.build_label_udf(<span class="string">&#x27;label&#x27;</span>).alias(<span class="string">&#x27;label&#x27;</span>),</span><br><span class="line">        )</span><br><span class="line">            <span class="comment"># filter out num_flow &lt; 10</span></span><br><span class="line">            .<span class="built_in">filter</span>((col(<span class="string">&#x27;num_flow&#x27;</span>) &gt;= <span class="number">10</span>))</span><br><span class="line">            <span class="comment"># sort by time window and source ip</span></span><br><span class="line">            .orderBy(<span class="string">&#x27;time_window&#x27;</span>, <span class="string">&#x27;src_ip&#x27;</span>)</span><br><span class="line">            <span class="comment"># drop num_flow</span></span><br><span class="line">            .drop(<span class="string">&#x27;num_flow&#x27;</span>)</span><br><span class="line">            <span class="comment"># fill na</span></span><br><span class="line">            .na.fill(<span class="number">0.0</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> df</span><br></pre></td></tr></table></figure>
+
+<h2 id="Build-Input-for-Model"><a href="#Build-Input-for-Model" class="headerlink" title="Build Input for Model"></a>Build Input for Model</h2><p>This step is simple, I scaled the extracted with a min-max scaler, made all the values ranged from 0 to 1. Besides that, I also converted the data schema to Petastorm compatible schema. Petastorm enables our learning process directly applied to the data generated by big data processing platform, such as PySpark.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">transform</span>(<span class="params">self, remove_malicious=<span class="literal">True</span>, remove_null_label=<span class="literal">True</span></span>) -&gt; pyspark.sql.DataFrame:</span><br><span class="line">    df = (</span><br><span class="line">        <span class="variable language_">self</span>.df</span><br><span class="line">            <span class="comment"># compose feature</span></span><br><span class="line">            .withColumn(<span class="string">&#x27;features&#x27;</span>, <span class="variable language_">self</span>.feature_compose_udf(*<span class="variable language_">self</span>.feature_column))</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> remove_null_label:</span><br><span class="line">        df = df.<span class="built_in">filter</span>(col(<span class="string">&#x27;label&#x27;</span>).isNotNull())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> remove_malicious:</span><br><span class="line">        df = df.<span class="built_in">filter</span>(col(<span class="string">&#x27;label&#x27;</span>) == <span class="string">&#x27;background&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># select only time_window, src_ip, feature and label columns</span></span><br><span class="line">    df = df.select(</span><br><span class="line">        <span class="string">&#x27;time_window&#x27;</span>, <span class="string">&#x27;src_ip&#x27;</span>, <span class="string">&#x27;features&#x27;</span>, <span class="string">&#x27;label&#x27;</span>,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> df</span><br></pre></td></tr></table></figure>
+
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>This paper used a VAE model (Variational autoencoder).</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VAE</span>(pl.LightningModule):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.encoder = Encoder()</span><br><span class="line">        <span class="variable language_">self</span>.decoder = Decoder()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reparameterise</span>(<span class="params">self, mu, logvar</span>):</span><br><span class="line">        std = torch.exp(<span class="number">0.5</span> * logvar)</span><br><span class="line">        eps = torch.randn_like(std)</span><br><span class="line">        <span class="keyword">return</span> mu + eps * std</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        mu, logvar = <span class="variable language_">self</span>.encoder(x)</span><br><span class="line">        z = <span class="variable language_">self</span>.reparameterise(mu, logvar)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.decoder(z), mu, logvar</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">loss_function</span>(<span class="params">self, recon_x, x, mu, logvar</span>):</span><br><span class="line">        BCE = F.binary_cross_entropy(recon_x, x, reduction=<span class="string">&#x27;sum&#x27;</span>)</span><br><span class="line">        KLD = -<span class="number">0.5</span> * torch.<span class="built_in">sum</span>(<span class="number">1</span> + logvar - mu.<span class="built_in">pow</span>(<span class="number">2</span>) - logvar.exp())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> BCE + KLD</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">training_step</span>(<span class="params">self, batch, batch_idx</span>):</span><br><span class="line">        x = batch[<span class="string">&#x27;feature&#x27;</span>]</span><br><span class="line">        recon_x, mu, logvar = <span class="variable language_">self</span>(x)</span><br><span class="line">        loss = <span class="variable language_">self</span>.loss_function(recon_x, x, mu, logvar)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&#x27;loss&#x27;</span>: loss&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">configure_optimizers</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> torch.optim.Adam(<span class="variable language_">self</span>.parameters(), lr=<span class="number">0.001</span>, weight_decay=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>Here comes the interesting part. We say that a sample is anomalous if its reconstruction error is big. Here lie two questions: how big is big, and how to compute the reconstruction error. </p>
+<p>To compute the reconstruction error, instinctively, I would choose the same loss function from the model, which is binary cross-entropy with or without the regularisation term, the KL-divergence. However, neither of these are performing well. Before I started to give up, I used the L2 distance (MSE) as the reconstruction error. Boom! Surprisingly, it did a lot better the two previously mentioned loss.</p>
+<p><img src="/images/gee/roc_background_spam.png"></p>
+<p>Now we found the best way to compute reconstruction error. How do we decide the threshold? Let me plot the distribution of errors from normal and malicious samples.</p>
+<p><img src="/images/gee/kde_background_spam.png"></p>
+<p>From the above image, we can see that the normal samples and malicious samples have two almost different error distribution, where the errors of the normal samples mostly concentrate at around 0.00, while the malicious ones concentrate at around 0.02. Based on the image, we can then set a hard threshold at 0.015. <a href="https://medium.com/balabit-unsupervised/calibrating-anomaly-scores-5e60b7e47553">Balabit unsupervised wrote a detailed article on calibrating a threshold that may worth a read.</a></p>
+<p><img src="/images/gee/gradient_spam.png"></p>
+<p>The authors also introduce a method to explain the VAE by the gradients. The explanation is somehow not very convincible, so I didn’t do a further experiment.</p>
+<h2 id="Code-and-Repo"><a href="#Code-and-Repo" class="headerlink" title="Code and Repo"></a>Code and Repo</h2><p>Feel free to look on the codes. <a href="https://github.com/munhouiani/GEE">https://github.com/munhouiani/GEE</a></p>
+]]></content>
+      <tags>
+        <tag>Deep Learning</tag>
+        <tag>PyTorch</tag>
+        <tag>Machine Learning</tag>
+        <tag>PySpark</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Simple Implementation of Rendezvous Architecture for Machine Learning Services</title>
     <url>/2022/02/09/Simple-Implementation-of-Rendevzous-Architecture-for-Machine-Learning-Services/</url>
     <content><![CDATA[<h2 id="Stream-First-Rendezvous-Architecture"><a href="#Stream-First-Rendezvous-Architecture" class="headerlink" title="Stream-First Rendezvous Architecture"></a>Stream-First Rendezvous Architecture</h2><p>The rendezvous architecture was introduced by Ted Dunning in his book <a href="https://www.oreilly.com/library/view/machine-learning-logistics/9781491997628/ch03.html">Machine Learning Logistics</a>. This architecture is aimed to solve several real-world machine learning challenges:</p>
@@ -2382,68 +2447,15 @@ Pic 3. Network Graph from Day 2
       </tags>
   </entry>
   <entry>
-    <title>Pytorch Implementation of GEE: A Gradient-based Explainable Variational Autoencoder for Network Anomaly Detection</title>
-    <url>/2020/07/12/Pytorch-Implementation-of-GEE-A-Gradient-based-Explainable-Variational-Autoencoder-for-Network-Anomaly-Detection/</url>
-    <content><![CDATA[<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>Recently I have been studying on varies methods of anomaly detection, ranging from the traditional methods, such as Isolation Forest to the latest deep-neural-network-based methods. All these methods have their beauty and shortcoming. The reason why I selected and implemented this paper, <a href="https://arxiv.org/abs/1903.06661">GEE: A Gradient-based Explainable Variational Autoencoder for Network Anomaly Detection</a>, is because it used an autoencoder trained with incomplete and noisy data for an anomaly detection task.</p>
-<span id="more"></span>
-
-<p><img src="/images/gee/autoencoder.png"><br>Image by Arden Dertat via <a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798">Toward Data Science</a></p>
-<p>The news which an autoencoder can be used for anomaly detection has been circulating on the internet for a while. Autoencoder was originally designed to learn the latent representation of a bunch of data. It consists of two parts, the encoder and decoder. Autoencoder will first encode the input data to a lower dimension of representation, it then decodes the representation back to its original form. Therefore, ones may suggest that if the difference between the reconstruction of a sample and its original form is big, then that sample could be an anomaly. Many internet articles suggested this idea, but only a few of them realised it. Therefore, I would like to implement this idea myself. By the way, <a href="https://towardsdatascience.com/understanding-variational-autoencoders-vaes-f70510919f73">Joseph Rocca wrote an exceptionally well introductory of autoencoders</a>. If you are not familiar with the idea of an autoencoder, you are welcomed to read it.</p>
-<p><img src="/images/gee/richard_feynman.png"><br>Image by Riza Fahmi via <a href="https://twitter.com/rizafahmi22/status/1000008342859894784">Twitter</a>.</p>
-<p>The other reason I implemented this is that the data it used wasn’t audio-like or image-like data. We’ve seen so many successful stories of deep learning applying on image or audio data via end-to-end learning, i.e., without human-involved feature engineering. I wonder if a deep neural network can be applied on traditional table-like data as well. This paper used NetFlow data, which already discard much raw information of a packet. Furthermore, it grouped these NetFlow data with a specified time window and source IP then performed feature extraction on the grouped data. It would be interesting to see how a deep neural network performs on this kind of feature engineered data.</p>
-<h2 id="Feature-Extraction"><a href="#Feature-Extraction" class="headerlink" title="Feature Extraction"></a>Feature Extraction</h2><p>As mentioned in the paper, the authors first group the NetFlow records into 3-minute sliding windows based on the source IP address and compute the aggregated features. Here is the list of features extracted:</p>
-<ul>
-<li>mean and standard deviation of ﬂow durations, number of packets, number of bytes, packet rate, and byte rate;</li>
-<li>entropy of protocol type, destination IP addresses, source ports, destination ports, and TCP ﬂags; and</li>
-<li>proportion of ports used for common applications.<br>For the ports of common applications, as they didn’t mention which exact ports they chose, I selected these ports:<ul>
-<li>DHCP</li>
-<li>DNS</li>
-<li>FTP</li>
-<li>HTTP</li>
-<li>HTTPS</li>
-<li>IMAP</li>
-<li>IPSec</li>
-<li>LDAP</li>
-<li>NetBios</li>
-<li>NNTP</li>
-<li>NTP</li>
-<li>POP3</li>
-<li>RDP</li>
-<li>RPC</li>
-<li>SMTP</li>
-<li>SNMP</li>
-<li>SSH</li>
-<li>Telnet</li>
-<li>TFTP</li>
-<li>Other</li>
-</ul>
-</li>
-</ul>
-<p>The final number of features will be 69 instead of the original 53 (5 mean-related + 5 std-related + 5 entropy-related + 22 source-port-proportion + 22 dest-port-proportion).</p>
-<p>I used PySpark to accelerate the extraction process.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extract_features</span>(<span class="params">self</span>) -&gt; pyspark.sql.dataframe:</span><br><span class="line">    df = (</span><br><span class="line">        <span class="variable language_">self</span>.df</span><br><span class="line">            <span class="comment"># group by src_ip and time_window as in paper</span></span><br><span class="line">            .groupby(<span class="string">&#x27;time_window&#x27;</span>, <span class="string">&#x27;src_ip&#x27;</span>)</span><br><span class="line">            <span class="comment"># start extracting feature</span></span><br><span class="line">            .agg(</span><br><span class="line">            <span class="variable language_">self</span>.extract_num_flow_udf(lit(<span class="number">1</span>)).alias(<span class="string">&#x27;num_flow&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;duration&#x27;</span>).alias(<span class="string">&#x27;mean_duration&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;packet&#x27;</span>).alias(<span class="string">&#x27;mean_packet&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;num_of_bytes&#x27;</span>).alias(<span class="string">&#x27;mean_num_of_bytes&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;packet_rate&#x27;</span>).alias(<span class="string">&#x27;mean_packet_rate&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.mean_udf(<span class="string">&#x27;byte_rate&#x27;</span>).alias(<span class="string">&#x27;mean_byte_rate&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;duration&#x27;</span>).alias(<span class="string">&#x27;std_duration&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;packet&#x27;</span>).alias(<span class="string">&#x27;std_packet&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;num_of_bytes&#x27;</span>).alias(<span class="string">&#x27;std_num_of_bytes&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;packet_rate&#x27;</span>).alias(<span class="string">&#x27;std_packet_rate&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.std_udf(<span class="string">&#x27;byte_rate&#x27;</span>).alias(<span class="string">&#x27;std_byte_rate&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;protocol&#x27;</span>).alias(<span class="string">&#x27;entropy_protocol&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;dst_ip&#x27;</span>).alias(<span class="string">&#x27;entropy_dst_ip&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;src_port&#x27;</span>).alias(<span class="string">&#x27;entropy_src_port&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;dst_port&#x27;</span>).alias(<span class="string">&#x27;entropy_dst_port&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.entropy_udf(<span class="string">&#x27;flags&#x27;</span>).alias(<span class="string">&#x27;entropy_flags&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.port_proportion_udf(<span class="string">&#x27;src_port&#x27;</span>).alias(<span class="string">&#x27;proportion_src_port&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.port_proportion_udf(<span class="string">&#x27;dst_port&#x27;</span>).alias(<span class="string">&#x27;proportion_dst_port&#x27;</span>),</span><br><span class="line">            <span class="variable language_">self</span>.build_label_udf(<span class="string">&#x27;label&#x27;</span>).alias(<span class="string">&#x27;label&#x27;</span>),</span><br><span class="line">        )</span><br><span class="line">            <span class="comment"># filter out num_flow &lt; 10</span></span><br><span class="line">            .<span class="built_in">filter</span>((col(<span class="string">&#x27;num_flow&#x27;</span>) &gt;= <span class="number">10</span>))</span><br><span class="line">            <span class="comment"># sort by time window and source ip</span></span><br><span class="line">            .orderBy(<span class="string">&#x27;time_window&#x27;</span>, <span class="string">&#x27;src_ip&#x27;</span>)</span><br><span class="line">            <span class="comment"># drop num_flow</span></span><br><span class="line">            .drop(<span class="string">&#x27;num_flow&#x27;</span>)</span><br><span class="line">            <span class="comment"># fill na</span></span><br><span class="line">            .na.fill(<span class="number">0.0</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> df</span><br></pre></td></tr></table></figure>
-
-<h2 id="Build-Input-for-Model"><a href="#Build-Input-for-Model" class="headerlink" title="Build Input for Model"></a>Build Input for Model</h2><p>This step is simple, I scaled the extracted with a min-max scaler, made all the values ranged from 0 to 1. Besides that, I also converted the data schema to Petastorm compatible schema. Petastorm enables our learning process directly applied to the data generated by big data processing platform, such as PySpark.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">transform</span>(<span class="params">self, remove_malicious=<span class="literal">True</span>, remove_null_label=<span class="literal">True</span></span>) -&gt; pyspark.sql.DataFrame:</span><br><span class="line">    df = (</span><br><span class="line">        <span class="variable language_">self</span>.df</span><br><span class="line">            <span class="comment"># compose feature</span></span><br><span class="line">            .withColumn(<span class="string">&#x27;features&#x27;</span>, <span class="variable language_">self</span>.feature_compose_udf(*<span class="variable language_">self</span>.feature_column))</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> remove_null_label:</span><br><span class="line">        df = df.<span class="built_in">filter</span>(col(<span class="string">&#x27;label&#x27;</span>).isNotNull())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> remove_malicious:</span><br><span class="line">        df = df.<span class="built_in">filter</span>(col(<span class="string">&#x27;label&#x27;</span>) == <span class="string">&#x27;background&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># select only time_window, src_ip, feature and label columns</span></span><br><span class="line">    df = df.select(</span><br><span class="line">        <span class="string">&#x27;time_window&#x27;</span>, <span class="string">&#x27;src_ip&#x27;</span>, <span class="string">&#x27;features&#x27;</span>, <span class="string">&#x27;label&#x27;</span>,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> df</span><br></pre></td></tr></table></figure>
-
-<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>This paper used a VAE model (Variational autoencoder).</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VAE</span>(pl.LightningModule):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.encoder = Encoder()</span><br><span class="line">        <span class="variable language_">self</span>.decoder = Decoder()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reparameterise</span>(<span class="params">self, mu, logvar</span>):</span><br><span class="line">        std = torch.exp(<span class="number">0.5</span> * logvar)</span><br><span class="line">        eps = torch.randn_like(std)</span><br><span class="line">        <span class="keyword">return</span> mu + eps * std</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        mu, logvar = <span class="variable language_">self</span>.encoder(x)</span><br><span class="line">        z = <span class="variable language_">self</span>.reparameterise(mu, logvar)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.decoder(z), mu, logvar</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">loss_function</span>(<span class="params">self, recon_x, x, mu, logvar</span>):</span><br><span class="line">        BCE = F.binary_cross_entropy(recon_x, x, reduction=<span class="string">&#x27;sum&#x27;</span>)</span><br><span class="line">        KLD = -<span class="number">0.5</span> * torch.<span class="built_in">sum</span>(<span class="number">1</span> + logvar - mu.<span class="built_in">pow</span>(<span class="number">2</span>) - logvar.exp())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> BCE + KLD</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">training_step</span>(<span class="params">self, batch, batch_idx</span>):</span><br><span class="line">        x = batch[<span class="string">&#x27;feature&#x27;</span>]</span><br><span class="line">        recon_x, mu, logvar = <span class="variable language_">self</span>(x)</span><br><span class="line">        loss = <span class="variable language_">self</span>.loss_function(recon_x, x, mu, logvar)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&#x27;loss&#x27;</span>: loss&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">configure_optimizers</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> torch.optim.Adam(<span class="variable language_">self</span>.parameters(), lr=<span class="number">0.001</span>, weight_decay=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>Here comes the interesting part. We say that a sample is anomalous if its reconstruction error is big. Here lie two questions: how big is big, and how to compute the reconstruction error. </p>
-<p>To compute the reconstruction error, instinctively, I would choose the same loss function from the model, which is binary cross-entropy with or without the regularisation term, the KL-divergence. However, neither of these are performing well. Before I started to give up, I used the L2 distance (MSE) as the reconstruction error. Boom! Surprisingly, it did a lot better the two previously mentioned loss.</p>
-<p><img src="/images/gee/roc_background_spam.png"></p>
-<p>Now we found the best way to compute reconstruction error. How do we decide the threshold? Let me plot the distribution of errors from normal and malicious samples.</p>
-<p><img src="/images/gee/kde_background_spam.png"></p>
-<p>From the above image, we can see that the normal samples and malicious samples have two almost different error distribution, where the errors of the normal samples mostly concentrate at around 0.00, while the malicious ones concentrate at around 0.02. Based on the image, we can then set a hard threshold at 0.015. <a href="https://medium.com/balabit-unsupervised/calibrating-anomaly-scores-5e60b7e47553">Balabit unsupervised wrote a detailed article on calibrating a threshold that may worth a read.</a></p>
-<p><img src="/images/gee/gradient_spam.png"></p>
-<p>The authors also introduce a method to explain the VAE by the gradients. The explanation is somehow not very convincible, so I didn’t do a further experiment.</p>
-<h2 id="Code-and-Repo"><a href="#Code-and-Repo" class="headerlink" title="Code and Repo"></a>Code and Repo</h2><p>Feel free to look on the codes. <a href="https://github.com/munhouiani/GEE">https://github.com/munhouiani/GEE</a></p>
+    <title>Summary of Malware Detection By Eating a Whole EXE in One Picture</title>
+    <url>/2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/</url>
+    <content><![CDATA[<p><img src="/images/eating-whole-files/pasted-0.png"></p>
 ]]></content>
       <tags>
         <tag>Deep Learning</tag>
-        <tag>PyTorch</tag>
         <tag>Machine Learning</tag>
-        <tag>PySpark</tag>
+        <tag>Malware Detection</tag>
+        <tag>Paper Summary</tag>
       </tags>
   </entry>
   <entry>
@@ -2537,18 +2549,6 @@ Pic 3. Network Graph from Day 2
         <tag>Deep Learning</tag>
         <tag>Machine Learning</tag>
         <tag>Large Language Model</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Summary of Malware Detection By Eating a Whole EXE in One Picture</title>
-    <url>/2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/</url>
-    <content><![CDATA[<p><img src="/images/eating-whole-files/pasted-0.png"></p>
-]]></content>
-      <tags>
-        <tag>Deep Learning</tag>
-        <tag>Machine Learning</tag>
-        <tag>Malware Detection</tag>
-        <tag>Paper Summary</tag>
       </tags>
   </entry>
   <entry>

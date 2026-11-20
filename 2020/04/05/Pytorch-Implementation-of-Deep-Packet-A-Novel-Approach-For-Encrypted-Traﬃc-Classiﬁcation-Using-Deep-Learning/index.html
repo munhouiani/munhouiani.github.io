@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css?v=mwo8pksg">
+<link rel="stylesheet" href="/css/main.css?v=mwo947g7">
 
 
 
@@ -85,6 +85,9 @@
 
 
 
+<script>
+  if (window.innerWidth >= 1200) document.documentElement.classList.add('sidebar-preopen');
+</script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -470,6 +473,10 @@
       event.stopImmediatePropagation();
     }
   }, true);
+</script><script>
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => document.documentElement.classList.remove('sidebar-preopen'));
+  });
 </script>
 
 </body>
