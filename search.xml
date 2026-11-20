@@ -69,73 +69,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Detecting Out-of-Distribution Samples with kNN</title>
-    <url>/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/</url>
-    <content><![CDATA[<h2 id="What-is-Out-of-Distribution-OOD-Detection-and-Why-is-it-Important"><a href="#What-is-Out-of-Distribution-OOD-Detection-and-Why-is-it-Important" class="headerlink" title="What is Out-of-Distribution (OOD) Detection and Why is it Important?"></a>What is Out-of-Distribution (OOD) Detection and Why is it Important?</h2><p>Most machine learning models are trained based on the closed-world assumption, meaning that the test data is assumed to have the same distribution as the training data. When we train a model, we usually form our training and testing data by randomly splitting the data we have into two sets, in which both datasets have the same label distribution. However, in the real-world scenario, this assumption doesn’t necessarily hold. For example, a model trained to classify cats and dogs may receive an image of a dolphin. Even worse, it might highly confident classify such inputs into in-distribution classes. </p>
-<img src="/images/ood-knn/2022-12-01T170823.png" alt="OOD Example" style="zoom:40%;" /> 
-
-<p>Detecting if the received model inputs have the same distribution as the training data is called out-of-distribution detection. </p>
-<span id="more"></span>
-
-<p>OOD detection plays a crucial part in modern-day machine learning services. For example, we can use the OOD detector as part of the machine learning operations to detect unknown inputs. When an unknown is seen, the machine learning service can safely reject the input instead of returning an answer from the model.</p>
-<img src="/images/ood-knn/2022-12-01T173157.png" alt="OOD Detector as a prefilter" style="zoom:35%;" /> 
-
-<p>We can also use the result from an OOD detector as a filter for the data labeling task. For example, a machine learning service might receive a lot of inputs every day, and it is not feasible to let human labelers review all data. We can prioritize the process with an OOD detector by reviewing those out-of-distribution samples.</p>
-<h2 id="How-is-OOD-Detection-Methods-Evaluted"><a href="#How-is-OOD-Detection-Methods-Evaluted" class="headerlink" title="How is OOD Detection Methods Evaluted?"></a>How is OOD Detection Methods Evaluted?</h2><p>OOD detection can be seen as a binary classification problem. We often start by training a model with a dataset known as the in-distribution dataset, i.e., CIFAR-10. To evaluate an OOD detector, we will prepare another dataset not in the same domain as the training data, i.e., SHVN, known as the out-of-distribution dataset. We then combine these two datasets to check if the OOD detection knows which is from the in-distribution dataset and vice versa. We usually use label 1 (positive) for in-distribution and 0 (negative) for the out-distribution. Aside from the standard evaluation metrics, we also calculate the FP rate of the OOD detector when its TP rate is at 95%, denoted as FPR@TPR95.</p>
-<h2 id="OOD-Detection-Methods"><a href="#OOD-Detection-Methods" class="headerlink" title="OOD Detection Methods"></a>OOD Detection Methods</h2><p>From <a href="https://arxiv.org/abs/2110.11334">a comprehensive study by J. Yang et al.</a>, OOD detections methods can be categorized into:</p>
-<ol>
-<li>Classification methods</li>
-<li>Density-based methods</li>
-<li>Distance-based methods</li>
-<li>Reconstruction-based methods</li>
-</ol>
-<h2 id="Using-kNN-as-an-OOD-Detector"><a href="#Using-kNN-as-an-OOD-Detector" class="headerlink" title="Using kNN as an OOD Detector"></a>Using kNN as an OOD Detector</h2><p>The following sections are notes and implementation of a paper by Y. Sun et al.: <em>Out-of-distribution detection with deep nearest neighbors</em>.</p>
-<h3 id="Out-of-Distribution-Detection-for-Single-Feature"><a href="#Out-of-Distribution-Detection-for-Single-Feature" class="headerlink" title="Out-of-Distribution Detection for Single Feature"></a>Out-of-Distribution Detection for Single Feature</h3><p>Before we dive into the kNN method, let’s see how out-of-distribution detection works on a single feature. For example, let’s say we have a feature $p$ that is normally distributed with a mean of $0$ and standard deviation of $1$, and $q$ is also drawn i.i.d. from the same distribution.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> wasserstein_distance</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">np.random.seed(<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p and q from the same distribution, both has 1000 samples</span></span><br><span class="line">p = np.random.normal(<span class="number">0</span>, <span class="number">1</span>, size=<span class="number">1000</span>)</span><br><span class="line">q = np.random.normal(<span class="number">0</span>, <span class="number">1</span>, size=<span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># check the wasserstein_distance: 0.04247616759945748</span></span><br><span class="line">wasserstein_distance(p, q)</span><br><span class="line"></span><br><span class="line"><span class="comment"># q is drawn from the different distribution</span></span><br><span class="line">q = np.random.normal(<span class="number">3</span>, <span class="number">5</span>, size=<span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># larger wasserstein_distance: 4.170158238494999</span></span><br><span class="line">wasserstein_distance(p, q)</span><br></pre></td></tr></table></figure>
-
-<p>We can use statistical distance measures, such as Wasserstein distance, to check if $p$ and $q$ have the same distribution. If they have the same distribution, the Wasserstein distance will be small. Otherwise, the resulting Wasserstein distance is large.</p>
-<p>Traditional statistical distance measures are no longer applied to deep learning models because the inputs are very high-dimensional. Take a $32 \times 32$ color image as an example, its dimension is $32 \times 32 \times 3 &#x3D; 3072$. Therefore, calculating statistical distance measures for all features is not feasible.</p>
-<h3 id="Core-Idea-Embedding"><a href="#Core-Idea-Embedding" class="headerlink" title="Core Idea: Embedding"></a>Core Idea: Embedding</h3><p>Regarding deep learning models with high dimensional features, current OOD methods focus on the embedding space of a <strong>well-trained</strong> model. Distance-based methods assume that in the embedding space, OOD samples are relatively far away from in-distribution data. Density-based methods believe that in-distribution data follow certain probability distributions. Hence data falls into low-density regions are OOD. </p>
-<img src="/images/ood-knn/2022-12-03T153545.png" alt="Embedding space" style="zoom:35%;" /> 
-
-<p>However, these assumptions may not hold. Instead of imposing strong assumptions on the underlying embedding space, Y. Sun et al. use kNN, which is distributional assumption-free. Their algorithm is simple. First, they will gather distances of $k$-nearest neighbor of all in-distribution samples, then use those distances to determine a threshold. Any test data with a kNN distance larger than the threshold are flagged as OOD.</p>
-<h3 id="Train-Resnet18-on-CIFAR-10"><a href="#Train-Resnet18-on-CIFAR-10" class="headerlink" title="Train Resnet18 on CIFAR-10"></a>Train Resnet18 on CIFAR-10</h3><p>We first train a ResNet18 model with CIFAR-10 data to demonstrate their approaches. This training code is slightly modified from the <a href="https://pytorch-lightning.readthedocs.io/en/stable/notebooks/lightning_examples/cifar10-baseline.html">official Pytorch Lightning tutorial</a>. </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LitResnet</span>(<span class="title class_ inherited__">LightningModule</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, lr=<span class="number">0.05</span>, num_classes=<span class="number">10</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.save_hyperparameters()</span><br><span class="line">        <span class="variable language_">self</span>.model = create_model()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        out = <span class="variable language_">self</span>.model(x)</span><br><span class="line">        <span class="keyword">return</span> F.log_softmax(out, dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">features</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = <span class="variable language_">self</span>.model.conv1(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.bn1(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.relu(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.maxpool(x)</span><br><span class="line"></span><br><span class="line">        x = <span class="variable language_">self</span>.model.layer1(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.layer2(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.layer3(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.layer4(x)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">training_step</span>(<span class="params">self, batch, batch_idx</span>):</span><br><span class="line">        x, y = batch</span><br><span class="line">        logits = <span class="variable language_">self</span>(x)</span><br><span class="line">        loss = F.nll_loss(logits, y)</span><br><span class="line">        <span class="variable language_">self</span>.log(<span class="string">&quot;train_loss&quot;</span>, loss)</span><br><span class="line">        <span class="keyword">return</span> loss</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">evaluate</span>(<span class="params">self, batch, stage=<span class="literal">None</span></span>):</span><br><span class="line">        x, y = batch</span><br><span class="line">        logits = <span class="variable language_">self</span>(x)</span><br><span class="line">        loss = F.nll_loss(logits, y)</span><br><span class="line">        preds = torch.argmax(logits, dim=<span class="number">1</span>)</span><br><span class="line">        acc = accuracy(preds, y, task=<span class="string">&quot;multiclass&quot;</span>, num_classes=num_classes)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> stage:</span><br><span class="line">            <span class="variable language_">self</span>.log(<span class="string">f&quot;<span class="subst">&#123;stage&#125;</span>_loss&quot;</span>, loss, prog_bar=<span class="literal">True</span>)</span><br><span class="line">            <span class="variable language_">self</span>.log(<span class="string">f&quot;<span class="subst">&#123;stage&#125;</span>_acc&quot;</span>, acc, prog_bar=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validation_step</span>(<span class="params">self, batch, batch_idx</span>):</span><br><span class="line">        <span class="variable language_">self</span>.evaluate(batch, <span class="string">&quot;val&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_step</span>(<span class="params">self, batch, batch_idx</span>):</span><br><span class="line">        <span class="variable language_">self</span>.evaluate(batch, <span class="string">&quot;test&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">configure_optimizers</span>(<span class="params">self</span>):</span><br><span class="line">        optimizer = torch.optim.SGD(</span><br><span class="line">            <span class="variable language_">self</span>.parameters(),</span><br><span class="line">            lr=<span class="variable language_">self</span>.hparams.lr,</span><br><span class="line">            momentum=<span class="number">0.9</span>,</span><br><span class="line">            weight_decay=<span class="number">5e-4</span>,</span><br><span class="line">        )</span><br><span class="line">        scheduler_dict = &#123;</span><br><span class="line">            <span class="string">&quot;scheduler&quot;</span>: OneCycleLR(</span><br><span class="line">                optimizer,</span><br><span class="line">                <span class="number">0.1</span>,</span><br><span class="line">                epochs=<span class="variable language_">self</span>.trainer.max_epochs,</span><br><span class="line">                total_steps=<span class="variable language_">self</span>.trainer.estimated_stepping_batches,</span><br><span class="line">            ),</span><br><span class="line">            <span class="string">&quot;interval&quot;</span>: <span class="string">&quot;step&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;optimizer&quot;</span>: optimizer, <span class="string">&quot;lr_scheduler&quot;</span>: scheduler_dict&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">model = LitResnet(lr=<span class="number">0.05</span>, num_classes=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">trainer = Trainer(</span><br><span class="line">    max_epochs=<span class="number">30</span>,</span><br><span class="line">    accelerator=<span class="string">&quot;auto&quot;</span>,</span><br><span class="line">    devices=<span class="string">&quot;auto&quot;</span>,</span><br><span class="line">    logger=CSVLogger(save_dir=<span class="string">&quot;logs/&quot;</span>),</span><br><span class="line">    callbacks=[</span><br><span class="line">        LearningRateMonitor(logging_interval=<span class="string">&quot;step&quot;</span>),</span><br><span class="line">        TQDMProgressBar(refresh_rate=<span class="number">10</span>),</span><br><span class="line">    ],</span><br><span class="line">    deterministic=<span class="literal">True</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">trainer.fit(model, train_loader, val_loader)</span><br><span class="line">trainer.test(model, dataloaders=val_loader)</span><br></pre></td></tr></table></figure>
-
-<p>This model achieves an accuracy of 94%.</p>
-<h3 id="Feature-Extraction"><a href="#Feature-Extraction" class="headerlink" title="Feature Extraction"></a>Feature Extraction</h3><p>We use the output of the last hidden layer (one layer before the output layer) as the features. Then, we normalize the features with the method described in the paper $\mathbf{z} &#x3D; \phi(\mathbf{x}) &#x2F; || \phi(\mathbf{x}) ||_{2}$.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extract_features</span>(<span class="params">model, dataloader</span>):</span><br><span class="line">    features = []</span><br><span class="line">    <span class="keyword">for</span> data, label <span class="keyword">in</span> dataloader:</span><br><span class="line">        <span class="comment"># get the last hidden layer&#x27;s output from model, size: (batch_size, 512, 4, 4)</span></span><br><span class="line">        x = model.features(data)</span><br><span class="line">        <span class="comment"># avg pool, size: (batch_size, 512, 1, 1)</span></span><br><span class="line">        x = F.adaptive_avg_pool2d(x, <span class="number">1</span>)</span><br><span class="line">        <span class="comment"># squeeze, size: (batch_size, 512)</span></span><br><span class="line">        x = x.squeeze()</span><br><span class="line">        <span class="comment"># detach</span></span><br><span class="line">        x = x.data.cpu().numpy()</span><br><span class="line"></span><br><span class="line">        features.append(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># merge as a large numpy array</span></span><br><span class="line">    features = np.vstack(features)</span><br><span class="line">    <span class="comment"># ensure data type</span></span><br><span class="line">    features = features.astype(np.float32)</span><br><span class="line">    <span class="comment"># normalization</span></span><br><span class="line">    features = features / (</span><br><span class="line">        np.linalg.norm(features, <span class="built_in">ord</span>=<span class="number">2</span>, axis=-<span class="number">1</span>, keepdims=<span class="literal">True</span>) + <span class="number">1e-10</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> features</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train_features = extract_features(model, train_loader)</span><br><span class="line">test_features = extract_features(model, val_loader)</span><br><span class="line">ood_features = extract_features(model, ood_loader)</span><br></pre></td></tr></table></figure>
-
-<h3 id="Find-k-Nearest-Neighbors-with-FAISS"><a href="#Find-k-Nearest-Neighbors-with-FAISS" class="headerlink" title="Find $k$-Nearest Neighbors with FAISS"></a>Find $k$-Nearest Neighbors with FAISS</h3><p>We now need to find the distances of kNN and determine the threshold. First, we build an index using FAISS with the training features. Then we gather distances of $k$-th neighbors to the testing features. Here we set $k$ to 50. After that, we determine the threshold with 95% of TRP.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># build index with training features</span></span><br><span class="line">index = faiss.IndexFlatL2(train_features.shape[<span class="number">1</span>])</span><br><span class="line">index.add(train_features)</span><br><span class="line"></span><br><span class="line"><span class="comment"># find k-th neighbours and distances</span></span><br><span class="line">k = <span class="number">50</span></span><br><span class="line">in_l2_distances, in_k_closest_points = index.search(test_features, k)</span><br><span class="line"></span><br><span class="line"><span class="comment"># in_l2_distances is sorted increasingly</span></span><br><span class="line">in_scores = in_l2_distances[:, -<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># determine threshold with TPR = 0.95</span></span><br><span class="line">in_scores.sort()</span><br><span class="line">threshold = in_scores[<span class="built_in">round</span>(<span class="number">0.95</span> * <span class="built_in">len</span>(in_scores))]</span><br></pre></td></tr></table></figure>
-
-<h3 id="Evaluate-on-OOD-Data"><a href="#Evaluate-on-OOD-Data" class="headerlink" title="Evaluate on OOD Data"></a>Evaluate on OOD Data</h3><p>We follow the same steps as above for the OOD data. </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># same as in-distribution data</span></span><br><span class="line">k = <span class="number">50</span></span><br><span class="line">out_l2_distances, out_k_closest_points = index.search(ood_features, k)</span><br><span class="line"></span><br><span class="line"><span class="comment"># out_l2_distances is sorted increasingly</span></span><br><span class="line">out_scores = out_l2_distances[:, -<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
-
-<p>After getting the distances of $k$-th nearest neighbors of the OOD data, we can easily find the result by checking if the distance is greater than the threshold.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tp = <span class="number">0</span></span><br><span class="line">tn = <span class="number">0</span></span><br><span class="line">fp = <span class="number">0</span></span><br><span class="line">fn = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> point <span class="keyword">in</span> in_scores:</span><br><span class="line">    <span class="keyword">if</span> point &lt;= threshold:</span><br><span class="line">        tp += <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        fn += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> point <span class="keyword">in</span> out_scores:</span><br><span class="line">    <span class="keyword">if</span> point &lt;= threshold:</span><br><span class="line">        fp += <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tn += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">tp_rate = tp / (tp + fn)</span><br><span class="line">tn_rate = tn / (tn + fp)</span><br><span class="line">fp_rate = fp / (fp + tn)</span><br><span class="line">fn_rate = fn / (fn + tp)</span><br><span class="line"></span><br><span class="line">result = &#123;</span><br><span class="line">    <span class="string">&quot;tp&quot;</span>: tp,</span><br><span class="line">    <span class="string">&quot;tn&quot;</span>: tn,</span><br><span class="line">    <span class="string">&quot;fp&quot;</span>: fp,</span><br><span class="line">    <span class="string">&quot;fn&quot;</span>: fn,</span><br><span class="line">    <span class="string">&quot;tpr&quot;</span>: tp_rate,</span><br><span class="line">    <span class="string">&quot;fpr&quot;</span>: fp_rate,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>The final result has an FPR@TPR95 of 37.45%, higher than the paper’s result of 24.53%. Developing an OOD detector depends on the quality of the model. The paper mentioned that we could improve the result by using contrastive learning. Contrastive learning helps bring data with the same label closer and push data with different labels further, which aligns with the usage of kNN.</p>
-<p>Checkout the full notebook here: <a href="https://github.com/munhouiani/ood-knn">https://github.com/munhouiani/ood-knn</a></p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li>J. Yang, K. Zhou, Y. Li, and Z. Liu, “Generalized out-of-distribution detection: A survey”, <em>CoRR</em>, vol. abs&#x2F;2110.11334, 2021, [Online]. Available: <a href="https://arxiv.org/abs/2110.11334">https://arxiv.org/abs/2110.11334</a></li>
-<li>J. Ren and B. Lakshminarayanan, “Improving Out-of-Distribution Detection in Machine Learning Models”, <em>Google Research Blog</em>, Dec. 17, 2019. <a href="https://ai.googleblog.com/2019/12/improving-out-of-distribution-detection.html">https://ai.googleblog.com/2019/12/improving-out-of-distribution-detection.html</a> (accessed Dec. 02, 2022).</li>
-<li>Y. Sun, Y. Ming, X. Zhu, and Y. Li, “Out-of-distribution detection with deep nearest neighbors”, 2022.</li>
-<li>PL team, “PyTorch Lightning CIFAR10 ~94% Baseline Tutorial”, <em>Pytorch Lightning</em>, Apr. 28, 2022. <a href="https://pytorch-lightning.readthedocs.io/en/stable/notebooks/lightning_examples/cifar10-baseline.html">https://pytorch-lightning.readthedocs.io/en/stable/notebooks/lightning_examples/cifar10-baseline.html</a> (accessed Dec. 02, 2022).</li>
-<li>P. Mardziel, “Drift Metrics: How to Select the Right Metric to Analyze Drift”, <em>Toward Data Science</em>, Dec. 06, 2021. <a href="https://towardsdatascience.com/drift-metrics-how-to-select-the-right-metric-to-analyze-drift-24da63e497e">https://towardsdatascience.com/drift-metrics-how-to-select-the-right-metric-to-analyze-drift-24da63e497e</a> (accessed Dec. 03, 2022).</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Deep Learning</tag>
-        <tag>PyTorch</tag>
-        <tag>Machine Learning</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Data Pipeline: From PySpark to PyTorch</title>
     <url>/2020/01/16/Data-Pipeline-From-Pyspark-to-Pytorch/</url>
     <content><![CDATA[<h1 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h1><p>Uber’s Petastorm library provides a data reader for PyTorch that reads files generated by PySpark. <a href="https://github.com/munhouiani/petastorm-demo">Clone the project from Github for more information.</a></p>
@@ -210,126 +143,70 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Importance Sampling</title>
-    <url>/2023/03/01/Importance-Sampling/</url>
-    <content><![CDATA[<p>Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly.</p>
+    <title>Detecting Out-of-Distribution Samples with kNN</title>
+    <url>/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/</url>
+    <content><![CDATA[<h2 id="What-is-Out-of-Distribution-OOD-Detection-and-Why-is-it-Important"><a href="#What-is-Out-of-Distribution-OOD-Detection-and-Why-is-it-Important" class="headerlink" title="What is Out-of-Distribution (OOD) Detection and Why is it Important?"></a>What is Out-of-Distribution (OOD) Detection and Why is it Important?</h2><p>Most machine learning models are trained based on the closed-world assumption, meaning that the test data is assumed to have the same distribution as the training data. When we train a model, we usually form our training and testing data by randomly splitting the data we have into two sets, in which both datasets have the same label distribution. However, in the real-world scenario, this assumption doesn’t necessarily hold. For example, a model trained to classify cats and dogs may receive an image of a dolphin. Even worse, it might highly confident classify such inputs into in-distribution classes. </p>
+<img src="/images/ood-knn/2022-12-01T170823.png" alt="OOD Example" style="zoom:40%;" /> 
+
+<p>Detecting if the received model inputs have the same distribution as the training data is called out-of-distribution detection. </p>
 <span id="more"></span>
 
-<p>Suppose we want to calculate the expectation of a distribution $p$, but we don’t have a closed-form expression for it. Instead, we can approximate it by drawing samples from $p$ and using the average of these samples. Specifically, we draw $N$ samples from $p$ denoted as $x^i$, where $i$ ranges from $1$ to $N$. Then, we compute the average value of function $f(x)$ over these samples. Mathematically, the approximation is expressed as:</p>
-<p>$$<br>E_{x \sim p}\big[ f(x) \big] \approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i)<br>$$</p>
-<p>Drawing samples directly from the distribution $p$ can sometimes be difficult or computationally expensive. Importance sampling provides a way to estimate the expectation of a function $f(x)$ with respect to $p$ by instead drawing samples from a different distribution $q$. The basic idea is to use the samples from $q$ to estimate the integral of $f(x)$ with respect to $p$ by applying a weighting factor. Specifically, we can express the expectation of $f(x)$ with respect to $p$ as:</p>
-<p>$$<br>\begin{aligned}<br>E_{x \sim p}\big[ f(x) \big] &amp;&#x3D; \int f(x)p(x) dx \\<br>&amp;&#x3D; \int f(x) \frac{p(x)}{q(x)} q(x) dx \\<br>&amp;&#x3D; E_{x \sim q}\bigg[ f(x) \frac{p(x)}{q(x)} \bigg] \\<br>&amp;\approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i) \frac{p(x^i)}{q(x^i)} \\<br>\end{aligned}<br>$$</p>
-<p>where $x^i$ is a sample drawn from $q$, and the importance weight $\frac{p(x^i)}{q(x^i)}$ is used to adjust for the difference between the two distributions. Using this weighting factor, we can generate more accurate estimates of the expectation of $f(x)$ with respect to $p$ using samples drawn from $q$, even if drawing samples directly from $p$ is difficult or impractical. </p>
-<p>By the way, this weight term assigns high weight to samples that are more likely to contribute to the expected value, and low weight to samples that are less likely to contribute, hence the name, “Importance Sampling”.</p>
-<h2 id="Issue-of-Importance-Sampling"><a href="#Issue-of-Importance-Sampling" class="headerlink" title="Issue of Importance Sampling"></a>Issue of Importance Sampling</h2><p>Importance sampling aims to estimate the expectation of a target distribution $p$ by drawing samples from another distribution $q$. However, it is important to note that the two distributions cannot differ too much. This is because the weight $\frac{p(x)}{q(x)}$ used to account for the difference between $p$ and $q$ can be very large if the difference between the two distributions is significant. As a result, the variance of the estimator can be large, which may require a larger number of samples to obtain an accurate estimate. To illustrate this, we can compare the variances of $\operatorname{VAR} _{x \sim p} [f(x)]$ and $\operatorname{VAR} _{x \sim q} [f(x) \frac{p(x)}{q(x)}]$.</p>
-<p>Recall that the equation of variance is</p>
-<p>$$<br>\operatorname{VAR} \big[ X \big] &#x3D; E \big[ X^2 \big] - (E \big[ X \big])^2<br>$$</p>
-<p>Hence:</p>
-<p>$$<br>\begin{aligned}<br>\operatorname{VAR} _{x \sim p} \big[ f(x) \big] &amp;&#x3D; E _{x \sim p} \big[ f(x)^2 \big] - \big( E _{x \sim p} \big[ f(x) \big] \big)^2<br>\end{aligned}<br>$$</p>
-<p>and</p>
-<p>$$<br>\begin{aligned}<br>\operatorname{VAR} _{x \sim q} \bigg[ f(x) \frac{p(x)}{q(x)} \bigg] &amp;&#x3D; E _{x \sim q} \bigg[ \bigg( f(x) \frac{p(x)}{q(x)} \bigg) ^2 \bigg] - E _{x \sim q} \bigg[ \bigg( f(x) \frac{p(x)}{q(x)} \bigg) \bigg]^2 \\<br>&amp;&#x3D; E _{x \sim p} \bigg[ \bigg( f(x) ^2 \frac{p(x)}{q(x)} \bigg) \bigg] - \big( E _{x \sim p} \big[ f(x) \big] \big) ^2<br>\end{aligned}<br>$$</p>
-<p>Note that the difference between the two variances depends on the weight $\frac{p(x)}{q(x)}$, which can be large if $p$ and $q$ differ significantly. Therefore, choosing a suitable distribution $q$ close enough to $p$ for importance sampling to be effective is crucial.</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Off-Policy Gradient Methods</title>
-    <url>/2023/03/01/Off-Policy-Gradient-Methods/</url>
-    <content><![CDATA[<p>Recall that from <a href="/2023/03/01/Policy-Gradient-Methods/" title="Policy Gradient Methods">Policy Gradient Methods</a>, the calculation of gradient is</p>
-<p>$$<br>\begin{aligned}<br>\nabla \hat{R} _{\theta} &amp;&#x3D; \hat{ \mathbb{E}} _{\tau \sim \pi _{\theta}(\tau)} \bigg[ R(\tau) \nabla \log \pi _{\theta} (\tau) \bigg]<br>\end{aligned}<br>$$</p>
-<p>where</p>
-<ul>
-<li>$\tau$ is a trajectory</li>
-<li>$\pi_{\theta}$ is a stochastic policy</li>
-<li>$\nabla_ {\pi _{\theta}}$ is the gradient operator of the policy $\pi$ with respect to $\theta$</li>
-<li>$\hat{\mathbb{E}} _{\tau \sim \pi _{\theta}(\tau)}[\dots]$ is the empirical average expectation over a finite batch of samples in an algorithm that alternates between sampling and optimization</li>
-</ul>
-<p>In this setting, we have to:</p>
-<ul>
-<li>Use $\pi _{\theta}$ to collect data. When the parameter $\theta$ is updated, we must sample the training data again.</li>
-<li>This is called <em>on-policy</em> training</li>
-</ul>
-<span id="more"></span>
+<p>OOD detection plays a crucial part in modern-day machine learning services. For example, we can use the OOD detector as part of the machine learning operations to detect unknown inputs. When an unknown is seen, the machine learning service can safely reject the input instead of returning an answer from the model.</p>
+<img src="/images/ood-knn/2022-12-01T173157.png" alt="OOD Detector as a prefilter" style="zoom:35%;" /> 
 
-<p>With <a href="/2023/03/01/Importance-Sampling/" title="Importance Sampling">Importance Sampling</a>, we can alter the equation to</p>
-<p>$$<br>\begin{aligned}<br>&amp;&#x3D; \hat{ \mathbb{E}} _{\tau \sim \pi _{\theta’} (\tau)} \bigg[ \frac{ \pi _{\theta}(\tau)} {\pi _{\theta’} (\tau)} R(\tau) \nabla \log \pi _{\theta} (\tau) \bigg]<br>\end{aligned}<br>$$</p>
-<p>In this setting, we can:</p>
-<ul>
-<li>Use the samples drawn from a <em>fixed</em> distribution $\pi_{\theta’}$ to train $\theta$. ($\theta’$ and $\theta$ are different)</li>
-<li>We can sample data once to train $\theta$ many times.</li>
-<li>To a certain extent, we can update $\pi_{\theta’}$, sample new data, and use the new data to train $\theta$.</li>
-<li>This is called <em>off-policy</em> training.</li>
-</ul>
-<p>We learned from <a href="/2023/03/01/Policy-Gradient-Methods/" title="Policy Gradient Methods">Policy Gradient Methods</a> that we would use an advantage function $A^\theta$. Therefore the gradient should be</p>
-<p>$$<br>\begin{aligned}<br>&amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’} (\tau)} \bigg[ \frac{ \pi _{\theta} (s_t, a_t)}{\pi _{\theta’}(s_t, a_t)} A^{\theta’} (s_t, a_t) \nabla \log \pi _{\theta} (a^n_t | s^n_t) \bigg] \\<br>&amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’} (\tau)} \bigg[ \frac{ \pi _{\theta} (a_t | s_t)} {\pi _{\theta’}(a_t | s_t)} \frac{\pi _{\theta}(s_t)}{\pi _{\theta’} (s_t)} A^{\theta’} (s_t, a_t) \nabla \log \pi _{\theta}(a^n_t | s^n_t) \bigg] \\<br>&amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’}(\tau)} \bigg[ \frac{\pi _{\theta} (a_t | s_t)}{\pi _{\theta’} (a_t | s_t)} A^{\theta’} (s_t, a_t) \nabla \log \pi _{\theta} (a^n_t | s^n_t) \bigg] \\<br>\end{aligned}<br>$$</p>
-<p>Note that:</p>
-<ul>
-<li>$(s_t, a_t)$ are training data drawn from a fix distribution $\pi_{\theta’}$</li>
-<li>The calculation of the advantage function $A^{\theta’}$ is based on  $\theta’$</li>
-<li>In line 2, we assume that $\pi_{\theta}(s_t)$ equals to $\pi_{\theta’}(s_t)$, therefore we eliminate $\frac{\pi_{\theta}(s_t)}{\pi_{\theta’}(s_t)}$. This hypothesis assumes that the probability of running into a state $s_t$ is independent from the $\theta$ (environment).</li>
-</ul>
-<p>Recall that for a gradient:</p>
-<p>$$<br>\nabla f(x) &#x3D; f(x) \nabla \log f(x)<br>$$</p>
-<p>Let $f(x) &#x3D; \pi_{\theta}(a^n_t | s^n_t)$. From above equation, combing $\pi_{\theta}(a^n_t | s^n_t) \nabla \log \pi_{\theta}(a^n_t | s^n_t)$ will get $\nabla \pi_{\theta}(a^n_t | s^n_t)$. Hence</p>
-<p>$$<br>\begin{aligned}<br>&amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’}(\tau)} \bigg[ \frac{ \nabla \pi  _{\theta}(a_t | s_t)} {\pi _{\theta’}(a_t | s_t)} A^{\theta’}(s_t, a_t) \bigg]<br>\end{aligned}<br>$$</p>
-<p>By removing the gradient, we now have an objective function:</p>
-<p>$$<br>\begin{aligned}<br>J ^{\theta’} (\theta) &amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’}(\tau)}\bigg[ \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta’}(a_t | s_t)} A^{\theta’}(s_t, a_t) \bigg] \<br>\end{aligned}<br>$$</p>
-<p>This means we use data sampled from $\theta’$ to update $\theta$.</p>
+<p>We can also use the result from an OOD detector as a filter for the data labeling task. For example, a machine learning service might receive a lot of inputs every day, and it is not feasible to let human labelers review all data. We can prioritize the process with an OOD detector by reviewing those out-of-distribution samples.</p>
+<h2 id="How-is-OOD-Detection-Methods-Evaluted"><a href="#How-is-OOD-Detection-Methods-Evaluted" class="headerlink" title="How is OOD Detection Methods Evaluted?"></a>How is OOD Detection Methods Evaluted?</h2><p>OOD detection can be seen as a binary classification problem. We often start by training a model with a dataset known as the in-distribution dataset, i.e., CIFAR-10. To evaluate an OOD detector, we will prepare another dataset not in the same domain as the training data, i.e., SHVN, known as the out-of-distribution dataset. We then combine these two datasets to check if the OOD detection knows which is from the in-distribution dataset and vice versa. We usually use label 1 (positive) for in-distribution and 0 (negative) for the out-distribution. Aside from the standard evaluation metrics, we also calculate the FP rate of the OOD detector when its TP rate is at 95%, denoted as FPR@TPR95.</p>
+<h2 id="OOD-Detection-Methods"><a href="#OOD-Detection-Methods" class="headerlink" title="OOD Detection Methods"></a>OOD Detection Methods</h2><p>From <a href="https://arxiv.org/abs/2110.11334">a comprehensive study by J. Yang et al.</a>, OOD detections methods can be categorized into:</p>
+<ol>
+<li>Classification methods</li>
+<li>Density-based methods</li>
+<li>Distance-based methods</li>
+<li>Reconstruction-based methods</li>
+</ol>
+<h2 id="Using-kNN-as-an-OOD-Detector"><a href="#Using-kNN-as-an-OOD-Detector" class="headerlink" title="Using kNN as an OOD Detector"></a>Using kNN as an OOD Detector</h2><p>The following sections are notes and implementation of a paper by Y. Sun et al.: <em>Out-of-distribution detection with deep nearest neighbors</em>.</p>
+<h3 id="Out-of-Distribution-Detection-for-Single-Feature"><a href="#Out-of-Distribution-Detection-for-Single-Feature" class="headerlink" title="Out-of-Distribution Detection for Single Feature"></a>Out-of-Distribution Detection for Single Feature</h3><p>Before we dive into the kNN method, let’s see how out-of-distribution detection works on a single feature. For example, let’s say we have a feature $p$ that is normally distributed with a mean of $0$ and standard deviation of $1$, and $q$ is also drawn i.i.d. from the same distribution.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> wasserstein_distance</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">np.random.seed(<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p and q from the same distribution, both has 1000 samples</span></span><br><span class="line">p = np.random.normal(<span class="number">0</span>, <span class="number">1</span>, size=<span class="number">1000</span>)</span><br><span class="line">q = np.random.normal(<span class="number">0</span>, <span class="number">1</span>, size=<span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># check the wasserstein_distance: 0.04247616759945748</span></span><br><span class="line">wasserstein_distance(p, q)</span><br><span class="line"></span><br><span class="line"><span class="comment"># q is drawn from the different distribution</span></span><br><span class="line">q = np.random.normal(<span class="number">3</span>, <span class="number">5</span>, size=<span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># larger wasserstein_distance: 4.170158238494999</span></span><br><span class="line">wasserstein_distance(p, q)</span><br></pre></td></tr></table></figure>
+
+<p>We can use statistical distance measures, such as Wasserstein distance, to check if $p$ and $q$ have the same distribution. If they have the same distribution, the Wasserstein distance will be small. Otherwise, the resulting Wasserstein distance is large.</p>
+<p>Traditional statistical distance measures are no longer applied to deep learning models because the inputs are very high-dimensional. Take a $32 \times 32$ color image as an example, its dimension is $32 \times 32 \times 3 &#x3D; 3072$. Therefore, calculating statistical distance measures for all features is not feasible.</p>
+<h3 id="Core-Idea-Embedding"><a href="#Core-Idea-Embedding" class="headerlink" title="Core Idea: Embedding"></a>Core Idea: Embedding</h3><p>Regarding deep learning models with high dimensional features, current OOD methods focus on the embedding space of a <strong>well-trained</strong> model. Distance-based methods assume that in the embedding space, OOD samples are relatively far away from in-distribution data. Density-based methods believe that in-distribution data follow certain probability distributions. Hence data falls into low-density regions are OOD. </p>
+<img src="/images/ood-knn/2022-12-03T153545.png" alt="Embedding space" style="zoom:35%;" /> 
+
+<p>However, these assumptions may not hold. Instead of imposing strong assumptions on the underlying embedding space, Y. Sun et al. use kNN, which is distributional assumption-free. Their algorithm is simple. First, they will gather distances of $k$-nearest neighbor of all in-distribution samples, then use those distances to determine a threshold. Any test data with a kNN distance larger than the threshold are flagged as OOD.</p>
+<h3 id="Train-Resnet18-on-CIFAR-10"><a href="#Train-Resnet18-on-CIFAR-10" class="headerlink" title="Train Resnet18 on CIFAR-10"></a>Train Resnet18 on CIFAR-10</h3><p>We first train a ResNet18 model with CIFAR-10 data to demonstrate their approaches. This training code is slightly modified from the <a href="https://pytorch-lightning.readthedocs.io/en/stable/notebooks/lightning_examples/cifar10-baseline.html">official Pytorch Lightning tutorial</a>. </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LitResnet</span>(<span class="title class_ inherited__">LightningModule</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, lr=<span class="number">0.05</span>, num_classes=<span class="number">10</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.save_hyperparameters()</span><br><span class="line">        <span class="variable language_">self</span>.model = create_model()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        out = <span class="variable language_">self</span>.model(x)</span><br><span class="line">        <span class="keyword">return</span> F.log_softmax(out, dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">features</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = <span class="variable language_">self</span>.model.conv1(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.bn1(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.relu(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.maxpool(x)</span><br><span class="line"></span><br><span class="line">        x = <span class="variable language_">self</span>.model.layer1(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.layer2(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.layer3(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.model.layer4(x)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">training_step</span>(<span class="params">self, batch, batch_idx</span>):</span><br><span class="line">        x, y = batch</span><br><span class="line">        logits = <span class="variable language_">self</span>(x)</span><br><span class="line">        loss = F.nll_loss(logits, y)</span><br><span class="line">        <span class="variable language_">self</span>.log(<span class="string">&quot;train_loss&quot;</span>, loss)</span><br><span class="line">        <span class="keyword">return</span> loss</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">evaluate</span>(<span class="params">self, batch, stage=<span class="literal">None</span></span>):</span><br><span class="line">        x, y = batch</span><br><span class="line">        logits = <span class="variable language_">self</span>(x)</span><br><span class="line">        loss = F.nll_loss(logits, y)</span><br><span class="line">        preds = torch.argmax(logits, dim=<span class="number">1</span>)</span><br><span class="line">        acc = accuracy(preds, y, task=<span class="string">&quot;multiclass&quot;</span>, num_classes=num_classes)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> stage:</span><br><span class="line">            <span class="variable language_">self</span>.log(<span class="string">f&quot;<span class="subst">&#123;stage&#125;</span>_loss&quot;</span>, loss, prog_bar=<span class="literal">True</span>)</span><br><span class="line">            <span class="variable language_">self</span>.log(<span class="string">f&quot;<span class="subst">&#123;stage&#125;</span>_acc&quot;</span>, acc, prog_bar=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validation_step</span>(<span class="params">self, batch, batch_idx</span>):</span><br><span class="line">        <span class="variable language_">self</span>.evaluate(batch, <span class="string">&quot;val&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_step</span>(<span class="params">self, batch, batch_idx</span>):</span><br><span class="line">        <span class="variable language_">self</span>.evaluate(batch, <span class="string">&quot;test&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">configure_optimizers</span>(<span class="params">self</span>):</span><br><span class="line">        optimizer = torch.optim.SGD(</span><br><span class="line">            <span class="variable language_">self</span>.parameters(),</span><br><span class="line">            lr=<span class="variable language_">self</span>.hparams.lr,</span><br><span class="line">            momentum=<span class="number">0.9</span>,</span><br><span class="line">            weight_decay=<span class="number">5e-4</span>,</span><br><span class="line">        )</span><br><span class="line">        scheduler_dict = &#123;</span><br><span class="line">            <span class="string">&quot;scheduler&quot;</span>: OneCycleLR(</span><br><span class="line">                optimizer,</span><br><span class="line">                <span class="number">0.1</span>,</span><br><span class="line">                epochs=<span class="variable language_">self</span>.trainer.max_epochs,</span><br><span class="line">                total_steps=<span class="variable language_">self</span>.trainer.estimated_stepping_batches,</span><br><span class="line">            ),</span><br><span class="line">            <span class="string">&quot;interval&quot;</span>: <span class="string">&quot;step&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;optimizer&quot;</span>: optimizer, <span class="string">&quot;lr_scheduler&quot;</span>: scheduler_dict&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">model = LitResnet(lr=<span class="number">0.05</span>, num_classes=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">trainer = Trainer(</span><br><span class="line">    max_epochs=<span class="number">30</span>,</span><br><span class="line">    accelerator=<span class="string">&quot;auto&quot;</span>,</span><br><span class="line">    devices=<span class="string">&quot;auto&quot;</span>,</span><br><span class="line">    logger=CSVLogger(save_dir=<span class="string">&quot;logs/&quot;</span>),</span><br><span class="line">    callbacks=[</span><br><span class="line">        LearningRateMonitor(logging_interval=<span class="string">&quot;step&quot;</span>),</span><br><span class="line">        TQDMProgressBar(refresh_rate=<span class="number">10</span>),</span><br><span class="line">    ],</span><br><span class="line">    deterministic=<span class="literal">True</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">trainer.fit(model, train_loader, val_loader)</span><br><span class="line">trainer.test(model, dataloaders=val_loader)</span><br></pre></td></tr></table></figure>
+
+<p>This model achieves an accuracy of 94%.</p>
+<h3 id="Feature-Extraction"><a href="#Feature-Extraction" class="headerlink" title="Feature Extraction"></a>Feature Extraction</h3><p>We use the output of the last hidden layer (one layer before the output layer) as the features. Then, we normalize the features with the method described in the paper $\mathbf{z} &#x3D; \phi(\mathbf{x}) &#x2F; || \phi(\mathbf{x}) ||_{2}$.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extract_features</span>(<span class="params">model, dataloader</span>):</span><br><span class="line">    features = []</span><br><span class="line">    <span class="keyword">for</span> data, label <span class="keyword">in</span> dataloader:</span><br><span class="line">        <span class="comment"># get the last hidden layer&#x27;s output from model, size: (batch_size, 512, 4, 4)</span></span><br><span class="line">        x = model.features(data)</span><br><span class="line">        <span class="comment"># avg pool, size: (batch_size, 512, 1, 1)</span></span><br><span class="line">        x = F.adaptive_avg_pool2d(x, <span class="number">1</span>)</span><br><span class="line">        <span class="comment"># squeeze, size: (batch_size, 512)</span></span><br><span class="line">        x = x.squeeze()</span><br><span class="line">        <span class="comment"># detach</span></span><br><span class="line">        x = x.data.cpu().numpy()</span><br><span class="line"></span><br><span class="line">        features.append(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># merge as a large numpy array</span></span><br><span class="line">    features = np.vstack(features)</span><br><span class="line">    <span class="comment"># ensure data type</span></span><br><span class="line">    features = features.astype(np.float32)</span><br><span class="line">    <span class="comment"># normalization</span></span><br><span class="line">    features = features / (</span><br><span class="line">        np.linalg.norm(features, <span class="built_in">ord</span>=<span class="number">2</span>, axis=-<span class="number">1</span>, keepdims=<span class="literal">True</span>) + <span class="number">1e-10</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> features</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train_features = extract_features(model, train_loader)</span><br><span class="line">test_features = extract_features(model, val_loader)</span><br><span class="line">ood_features = extract_features(model, ood_loader)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Find-k-Nearest-Neighbors-with-FAISS"><a href="#Find-k-Nearest-Neighbors-with-FAISS" class="headerlink" title="Find $k$-Nearest Neighbors with FAISS"></a>Find $k$-Nearest Neighbors with FAISS</h3><p>We now need to find the distances of kNN and determine the threshold. First, we build an index using FAISS with the training features. Then we gather distances of $k$-th neighbors to the testing features. Here we set $k$ to 50. After that, we determine the threshold with 95% of TRP.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># build index with training features</span></span><br><span class="line">index = faiss.IndexFlatL2(train_features.shape[<span class="number">1</span>])</span><br><span class="line">index.add(train_features)</span><br><span class="line"></span><br><span class="line"><span class="comment"># find k-th neighbours and distances</span></span><br><span class="line">k = <span class="number">50</span></span><br><span class="line">in_l2_distances, in_k_closest_points = index.search(test_features, k)</span><br><span class="line"></span><br><span class="line"><span class="comment"># in_l2_distances is sorted increasingly</span></span><br><span class="line">in_scores = in_l2_distances[:, -<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># determine threshold with TPR = 0.95</span></span><br><span class="line">in_scores.sort()</span><br><span class="line">threshold = in_scores[<span class="built_in">round</span>(<span class="number">0.95</span> * <span class="built_in">len</span>(in_scores))]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Evaluate-on-OOD-Data"><a href="#Evaluate-on-OOD-Data" class="headerlink" title="Evaluate on OOD Data"></a>Evaluate on OOD Data</h3><p>We follow the same steps as above for the OOD data. </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># same as in-distribution data</span></span><br><span class="line">k = <span class="number">50</span></span><br><span class="line">out_l2_distances, out_k_closest_points = index.search(ood_features, k)</span><br><span class="line"></span><br><span class="line"><span class="comment"># out_l2_distances is sorted increasingly</span></span><br><span class="line">out_scores = out_l2_distances[:, -<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<p>After getting the distances of $k$-th nearest neighbors of the OOD data, we can easily find the result by checking if the distance is greater than the threshold.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tp = <span class="number">0</span></span><br><span class="line">tn = <span class="number">0</span></span><br><span class="line">fp = <span class="number">0</span></span><br><span class="line">fn = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> point <span class="keyword">in</span> in_scores:</span><br><span class="line">    <span class="keyword">if</span> point &lt;= threshold:</span><br><span class="line">        tp += <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        fn += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> point <span class="keyword">in</span> out_scores:</span><br><span class="line">    <span class="keyword">if</span> point &lt;= threshold:</span><br><span class="line">        fp += <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tn += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">tp_rate = tp / (tp + fn)</span><br><span class="line">tn_rate = tn / (tn + fp)</span><br><span class="line">fp_rate = fp / (fp + tn)</span><br><span class="line">fn_rate = fn / (fn + tp)</span><br><span class="line"></span><br><span class="line">result = &#123;</span><br><span class="line">    <span class="string">&quot;tp&quot;</span>: tp,</span><br><span class="line">    <span class="string">&quot;tn&quot;</span>: tn,</span><br><span class="line">    <span class="string">&quot;fp&quot;</span>: fp,</span><br><span class="line">    <span class="string">&quot;fn&quot;</span>: fn,</span><br><span class="line">    <span class="string">&quot;tpr&quot;</span>: tp_rate,</span><br><span class="line">    <span class="string">&quot;fpr&quot;</span>: fp_rate,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The final result has an FPR@TPR95 of 37.45%, higher than the paper’s result of 24.53%. Developing an OOD detector depends on the quality of the model. The paper mentioned that we could improve the result by using contrastive learning. Contrastive learning helps bring data with the same label closer and push data with different labels further, which aligns with the usage of kNN.</p>
+<p>Checkout the full notebook here: <a href="https://github.com/munhouiani/ood-knn">https://github.com/munhouiani/ood-knn</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li>J. Yang, K. Zhou, Y. Li, and Z. Liu, “Generalized out-of-distribution detection: A survey”, <em>CoRR</em>, vol. abs&#x2F;2110.11334, 2021, [Online]. Available: <a href="https://arxiv.org/abs/2110.11334">https://arxiv.org/abs/2110.11334</a></li>
+<li>J. Ren and B. Lakshminarayanan, “Improving Out-of-Distribution Detection in Machine Learning Models”, <em>Google Research Blog</em>, Dec. 17, 2019. <a href="https://ai.googleblog.com/2019/12/improving-out-of-distribution-detection.html">https://ai.googleblog.com/2019/12/improving-out-of-distribution-detection.html</a> (accessed Dec. 02, 2022).</li>
+<li>Y. Sun, Y. Ming, X. Zhu, and Y. Li, “Out-of-distribution detection with deep nearest neighbors”, 2022.</li>
+<li>PL team, “PyTorch Lightning CIFAR10 ~94% Baseline Tutorial”, <em>Pytorch Lightning</em>, Apr. 28, 2022. <a href="https://pytorch-lightning.readthedocs.io/en/stable/notebooks/lightning_examples/cifar10-baseline.html">https://pytorch-lightning.readthedocs.io/en/stable/notebooks/lightning_examples/cifar10-baseline.html</a> (accessed Dec. 02, 2022).</li>
+<li>P. Mardziel, “Drift Metrics: How to Select the Right Metric to Analyze Drift”, <em>Toward Data Science</em>, Dec. 06, 2021. <a href="https://towardsdatascience.com/drift-metrics-how-to-select-the-right-metric-to-analyze-drift-24da63e497e">https://towardsdatascience.com/drift-metrics-how-to-select-the-right-metric-to-analyze-drift-24da63e497e</a> (accessed Dec. 03, 2022).</li>
+</ol>
 ]]></content>
       <tags>
-        <tag>Reinforcement Learning</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ML Prediction with XGBoost and PySpark</title>
-    <url>/2020/03/01/ML-Prediction-with-XGBoost-and-PySpark/</url>
-    <content><![CDATA[<p>Once a XGBoost model is trained, we would like to use PySpark for batch predictions.</p>
-<p>The method we use here is through Pandas UDF.</p>
-<span id="more"></span>
-
-
-<h2 id="Why-pandas-udf-Instead-of-udf"><a href="#Why-pandas-udf-Instead-of-udf" class="headerlink" title="Why pandas_udf Instead of udf"></a>Why <code>pandas_udf</code> Instead of <code>udf</code></h2><p>For a <code>udf</code> function, PySpark evaluates it one record at a time, which is the slowest possible way to execute the prediction. While for a <code>pandas_udf</code> function, it takes a bunch of pandas <code>Series</code> and returns a <code>Series</code>, which is vectorised.</p>
-<h2 id="Create-a-pandas-udf-Prediction-Function"><a href="#Create-a-pandas-udf-Prediction-Function" class="headerlink" title="Create a pandas_udf Prediction Function"></a>Create a <code>pandas_udf</code> Prediction Function</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@pandas_udf(<span class="params">FloatType(<span class="params"></span>)</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_prediction_result</span>(<span class="params">features</span>):</span><br><span class="line">    <span class="comment"># convert to 2D-numpy array</span></span><br><span class="line">    numpy_array = np.array(</span><br><span class="line">        features</span><br><span class="line">        .values</span><br><span class="line">        .tolist()</span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># convert to xgboost dmatrix</span></span><br><span class="line">    dmatrix = xgb.DMatrix(numpy_array)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># predict</span></span><br><span class="line">    y = model.predict(dmatrix)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># return with pandas series</span></span><br><span class="line">    series = pd.Series(y)</span><br><span class="line">    <span class="keyword">return</span> series</span><br></pre></td></tr></table></figure>
-
-<p>Let’s say we have a dataframe <code>df</code> with following records:</p>
-<table>
-<thead>
-<tr>
-<th>features</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[149.0, 84.0. 38.5, 79.7]</td>
-</tr>
-<tr>
-<td>[2.5, 34.0. 35.5, 97.6]</td>
-</tr>
-<tr>
-<td>[0.0, 65.3. 58.7, 45.7]</td>
-</tr>
-</tbody></table>
-<p><code>features</code> is the feature column with <code>ArrayType(FloatType())</code> and each row of <code>features</code> contains 4 feature values.</p>
-<p>When we call <code>get_prediction_result</code> function, it receives a <code>Series</code> object. In this case, it would be </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0    [149.0, 84.0, 38.5, 79.7]</span><br><span class="line">1    [2.5, 34.0, 35.5, 97.6]</span><br><span class="line">2    [0.0, 65.3, 58.7, 45.7]</span><br><span class="line">dtype: object</span><br></pre></td></tr></table></figure>
-
-<p>We would need to convert it to a <code>DMatrix</code> object, which is the input for a XGBoost model. We first call its <code>values</code> method, which yields:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">array([list([149.0, 84.0, 38.5, 79.7]), list([2.5, 34.0, 35.5, 97.6]),</span><br><span class="line">       list([0.0, 65.3, 58.7, 45.7])], dtype=object)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>Then we call <code>tolist</code> to convert it into a list of list, yields:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[[149.0, 84.0, 38.5, 79.7], [2.5, 34.0, 35.5, 97.6], [0.0, 65.3, 58.7, 45.7]]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>After that, we convert it into a 2D numpy array:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">array([[149. ,  84. ,  38.5,  79.7],</span><br><span class="line">       [  2.5,  34. ,  35.5,  97.6],</span><br><span class="line">       [  0. ,  65.3,  58.7,  45.7]])</span><br></pre></td></tr></table></figure>
-
-<p>Finally, we initialise a <code>DMatrix</code> object with the 2D numpy array we just created. We then run the prediction. As a <code>pandas_udf</code> requires a <code>Series</code> object to return, we convert the prediction scores into a <code>Series</code> at the line 16.</p>
-<h2 id="Using-a-pandas-udf-Function"><a href="#Using-a-pandas-udf-Function" class="headerlink" title="Using a pandas_udf Function"></a>Using a <code>pandas_udf</code> Function</h2><p>Using a <code>pandas_udf</code> function is just like how we use a normal <code>udf</code> function:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df.withColumn(<span class="string">&#x27;prediction&#x27;</span>, get_prediction_result(<span class="string">&#x27;features&#x27;</span>))</span><br></pre></td></tr></table></figure>
-
-
-<p>That’s how we integrate the XGBoost batch prediction into our PySpark pipeline.</p>
-]]></content>
-      <tags>
+        <tag>Deep Learning</tag>
+        <tag>PyTorch</tag>
         <tag>Machine Learning</tag>
-        <tag>PySpark</tag>
       </tags>
   </entry>
   <entry>
@@ -1405,6 +1282,300 @@
       </tags>
   </entry>
   <entry>
+    <title>Importance Sampling</title>
+    <url>/2023/03/01/Importance-Sampling/</url>
+    <content><![CDATA[<p>Importance sampling is a technique commonly used in statistics and machine learning to estimate properties of a distribution that may be difficult to compute directly.</p>
+<span id="more"></span>
+
+<p>Suppose we want to calculate the expectation of a distribution $p$, but we don’t have a closed-form expression for it. Instead, we can approximate it by drawing samples from $p$ and using the average of these samples. Specifically, we draw $N$ samples from $p$ denoted as $x^i$, where $i$ ranges from $1$ to $N$. Then, we compute the average value of function $f(x)$ over these samples. Mathematically, the approximation is expressed as:</p>
+<p>$$<br>E_{x \sim p}\big[ f(x) \big] \approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i)<br>$$</p>
+<p>Drawing samples directly from the distribution $p$ can sometimes be difficult or computationally expensive. Importance sampling provides a way to estimate the expectation of a function $f(x)$ with respect to $p$ by instead drawing samples from a different distribution $q$. The basic idea is to use the samples from $q$ to estimate the integral of $f(x)$ with respect to $p$ by applying a weighting factor. Specifically, we can express the expectation of $f(x)$ with respect to $p$ as:</p>
+<p>$$<br>\begin{aligned}<br>E_{x \sim p}\big[ f(x) \big] &amp;&#x3D; \int f(x)p(x) dx \\<br>&amp;&#x3D; \int f(x) \frac{p(x)}{q(x)} q(x) dx \\<br>&amp;&#x3D; E_{x \sim q}\bigg[ f(x) \frac{p(x)}{q(x)} \bigg] \\<br>&amp;\approx \frac{1}{N} \sum^{N}_{i&#x3D;1} f(x^i) \frac{p(x^i)}{q(x^i)} \\<br>\end{aligned}<br>$$</p>
+<p>where $x^i$ is a sample drawn from $q$, and the importance weight $\frac{p(x^i)}{q(x^i)}$ is used to adjust for the difference between the two distributions. Using this weighting factor, we can generate more accurate estimates of the expectation of $f(x)$ with respect to $p$ using samples drawn from $q$, even if drawing samples directly from $p$ is difficult or impractical. </p>
+<p>By the way, this weight term assigns high weight to samples that are more likely to contribute to the expected value, and low weight to samples that are less likely to contribute, hence the name, “Importance Sampling”.</p>
+<h2 id="Issue-of-Importance-Sampling"><a href="#Issue-of-Importance-Sampling" class="headerlink" title="Issue of Importance Sampling"></a>Issue of Importance Sampling</h2><p>Importance sampling aims to estimate the expectation of a target distribution $p$ by drawing samples from another distribution $q$. However, it is important to note that the two distributions cannot differ too much. This is because the weight $\frac{p(x)}{q(x)}$ used to account for the difference between $p$ and $q$ can be very large if the difference between the two distributions is significant. As a result, the variance of the estimator can be large, which may require a larger number of samples to obtain an accurate estimate. To illustrate this, we can compare the variances of $\operatorname{VAR} _{x \sim p} [f(x)]$ and $\operatorname{VAR} _{x \sim q} [f(x) \frac{p(x)}{q(x)}]$.</p>
+<p>Recall that the equation of variance is</p>
+<p>$$<br>\operatorname{VAR} \big[ X \big] &#x3D; E \big[ X^2 \big] - (E \big[ X \big])^2<br>$$</p>
+<p>Hence:</p>
+<p>$$<br>\begin{aligned}<br>\operatorname{VAR} _{x \sim p} \big[ f(x) \big] &amp;&#x3D; E _{x \sim p} \big[ f(x)^2 \big] - \big( E _{x \sim p} \big[ f(x) \big] \big)^2<br>\end{aligned}<br>$$</p>
+<p>and</p>
+<p>$$<br>\begin{aligned}<br>\operatorname{VAR} _{x \sim q} \bigg[ f(x) \frac{p(x)}{q(x)} \bigg] &amp;&#x3D; E _{x \sim q} \bigg[ \bigg( f(x) \frac{p(x)}{q(x)} \bigg) ^2 \bigg] - E _{x \sim q} \bigg[ \bigg( f(x) \frac{p(x)}{q(x)} \bigg) \bigg]^2 \\<br>&amp;&#x3D; E _{x \sim p} \bigg[ \bigg( f(x) ^2 \frac{p(x)}{q(x)} \bigg) \bigg] - \big( E _{x \sim p} \big[ f(x) \big] \big) ^2<br>\end{aligned}<br>$$</p>
+<p>Note that the difference between the two variances depends on the weight $\frac{p(x)}{q(x)}$, which can be large if $p$ and $q$ differ significantly. Therefore, choosing a suitable distribution $q$ close enough to $p$ for importance sampling to be effective is crucial.</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Lessons Learned From World Model Training for LLM Agent</title>
+    <url>/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/</url>
+    <content><![CDATA[<p>In my <a href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment">previous post</a>, I trained an LLM agent on Delta Lake tasks with GRPO and with ECHO. I compared how well each model predicts its tool outputs and how many tasks it solves. That post was already long, so I left out most of what happened on the way to those results. This post covers the problems I ran into, the training metrics that pointed to them, why I read them the way I did, and what I changed.</p>
+<p>The setup, briefly:</p>
+<ul>
+<li>Policy: NVIDIA Nemotron 3 Nano 4B, non-thinking. It is a hybrid model that keeps most of its state in Mamba-2 layers and has four attention layers.</li>
+<li>Training: NeMo RL 0.7 on the Megatron backend, with vLLM as the sampler. GRPO with 8 prompts × 8 rollouts per step, for 90 steps.</li>
+<li>Arms: GRPO, ECHO with $\lambda&#x3D;0.005$ and ECHO with $\lambda&#x3D;0.02$, one seed each.</li>
+<li>Hardware: each arm ran on one H200 on Modal. A run took about 4 hours and cost about $23.</li>
+<li>Environment: a Databricks-style simulator built on Spark Connect and Delta Lake. The agent has three tools, <code>run_sql</code>, <code>run_python</code> and <code>submit</code>, and a verifier checks the final state of the tables.</li>
+</ul>
+<p>The code is at <a href="https://github.com/munhouiani/delta_world">munhouiani&#x2F;delta_world</a>.</p>
+<span id="more"></span>
+
+<h2 id="Before-Training"><a href="#Before-Training" class="headerlink" title="Before Training"></a>Before Training</h2><h3 id="Base-Model-Claims-Success-Without-Acting"><a href="#Base-Model-Claims-Success-Without-Acting" class="headerlink" title="Base Model Claims Success Without Acting"></a>Base Model Claims Success Without Acting</h3><p>Base Nemotron could not do these tasks. When I asked it to restore a damaged table, it would query the table and then claim the job was done, without ever running <code>RESTORE</code>. In a pilot, it ran 2 <code>RESTORE</code>s in 48 attempts and solved about 5% of dev tasks, none in family A (time travel) or D (clustering). Here is an example of execution:</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Task: A test job ran an INSERT OVERWRITE against workspace.ops.invoices ... Restore the</span><br><span class="line">table to exactly the state it was in immediately before that operation, using Delta time</span><br><span class="line">travel.</span><br><span class="line"></span><br><span class="line">&gt; SELECT * FROM workspace.ops.invoices</span><br><span class="line">&gt; SELECT * FROM workspace.ops.invoices</span><br><span class="line">&gt; submit(&quot;Table restored to original state via Delta time travel.&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>The verifier reads the table’s final state and ignores what the agent says it did, so this episode scores 0. That is what a verifier should do, but it left RL with nothing to learn from. When all 8 rollouts in a group fail, every advantage in the group is zero, and the group contributes no gradient.</p>
+<p>I first tried few-shot examples of the agent loop in the system prompt. That made things worse: family C (schema evolution) fell from 0.15 to 0.02.</p>
+<p>What worked was a light supervised fine-tune on verified episodes from a teacher model, Claude Haiku 5.5, trained on the assistant’s tokens only. The amount of data has a significant impact:</p>
+<table>
+<thead>
+<tr>
+<th>Teacher episodes per family</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10</td>
+<td>no better than the base model</td>
+</tr>
+<tr>
+<td>25</td>
+<td>a usable start, with every family except D above zero</td>
+</tr>
+<tr>
+<td>100</td>
+<td>0.77 on dev, which leaves little room for RL to show anything</td>
+</tr>
+</tbody></table>
+<p>I used 25 per family, which I call S0. It scores 0.240 on dev and is the starting point for all three arms.</p>
+<p><strong>Lesson: Don’t rush into RL. Check that your base model produces a learning signal and has room to improve.</strong></p>
+<h3 id="Slow-Simulator"><a href="#Slow-Simulator" class="headerlink" title="Slow Simulator"></a>Slow Simulator</h3><p>A training step waits for all 64 episodes, so at first the simulator’s speed set the cost of the whole experiment. Delta commits took most of the time: a <code>MERGE</code> costs about 1s and a <code>RESTORE</code> about 2s. Setting up and verifying a task took 65% of an episode’s time. Under load, the Spark JVM was CPU-bound, because it compiled generated code for every new query plan.</p>
+<p>I ended up turning off Spark’s code generation and using Hadoop’s raw local filesystem. One episode went from 8.3 s to 4.5 s, and throughput at 8 concurrent episodes rose from 0.26 to 0.58 episodes per second. These changes were meant to be invisible to the agent, but the reinforcement learning cycle runs faster (and saves me a lot of money).</p>
+<p><strong>Lesson: The bottleneck of an RL cycle might not be GPU training. Finding and fixing it saves a lot of money.</strong></p>
+<h2 id="During-Training"><a href="#During-Training" class="headerlink" title="During Training"></a>During Training</h2><p>Every run logged about a hundred metrics to Weights &amp; Biases at each step. The default dashboard shows reward and loss, and those were rarely where a problem showed first. These are the signals that told me something:</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Healthy</th>
+<th>What I saw</th>
+<th>What I did</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Step-1 reward</td>
+<td>close to S0’s pass@1 (0.240)</td>
+<td>0.27-0.33</td>
+<td>nothing</td>
+</tr>
+<tr>
+<td>Worst sequence’s sampler&#x2F;trainer probability ratio</td>
+<td>about 1.01</td>
+<td>$10^{12}$ to $10^{24}$ on about half the early steps</td>
+<td>stopped all arms, found the cause, relaunched</td>
+</tr>
+<tr>
+<td>Groups where all 8 rollouts failed</td>
+<td>falling</td>
+<td>ECHO’s fell; GRPO’s fell, then rose</td>
+<td>broke it down by family</td>
+</tr>
+<tr>
+<td>The starting model’s habits</td>
+<td>stable</td>
+<td>GRPO’s <code>submit</code> share fell from 0.45 to 0.02</td>
+<td>wrote down how to read the results</td>
+</tr>
+<tr>
+<td>Policy entropy</td>
+<td>flat or slowly falling</td>
+<td>ECHO’s rose 2.3x and 3.2x; GRPO’s halved</td>
+<td>watched</td>
+</tr>
+<tr>
+<td>ECHO’s observation loss</td>
+<td>falling as reward rises</td>
+<td>fell while reward collapsed</td>
+<td>read it next to truncation</td>
+</tr>
+<tr>
+<td>Training reward</td>
+<td>tracks the evaluation</td>
+<td>matched overall, hid a lost family</td>
+<td>evaluated by family at steps 30, 60 and 90</td>
+</tr>
+</tbody></table>
+<h3 id="The-First-Step"><a href="#The-First-Step" class="headerlink" title="The First Step"></a>The First Step</h3><p>Step 1 samples S0 on tasks from the same generators as the evaluation, so I expected its batch reward to land near S0’s pass@1 of 0.240. That only holds if the sampler settings match. NeMo RL’s default sampling temperature is 1.0 and my evaluation uses 0.6, so I set 0.6 before launch.</p>
+<p>The three arms’ step-1 rewards were 0.27, 0.31 and 0.33. All three sample the same S0 on the same prompts at step 1, so their differences are sampling noise alone. A batch of 64 rollouts on only 8 prompts is close enough to 0.24, and I changed nothing. The point is to know what step 1 should show before launching, and to stop if it shows something else.</p>
+<h3 id="The-Sampler-and-The-Trainer-Disagreed"><a href="#The-Sampler-and-The-Trainer-Disagreed" class="headerlink" title="The Sampler and The Trainer Disagreed"></a>The Sampler and The Trainer Disagreed</h3><p>In NeMo RL, vLLM samples the rollouts and Megatron computes the gradients, both from the same weights. The update treats the sampled tokens as if Megatron had sampled them, so if the two engines disagree, every update is off-policy. NeMo RL logs the disagreement as the generation KL error, and as <code>max_seq_mult_prob_error</code>, the probability ratio of the worst sequence in the batch. When the engines agree, the KL error is about 3e-4 and the worst ratio about 1.01.</p>
+<p>At the first launch, both metrics spiked on about half of the early steps, in every arm, GRPO included. The KL error reached 0.005-0.056, and the worst sequence’s ratio reached $10^{12}$ to $10^{24}$.</p>
+<p><img src="/images/echo-model-lessons-learned/monitor-mismatch.svg" alt="Worst-sequence probability ratio per step, and corrupted rollouts per vLLM setting"></p>
+<p>A few sequences carried each spike. In the per-step sample dumps, their generation turned to garbage right after a tool result:</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&quot; A Find E проекта E ![ E cereal gam A In The&quot;</span><br></pre></td></tr></table></figure>
+
+<p>vLLM had sampled those tokens at a log-probability of about -0.7, and Megatron scored them at -35 to -56. 33 of GRPO’s first 512 rollouts (6.4%) were corrupted like this. Nearly all of them scored 0, so the trainer was learning from sampler garbage as if it were the policy’s own failures, and the group baselines shifted with it. I stopped all three arms at steps 10-13.</p>
+<p>My first diagnosis was wrong. vLLM’s start-up log warned that prefix caching on this hybrid model caches the Mamba state in an experimental mode. Multi-turn rollouts reuse prefixes all the time, so prefix caching looked like the cause, and I turned it off. Corruption went from 6% of rollouts to 52%, on every step. Without the cache, every long prefill ran in 2,048-token chunks.</p>
+<p>So I stopped guessing and changed one setting at a time, in 4-step runs, counting corrupted rollouts directly from the sample dumps. A rollout counted as corrupted if any of its tokens differed between the two engines by more than 10 nats.</p>
+<table>
+<thead>
+<tr>
+<th>Prefix caching</th>
+<th>Prefill chunks</th>
+<th>CUDA graphs</th>
+<th>Corrupted rollouts</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>on</td>
+<td>2,048</td>
+<td>on (the first launch)</td>
+<td>33&#x2F;512 (6%)</td>
+</tr>
+<tr>
+<td>off</td>
+<td>2,048</td>
+<td>on</td>
+<td>265&#x2F;512 (52%)</td>
+</tr>
+<tr>
+<td>off</td>
+<td>8,192</td>
+<td>on</td>
+<td>13&#x2F;256 (5%, all in step 1)</td>
+</tr>
+<tr>
+<td>on</td>
+<td>8,192</td>
+<td>on</td>
+<td>0&#x2F;256 (only 4 steps, not conclusive on its own)</td>
+</tr>
+<tr>
+<td>off</td>
+<td>2,048</td>
+<td>decode only</td>
+<td>177&#x2F;256 (69%)</td>
+</tr>
+<tr>
+<td>off</td>
+<td>2,048</td>
+<td>on, eager compile backend</td>
+<td>102&#x2F;256 (40%)</td>
+</tr>
+<tr>
+<td>off</td>
+<td>2,048</td>
+<td>off (eager)</td>
+<td>0&#x2F;256</td>
+</tr>
+</tbody></table>
+<p>The cause is vLLM’s CUDA graphs. With graphs on, every faster setting I tried corrupted rollouts. Graphs on decoding alone were the worst, so graph-captured decoding itself corrupts the Mamba state. Larger chunks and prefix caching only made bad batches rarer, which is why the first launch saw 6% and not 50%. In eager mode no rollout was corrupted, and the largest gap between the engines on any token was 0.90 nats.</p>
+<p>Running in eager mode costs speed. During my diagnosis, steps were about 60% slower with eager mode. I had no choice but to relaunch the three arms in eager mode, and made eager the default for every vLLM in the project, to keep training correct.</p>
+<p><strong>Lesson: Capture, sample, and watch the worst sequence in each batch.</strong></p>
+<h3 id="Groups-With-Nothing-To-Learn-From"><a href="#Groups-With-Nothing-To-Learn-From" class="headerlink" title="Groups With Nothing To Learn From"></a>Groups With Nothing To Learn From</h3><p>GRPO’s advantage is each rollout’s reward minus its group’s mean. A group whose 8 rollouts all fail, or all succeed, contributes no gradient. NeMo RL logs the share of each kind, and I expected the all-fail share to fall as the policy improved.</p>
+<p><img src="/images/echo-model-lessons-learned/monitor-no-signal.svg" alt="Share of groups where all rollouts failed, and of groups with mixed outcomes"></p>
+<p>The ECHO arms followed that path, from 39-43% of groups over steps 1-10 to 10-21% from step 21 on. GRPO’s fell to 28% over steps 21-30, then rose again and ended at 35%. Groups with mixed outcomes were common from the start: 50-72% at step 1.</p>
+<p>I learned three things from this. First, GRPO had a learning signal from step 1. That is not the sparse-reward setting that motivates ECHO, where most groups fail and the observation loss becomes the main teacher. Second, GRPO’s late rise came from a family it had lost, not from tasks it never learned. When I broke the share down by family, using NeMo RL’s per-sample logs, GRPO’s family-E groups failed outright in every batch I sampled from step 30 to step 60. The batch mean doesn’t show that. Third, the ECHO arms’ all-fail share settled at 16-20% from step 51. That floor is close to the share of training prompts that no model ever solved.</p>
+<p><strong>Lesson: Understand the RL algorithm.</strong></p>
+<h2 id="After-Training-Tasks-No-Model-Learned"><a href="#After-Training-Tasks-No-Model-Learned" class="headerlink" title="After Training: Tasks No Model Learned"></a>After Training: Tasks No Model Learned</h2><p>After training, I checked the instances that no model ever solved: 16 on dev and 28 on test-ood-hard, unsolved in 16 samples across S0 and the three step-90 arms. My first worry was broken tasks, but the scripted solver solves all 44. Most of them belong to two kinds of task that no model learned, before or after training:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Solved, dev</th>
+<th>Solved, test-ood-hard</th>
+<th>What the models do</th>
+<th>The step no model takes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C, a column widened from <code>INT</code> to <code>BIGINT</code></td>
+<td>0&#x2F;20</td>
+<td>0&#x2F;40</td>
+<td><code>ALTER COLUMN value TYPE BIGINT</code>, which is rejected</td>
+<td>enable <code>delta.enableTypeWidening</code> first</td>
+</tr>
+<tr>
+<td>D, clustered on the wrong column</td>
+<td>1&#x2F;48 for $\lambda&#x3D;0.02$, 0&#x2F;48 for the rest</td>
+<td>0&#x2F;44</td>
+<td><code>CLUSTER BY</code> the filtered column, then a plain <code>OPTIMIZE</code>, which reclusters nothing</td>
+<td><code>OPTIMIZE ... FULL</code></td>
+</tr>
+</tbody></table>
+<p>Their neighbours were learned. Renamed columns went from 2 of 32 for S0 to 27-30 of 32 for the trained arms, and unclustered tables went from 1 of 48 to 41-47 of 48. Each of the two failing kinds needs one Delta feature that the models almost never used. The environment gives no hint, just as Databricks doesn’t: the rejected <code>ALTER</code> returns the workspace’s own message, “ALTER TABLE CHANGE COLUMN is not supported for changing column value from INT to BIGINT”, which doesn’t mention type widening.</p>
+<p>Neither loss can reach these tasks. A group whose 8 rollouts all fail gives GRPO no gradient. ECHO’s observation loss can’t help either: the missing step almost never runs, so its output is almost never there to be predicted. These tasks are 16.4% of the training prompts, and they cap every arm at about 0.86 on dev and 0.82 on test-ood-hard.</p>
+<p><strong>Lesson: Understand the failure and design a better guide for the model.</strong></p>
+<h2 id="What-I-Would-Put-On-the-Dashboard-From-The-Start"><a href="#What-I-Would-Put-On-the-Dashboard-From-The-Start" class="headerlink" title="What I Would Put On the Dashboard From The Start"></a>What I Would Put On the Dashboard From The Start</h2><p>If I ran this again, these are the panels I would set up before step 1, in order:</p>
+<ol>
+<li>Step-1 reward against the starting model’s evaluation.</li>
+<li>The worst sequence’s sampler&#x2F;trainer probability ratio, and a count of corrupted rollouts from the sample dumps.</li>
+<li>The share of groups where every rollout failed, per family.</li>
+<li>The starting model’s habits in the training batches: how episodes end, and the commands that decide each family.</li>
+<li>Policy entropy and generated length.</li>
+<li>Any auxiliary loss, next to reward and the truncation rate.</li>
+<li>Step time split into rollout and training, the number of episodes vLLM is generating through the rollout, and environment errors.</li>
+<li>A held-out evaluation every 30 steps, broken down by family.</li>
+</ol>
+<p>Reward and loss alone would have missed most of the problems in this post.</p>
+]]></content>
+      <tags>
+        <tag>Deep Learning</tag>
+        <tag>Machine Learning</tag>
+        <tag>Reinforcement Learning</tag>
+        <tag>Large Language Model</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ML Prediction with XGBoost and PySpark</title>
+    <url>/2020/03/01/ML-Prediction-with-XGBoost-and-PySpark/</url>
+    <content><![CDATA[<p>Once a XGBoost model is trained, we would like to use PySpark for batch predictions.</p>
+<p>The method we use here is through Pandas UDF.</p>
+<span id="more"></span>
+
+
+<h2 id="Why-pandas-udf-Instead-of-udf"><a href="#Why-pandas-udf-Instead-of-udf" class="headerlink" title="Why pandas_udf Instead of udf"></a>Why <code>pandas_udf</code> Instead of <code>udf</code></h2><p>For a <code>udf</code> function, PySpark evaluates it one record at a time, which is the slowest possible way to execute the prediction. While for a <code>pandas_udf</code> function, it takes a bunch of pandas <code>Series</code> and returns a <code>Series</code>, which is vectorised.</p>
+<h2 id="Create-a-pandas-udf-Prediction-Function"><a href="#Create-a-pandas-udf-Prediction-Function" class="headerlink" title="Create a pandas_udf Prediction Function"></a>Create a <code>pandas_udf</code> Prediction Function</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@pandas_udf(<span class="params">FloatType(<span class="params"></span>)</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_prediction_result</span>(<span class="params">features</span>):</span><br><span class="line">    <span class="comment"># convert to 2D-numpy array</span></span><br><span class="line">    numpy_array = np.array(</span><br><span class="line">        features</span><br><span class="line">        .values</span><br><span class="line">        .tolist()</span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># convert to xgboost dmatrix</span></span><br><span class="line">    dmatrix = xgb.DMatrix(numpy_array)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># predict</span></span><br><span class="line">    y = model.predict(dmatrix)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># return with pandas series</span></span><br><span class="line">    series = pd.Series(y)</span><br><span class="line">    <span class="keyword">return</span> series</span><br></pre></td></tr></table></figure>
+
+<p>Let’s say we have a dataframe <code>df</code> with following records:</p>
+<table>
+<thead>
+<tr>
+<th>features</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[149.0, 84.0. 38.5, 79.7]</td>
+</tr>
+<tr>
+<td>[2.5, 34.0. 35.5, 97.6]</td>
+</tr>
+<tr>
+<td>[0.0, 65.3. 58.7, 45.7]</td>
+</tr>
+</tbody></table>
+<p><code>features</code> is the feature column with <code>ArrayType(FloatType())</code> and each row of <code>features</code> contains 4 feature values.</p>
+<p>When we call <code>get_prediction_result</code> function, it receives a <code>Series</code> object. In this case, it would be </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0    [149.0, 84.0, 38.5, 79.7]</span><br><span class="line">1    [2.5, 34.0, 35.5, 97.6]</span><br><span class="line">2    [0.0, 65.3, 58.7, 45.7]</span><br><span class="line">dtype: object</span><br></pre></td></tr></table></figure>
+
+<p>We would need to convert it to a <code>DMatrix</code> object, which is the input for a XGBoost model. We first call its <code>values</code> method, which yields:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">array([list([149.0, 84.0, 38.5, 79.7]), list([2.5, 34.0, 35.5, 97.6]),</span><br><span class="line">       list([0.0, 65.3, 58.7, 45.7])], dtype=object)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Then we call <code>tolist</code> to convert it into a list of list, yields:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[[149.0, 84.0, 38.5, 79.7], [2.5, 34.0, 35.5, 97.6], [0.0, 65.3, 58.7, 45.7]]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>After that, we convert it into a 2D numpy array:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">array([[149. ,  84. ,  38.5,  79.7],</span><br><span class="line">       [  2.5,  34. ,  35.5,  97.6],</span><br><span class="line">       [  0. ,  65.3,  58.7,  45.7]])</span><br></pre></td></tr></table></figure>
+
+<p>Finally, we initialise a <code>DMatrix</code> object with the 2D numpy array we just created. We then run the prediction. As a <code>pandas_udf</code> requires a <code>Series</code> object to return, we convert the prediction scores into a <code>Series</code> at the line 16.</p>
+<h2 id="Using-a-pandas-udf-Function"><a href="#Using-a-pandas-udf-Function" class="headerlink" title="Using a pandas_udf Function"></a>Using a <code>pandas_udf</code> Function</h2><p>Using a <code>pandas_udf</code> function is just like how we use a normal <code>udf</code> function:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df.withColumn(<span class="string">&#x27;prediction&#x27;</span>, get_prediction_result(<span class="string">&#x27;features&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+
+<p>That’s how we integrate the XGBoost batch prediction into our PySpark pipeline.</p>
+]]></content>
+      <tags>
+        <tag>Machine Learning</tag>
+        <tag>PySpark</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F</title>
     <url>/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/</url>
     <content><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>Anomaly detection has always been a challenging research field. An anomaly indicates a sudden and short-lived pattern change, while a detection algorithm aims to identify anomalies promptly. Detecting anomaly on networks levels up the problem as network monitoring devices usually collect data at high rates, which means a network anomaly detection algorithm should handle high-dimension, noisy, and massive data under power and communication constraints. We should also acknowledge that different anomalies exhibit themselves in network statistics in a different manner. A general anomaly detection model often does not exist. A model that detects surprising edges in a network is probably cannot detect micro cluster anomalies.</p>
@@ -1488,6 +1659,175 @@ Pic 3. Network Graph from Day 2
       <tags>
         <tag>Machine Learning</tag>
         <tag>Anomaly Detection</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Off-Policy Gradient Methods</title>
+    <url>/2023/03/01/Off-Policy-Gradient-Methods/</url>
+    <content><![CDATA[<p>Recall that from <a href="/2023/03/01/Policy-Gradient-Methods/" title="Policy Gradient Methods">Policy Gradient Methods</a>, the calculation of gradient is</p>
+<p>$$<br>\begin{aligned}<br>\nabla \hat{R} _{\theta} &amp;&#x3D; \hat{ \mathbb{E}} _{\tau \sim \pi _{\theta}(\tau)} \bigg[ R(\tau) \nabla \log \pi _{\theta} (\tau) \bigg]<br>\end{aligned}<br>$$</p>
+<p>where</p>
+<ul>
+<li>$\tau$ is a trajectory</li>
+<li>$\pi_{\theta}$ is a stochastic policy</li>
+<li>$\nabla_ {\pi _{\theta}}$ is the gradient operator of the policy $\pi$ with respect to $\theta$</li>
+<li>$\hat{\mathbb{E}} _{\tau \sim \pi _{\theta}(\tau)}[\dots]$ is the empirical average expectation over a finite batch of samples in an algorithm that alternates between sampling and optimization</li>
+</ul>
+<p>In this setting, we have to:</p>
+<ul>
+<li>Use $\pi _{\theta}$ to collect data. When the parameter $\theta$ is updated, we must sample the training data again.</li>
+<li>This is called <em>on-policy</em> training</li>
+</ul>
+<span id="more"></span>
+
+<p>With <a href="/2023/03/01/Importance-Sampling/" title="Importance Sampling">Importance Sampling</a>, we can alter the equation to</p>
+<p>$$<br>\begin{aligned}<br>&amp;&#x3D; \hat{ \mathbb{E}} _{\tau \sim \pi _{\theta’} (\tau)} \bigg[ \frac{ \pi _{\theta}(\tau)} {\pi _{\theta’} (\tau)} R(\tau) \nabla \log \pi _{\theta} (\tau) \bigg]<br>\end{aligned}<br>$$</p>
+<p>In this setting, we can:</p>
+<ul>
+<li>Use the samples drawn from a <em>fixed</em> distribution $\pi_{\theta’}$ to train $\theta$. ($\theta’$ and $\theta$ are different)</li>
+<li>We can sample data once to train $\theta$ many times.</li>
+<li>To a certain extent, we can update $\pi_{\theta’}$, sample new data, and use the new data to train $\theta$.</li>
+<li>This is called <em>off-policy</em> training.</li>
+</ul>
+<p>We learned from <a href="/2023/03/01/Policy-Gradient-Methods/" title="Policy Gradient Methods">Policy Gradient Methods</a> that we would use an advantage function $A^\theta$. Therefore the gradient should be</p>
+<p>$$<br>\begin{aligned}<br>&amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’} (\tau)} \bigg[ \frac{ \pi _{\theta} (s_t, a_t)}{\pi _{\theta’}(s_t, a_t)} A^{\theta’} (s_t, a_t) \nabla \log \pi _{\theta} (a^n_t | s^n_t) \bigg] \\<br>&amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’} (\tau)} \bigg[ \frac{ \pi _{\theta} (a_t | s_t)} {\pi _{\theta’}(a_t | s_t)} \frac{\pi _{\theta}(s_t)}{\pi _{\theta’} (s_t)} A^{\theta’} (s_t, a_t) \nabla \log \pi _{\theta}(a^n_t | s^n_t) \bigg] \\<br>&amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’}(\tau)} \bigg[ \frac{\pi _{\theta} (a_t | s_t)}{\pi _{\theta’} (a_t | s_t)} A^{\theta’} (s_t, a_t) \nabla \log \pi _{\theta} (a^n_t | s^n_t) \bigg] \\<br>\end{aligned}<br>$$</p>
+<p>Note that:</p>
+<ul>
+<li>$(s_t, a_t)$ are training data drawn from a fix distribution $\pi_{\theta’}$</li>
+<li>The calculation of the advantage function $A^{\theta’}$ is based on  $\theta’$</li>
+<li>In line 2, we assume that $\pi_{\theta}(s_t)$ equals to $\pi_{\theta’}(s_t)$, therefore we eliminate $\frac{\pi_{\theta}(s_t)}{\pi_{\theta’}(s_t)}$. This hypothesis assumes that the probability of running into a state $s_t$ is independent from the $\theta$ (environment).</li>
+</ul>
+<p>Recall that for a gradient:</p>
+<p>$$<br>\nabla f(x) &#x3D; f(x) \nabla \log f(x)<br>$$</p>
+<p>Let $f(x) &#x3D; \pi_{\theta}(a^n_t | s^n_t)$. From above equation, combing $\pi_{\theta}(a^n_t | s^n_t) \nabla \log \pi_{\theta}(a^n_t | s^n_t)$ will get $\nabla \pi_{\theta}(a^n_t | s^n_t)$. Hence</p>
+<p>$$<br>\begin{aligned}<br>&amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’}(\tau)} \bigg[ \frac{ \nabla \pi  _{\theta}(a_t | s_t)} {\pi _{\theta’}(a_t | s_t)} A^{\theta’}(s_t, a_t) \bigg]<br>\end{aligned}<br>$$</p>
+<p>By removing the gradient, we now have an objective function:</p>
+<p>$$<br>\begin{aligned}<br>J ^{\theta’} (\theta) &amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’}(\tau)}\bigg[ \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta’}(a_t | s_t)} A^{\theta’}(s_t, a_t) \bigg] \<br>\end{aligned}<br>$$</p>
+<p>This means we use data sampled from $\theta’$ to update $\theta$.</p>
+]]></content>
+      <tags>
+        <tag>Reinforcement Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Paper Study: LLaMA Open and Efﬁcient Foundation Language Models</title>
+    <url>/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/</url>
+    <content><![CDATA[<h1 id="LLaMA-Open-and-Efﬁcient-Foundation-Language-Models"><a href="#LLaMA-Open-and-Efﬁcient-Foundation-Language-Models" class="headerlink" title="LLaMA Open and Efﬁcient Foundation Language Models"></a>LLaMA Open and Efﬁcient Foundation Language Models</h1><h2 id="📖-Abstract"><a href="#📖-Abstract" class="headerlink" title="📖 Abstract"></a>📖 Abstract</h2><p>We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively, without resorting to proprietary and inaccessible datasets. In particular, LLaMA-13B outperforms GPT-3 (175B) on most benchmarks, and LLaMA65B is competitive with the best models, Chinchilla-70B and PaLM-540B. We release all our models to the research community.</p>
+<span id="more"></span>
+
+<h2 id="🎯-Goal"><a href="#🎯-Goal" class="headerlink" title="🎯 Goal"></a>🎯 Goal</h2><ul>
+<li>To train a series of language models that achieve the best possible performance at various inference budgets.</li>
+</ul>
+<h2 id="🤔-Hypothesis"><a href="#🤔-Hypothesis" class="headerlink" title="🤔 Hypothesis"></a>🤔 Hypothesis</h2><ul>
+<li>Training relatively small language models with more data can yield better performance.</li>
+</ul>
+<h2 id="💡-Methodology"><a href="#💡-Methodology" class="headerlink" title="💡 Methodology"></a>💡 Methodology</h2><ul>
+<li>Use only publicly available data. The entire training dataset contains 1.4T tokens after tokenization.</li>
+</ul>
+<img src="/images/llama/CleanShot2023-08-07at231107.png" width=500px>
+- Tokenize the data with <a href="/2023/08/14/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">Byte-Pair Encoding</a> (<a href="/2023/08/14/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">BPE</a>) algorithm, with the implementation from [SentencePiece](https://github.com/google/sentencepiece).
+- Each token is used only once during training, except Wikipedia and Books, which are trained for approximately 2 epochs.
+- Architecture-wise, their network is based on the Transformer architecture, with the following differences:
+    - Pre-normalization:
+        - Normalize the input of each transformer sub-layer instead of the output.
+        - Use the RMSNorm normalizing function.
+    - SwiGLU activation function:
+        - Replace the ReLU with the SwiGLU activation function.
+        - SwiGLU has trainable parameters $W$ and $V$, they scale down the size of the hidden units with a factor of $\frac{2}{3}$.
+    - Rotary Embedding
+        - Replace absolute positional embedding with Rotary Positional Embedding(RoPE)
+- Use AdamW optimizer with the following hyperparemeters:
+    - $\beta_1 = 0.9$
+    - $\beta_2 = 0.95$
+    - Use a cosine learning rate schedule, where the final learning rate equals 10% of the maximal learning rate.
+    - Use weight decay of 0.1
+    - Use gradient clipping of 1.0
+    - use 2000 warmup steps
+    - Varying batch size and learning rate  
+   <img src="/images/llama/CleanShot2023-08-07at235133.png" width=500/>
+   - Use efficient implementation of the causal multi-head attention to reduce memory usage and runtime
+       - Use works from *Self-attention does not need O(n2) memory* and *Flashattention Fast and memory-efﬁcient exact attention with io-awareness*
+       - Available at the [xformers](https://github.com/facebookresearch/xformers) library.
+   - Reducing activation recomputation in large transformer models
+
+<h2 id="📊-Result-s"><a href="#📊-Result-s" class="headerlink" title="📊 Result(s)"></a>📊 Result(s)</h2><h3 id="Training-Loss"><a href="#Training-Loss" class="headerlink" title="Training Loss"></a>Training Loss</h3><img src="/images/llama/CleanShot2023-08-08at001349.png" width=500/>
+
+<h3 id="Evolution-of-Performance"><a href="#Evolution-of-Performance" class="headerlink" title="Evolution of Performance"></a>Evolution of Performance</h3><img src="/images/llama/CleanShot2023-08-08at002024.png" width=500/>
+
+<h3 id="Zero-Shot-and-Few-Shot-Performance"><a href="#Zero-Shot-and-Few-Shot-Performance" class="headerlink" title="Zero-Shot and Few-Shot Performance"></a>Zero-Shot and Few-Shot Performance</h3><img src="/images/llama/CleanShot2023-08-08at001437.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001547.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001621.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001639.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001710.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001740.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at001831.png" width=500/>
+
+<h3 id="Instruction-Finetuning-Result"><a href="#Instruction-Finetuning-Result" class="headerlink" title="Instruction Finetuning Result"></a>Instruction Finetuning Result</h3><img src="/images/llama/CleanShot2023-08-08at001912.png" width=500/>
+
+<h3 id="Bias-Toxicity-and-Misinformation"><a href="#Bias-Toxicity-and-Misinformation" class="headerlink" title="Bias, Toxicity and Misinformation"></a>Bias, Toxicity and Misinformation</h3><img src="/images/llama/CleanShot2023-08-08at002122.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at002142.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at002204.png" width=500/>
+
+<img src="/images/llama/CleanShot2023-08-08at002223.png" width=500/>
+
+<h2 id="🔑-Summary-of-Key-Points"><a href="#🔑-Summary-of-Key-Points" class="headerlink" title="🔑 Summary of Key Points"></a>🔑 Summary of Key Points</h2><ul>
+<li>Training with more data increases model Performance</li>
+</ul>
+<h2 id="❗-Significance"><a href="#❗-Significance" class="headerlink" title="❗ Significance"></a>❗ Significance</h2><ul>
+<li>Smaller models can perform better than a large language model by scaling up training data, drastically reducing the inference cost</li>
+</ul>
+<h2 id="🙋‍♂️-Questions-and-Answers"><a href="#🙋‍♂️-Questions-and-Answers" class="headerlink" title="🙋‍♂️ Questions and Answers"></a>🙋‍♂️ Questions and Answers</h2><p><strong>Q</strong>: Can you briefly summarize the key contributions of the LLaMA paper?</p>
+<p><strong>A</strong>: The LLaMA paper introduces a series of large language models ranging from 7B to 65B parameters. The key contributions are:</p>
+<ul>
+<li>Training large transformer models using publicly available data sources without relying on proprietary datasets. This makes the work more aligned with open sourcing.</li>
+<li>Showing competitive performance can be achieved by scaling up training data, even for smaller models. For example, their 13B parameter model outperforms the 175B parameter GPT-3 on many benchmarks.</li>
+<li>Releasing the pre-trained models openly to the research community. This will help democratize access to large language models for research.</li>
+</ul>
+<p><strong>Q</strong>: What was the motivation behind training the LLaMA models? How does this differ from previous work?</p>
+<p><strong>A</strong>: Most prior work focused on training the largest models possible for a given computing budget. LLaMA instead optimized for inference efficiency - training smaller models that can reach a target performance level with less inference cost. This is important since inference cost is a bottleneck when deploying models.</p>
+<p><strong>Q</strong>: Can you describe the model architecture, training data, and optimization process?</p>
+<p><strong>A</strong>: The LLaMA models are transformer networks incorporating improvements like pre-layer normalization and rotary embeddings. They were trained on a mixture of CommonCrawl, Wikipedia, Books, GitHub code, etc., amounting to 1-1.4 trillion tokens. Optimization was done with AdamW and cosine decay learning rates. Efficiency techniques like activation checkpointing were used.</p>
+<p><strong>Q</strong>: How did the LLaMA models compare to prior work on benchmark evaluations like GPT-3 and PaLM?</p>
+<p><strong>A</strong>: LLaMA-13B outperformed GPT-3 on most benchmarks despite being 10x smaller. LLaMA-65B was competitive and often better than similarly sized models like Chinchilla-70B and PaLM-540B. This demonstrates their approach of scaling data over model size can work.</p>
+<p><strong>Q</strong>: What limitations or potential risks did the authors describe for large language models like LLaMA?</p>
+<p><strong>A</strong>: They analyzed model biases and toxicity using probes like RealToxicityPrompts, finding issues that need more research. They also reported on the carbon emissions from training, which were quite high. More work is needed to address these problems.</p>
+<p><strong>Q</strong>: What directions for future work did the authors suggest?</p>
+<p><strong>A</strong>: They plan to release larger models trained on more data since performance kept improving with their scaling approach. They also want to investigate instruction tuning further as a way to improve abilities rapidly.</p>
+<p><strong>Q</strong>: How does the performance of LLaMA models evolve during training? Are there any interesting trends or observations?</p>
+<p><strong>A</strong>: The paper showed performance on benchmarks improved steadily over training, correlating with reductions in training perplexity. One observation was performance on WinoGrande didn’t improve much between the 33B and 65B models, suggesting potential issues with that benchmark.</p>
+<p><strong>Q</strong>: The authors propose training compute-optimal models that minimize inference costs. Can you expand on the benefits of this approach?</p>
+<p><strong>A</strong>: Most prior work focused only on minimizing training costs for a target performance level. But inference cost is also critical when deploying models. The LLaMA approach optimizes inference by training smaller models on more data to reach the target performance at a lower inference cost.</p>
+<p><strong>Q</strong>: Were the LLaMA models fine-tuned in any way? If not, how was strong performance achieved?</p>
+<p><strong>A</strong>: No finetuning was done except for one instruction-tuned variant called LLaMA-I. The models performed well on many NLP benchmarks from pretraining on the large and diverse dataset. This demonstrates the generalization ability of the scaling approach.</p>
+<p><strong>Q</strong>: The authors mention using techniques like activation checkpointing to improve training efficiency. Can you explain what this involves?</p>
+<p><strong>A</strong>: Activation checkpointing reduces the memory and computing needed during training by avoiding recomputing certain activations during the backward pass. This is done by saving only the necessary activations from the forward pass and releasing unused activations from memory.</p>
+<p><strong>Q</strong>: How did the authors evaluate model toxicity? What conclusions did they draw from this analysis?</p>
+<p><strong>A</strong>: They tested toxicity using RealToxicityPrompts by generating completions and scoring them with Perspective API. Toxicity increased with model size, especially on respectful prompts, indicating larger models can be more toxic. However, the evaluation methodology had limitations.</p>
+<p><strong>Q</strong>: What types of NLP tasks or applications do you think LLaMA models would suit well? Are there tasks where other models may be more appropriate?</p>
+<p><strong>A</strong>: LLaMA models could be useful for open domain dialog, question answering, summarization, and other text generation applications. Their strong language modeling and few-shot performance suggest versatility. For very specialized domains like biomedical, other models pretrained on domain text may be better.</p>
+<p><strong>Q</strong>: The authors propose training even larger LLaMA models. What potential concerns or limitations would this raise?</p>
+<p><strong>A</strong>: Larger models increase risks around safety, bias, toxicity, and misuse. The compute and carbon cost also scales up. Deployment costs grow as well. So, while performance may improve further, there are many non-technical factors to consider before scaling up model size even more.</p>
+<p><strong>Q</strong>: What are some key takeaways from this work that could guide future research on large language models?</p>
+<p><strong>A</strong>: Pretraining on diverse public data can remove the need for private datasets while achieving strong performance. Compute-optimal models can minimize inference costs. Many challenges around responsible LLM development still require more research and solutions.</p>
+<p><strong>Q</strong>: Were the LLaMA models tested in a chatbot or conversational agent setting? If not, how do you think they would perform such tasks?</p>
+<p><strong>A</strong>: The paper evaluated the models on NLP benchmarks but not conversational tasks. However, their strong language modeling and few-shot abilities suggest they could perform well in open-ended dialog. Testing on conversational benchmarks could be an interesting direction for future work.</p>
+<p><strong>Q</strong>: How could we improve diversity, mitigate bias, and address other ethical risks if we deployed these models in products and services?</p>
+<p><strong>A</strong>: Many bias mitigation research is needed - techniques like adversarial debiasing, personalized bias ratings, censoring toxic generations, etc. Diversifying and filtering the training data can help. Extensive testing for different biases is required. There should be a focus on ethics and inclusivity throughout the development process.</p>
+<p><strong>Q</strong>: What do you think could be promising directions for future work on more robust and beneficial language models?</p>
+<p><strong>A</strong>: Aligning models with human values through techniques like instruction following and reinforcement learning from feedback seems promising. Expanding capabilities beyond text, like reasoning, causality, and symbol manipulation, could make models more generally intelligent. Building oversight, auditability, and control mechanisms will be important. There are many open challenges to work on.</p>
+]]></content>
+      <tags>
+        <tag>Deep Learning</tag>
+        <tag>Large Language Model</tag>
+        <tag>Paper Study</tag>
       </tags>
   </entry>
   <entry>
@@ -1778,127 +2118,6 @@ Pic 3. Network Graph from Day 2
       </tags>
   </entry>
   <entry>
-    <title>Paper Study: LLaMA Open and Efﬁcient Foundation Language Models</title>
-    <url>/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/</url>
-    <content><![CDATA[<h1 id="LLaMA-Open-and-Efﬁcient-Foundation-Language-Models"><a href="#LLaMA-Open-and-Efﬁcient-Foundation-Language-Models" class="headerlink" title="LLaMA Open and Efﬁcient Foundation Language Models"></a>LLaMA Open and Efﬁcient Foundation Language Models</h1><h2 id="📖-Abstract"><a href="#📖-Abstract" class="headerlink" title="📖 Abstract"></a>📖 Abstract</h2><p>We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively, without resorting to proprietary and inaccessible datasets. In particular, LLaMA-13B outperforms GPT-3 (175B) on most benchmarks, and LLaMA65B is competitive with the best models, Chinchilla-70B and PaLM-540B. We release all our models to the research community.</p>
-<span id="more"></span>
-
-<h2 id="🎯-Goal"><a href="#🎯-Goal" class="headerlink" title="🎯 Goal"></a>🎯 Goal</h2><ul>
-<li>To train a series of language models that achieve the best possible performance at various inference budgets.</li>
-</ul>
-<h2 id="🤔-Hypothesis"><a href="#🤔-Hypothesis" class="headerlink" title="🤔 Hypothesis"></a>🤔 Hypothesis</h2><ul>
-<li>Training relatively small language models with more data can yield better performance.</li>
-</ul>
-<h2 id="💡-Methodology"><a href="#💡-Methodology" class="headerlink" title="💡 Methodology"></a>💡 Methodology</h2><ul>
-<li>Use only publicly available data. The entire training dataset contains 1.4T tokens after tokenization.</li>
-</ul>
-<img src="/images/llama/CleanShot2023-08-07at231107.png" width=500px>
-- Tokenize the data with <a href="/2023/08/14/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">Byte-Pair Encoding</a> (<a href="/2023/08/14/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">BPE</a>) algorithm, with the implementation from [SentencePiece](https://github.com/google/sentencepiece).
-- Each token is used only once during training, except Wikipedia and Books, which are trained for approximately 2 epochs.
-- Architecture-wise, their network is based on the Transformer architecture, with the following differences:
-    - Pre-normalization:
-        - Normalize the input of each transformer sub-layer instead of the output.
-        - Use the RMSNorm normalizing function.
-    - SwiGLU activation function:
-        - Replace the ReLU with the SwiGLU activation function.
-        - SwiGLU has trainable parameters $W$ and $V$, they scale down the size of the hidden units with a factor of $\frac{2}{3}$.
-    - Rotary Embedding
-        - Replace absolute positional embedding with Rotary Positional Embedding(RoPE)
-- Use AdamW optimizer with the following hyperparemeters:
-    - $\beta_1 = 0.9$
-    - $\beta_2 = 0.95$
-    - Use a cosine learning rate schedule, where the final learning rate equals 10% of the maximal learning rate.
-    - Use weight decay of 0.1
-    - Use gradient clipping of 1.0
-    - use 2000 warmup steps
-    - Varying batch size and learning rate  
-   <img src="/images/llama/CleanShot2023-08-07at235133.png" width=500/>
-   - Use efficient implementation of the causal multi-head attention to reduce memory usage and runtime
-       - Use works from *Self-attention does not need O(n2) memory* and *Flashattention Fast and memory-efﬁcient exact attention with io-awareness*
-       - Available at the [xformers](https://github.com/facebookresearch/xformers) library.
-   - Reducing activation recomputation in large transformer models
-
-<h2 id="📊-Result-s"><a href="#📊-Result-s" class="headerlink" title="📊 Result(s)"></a>📊 Result(s)</h2><h3 id="Training-Loss"><a href="#Training-Loss" class="headerlink" title="Training Loss"></a>Training Loss</h3><img src="/images/llama/CleanShot2023-08-08at001349.png" width=500/>
-
-<h3 id="Evolution-of-Performance"><a href="#Evolution-of-Performance" class="headerlink" title="Evolution of Performance"></a>Evolution of Performance</h3><img src="/images/llama/CleanShot2023-08-08at002024.png" width=500/>
-
-<h3 id="Zero-Shot-and-Few-Shot-Performance"><a href="#Zero-Shot-and-Few-Shot-Performance" class="headerlink" title="Zero-Shot and Few-Shot Performance"></a>Zero-Shot and Few-Shot Performance</h3><img src="/images/llama/CleanShot2023-08-08at001437.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001547.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001621.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001639.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001710.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001740.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at001831.png" width=500/>
-
-<h3 id="Instruction-Finetuning-Result"><a href="#Instruction-Finetuning-Result" class="headerlink" title="Instruction Finetuning Result"></a>Instruction Finetuning Result</h3><img src="/images/llama/CleanShot2023-08-08at001912.png" width=500/>
-
-<h3 id="Bias-Toxicity-and-Misinformation"><a href="#Bias-Toxicity-and-Misinformation" class="headerlink" title="Bias, Toxicity and Misinformation"></a>Bias, Toxicity and Misinformation</h3><img src="/images/llama/CleanShot2023-08-08at002122.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at002142.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at002204.png" width=500/>
-
-<img src="/images/llama/CleanShot2023-08-08at002223.png" width=500/>
-
-<h2 id="🔑-Summary-of-Key-Points"><a href="#🔑-Summary-of-Key-Points" class="headerlink" title="🔑 Summary of Key Points"></a>🔑 Summary of Key Points</h2><ul>
-<li>Training with more data increases model Performance</li>
-</ul>
-<h2 id="❗-Significance"><a href="#❗-Significance" class="headerlink" title="❗ Significance"></a>❗ Significance</h2><ul>
-<li>Smaller models can perform better than a large language model by scaling up training data, drastically reducing the inference cost</li>
-</ul>
-<h2 id="🙋‍♂️-Questions-and-Answers"><a href="#🙋‍♂️-Questions-and-Answers" class="headerlink" title="🙋‍♂️ Questions and Answers"></a>🙋‍♂️ Questions and Answers</h2><p><strong>Q</strong>: Can you briefly summarize the key contributions of the LLaMA paper?</p>
-<p><strong>A</strong>: The LLaMA paper introduces a series of large language models ranging from 7B to 65B parameters. The key contributions are:</p>
-<ul>
-<li>Training large transformer models using publicly available data sources without relying on proprietary datasets. This makes the work more aligned with open sourcing.</li>
-<li>Showing competitive performance can be achieved by scaling up training data, even for smaller models. For example, their 13B parameter model outperforms the 175B parameter GPT-3 on many benchmarks.</li>
-<li>Releasing the pre-trained models openly to the research community. This will help democratize access to large language models for research.</li>
-</ul>
-<p><strong>Q</strong>: What was the motivation behind training the LLaMA models? How does this differ from previous work?</p>
-<p><strong>A</strong>: Most prior work focused on training the largest models possible for a given computing budget. LLaMA instead optimized for inference efficiency - training smaller models that can reach a target performance level with less inference cost. This is important since inference cost is a bottleneck when deploying models.</p>
-<p><strong>Q</strong>: Can you describe the model architecture, training data, and optimization process?</p>
-<p><strong>A</strong>: The LLaMA models are transformer networks incorporating improvements like pre-layer normalization and rotary embeddings. They were trained on a mixture of CommonCrawl, Wikipedia, Books, GitHub code, etc., amounting to 1-1.4 trillion tokens. Optimization was done with AdamW and cosine decay learning rates. Efficiency techniques like activation checkpointing were used.</p>
-<p><strong>Q</strong>: How did the LLaMA models compare to prior work on benchmark evaluations like GPT-3 and PaLM?</p>
-<p><strong>A</strong>: LLaMA-13B outperformed GPT-3 on most benchmarks despite being 10x smaller. LLaMA-65B was competitive and often better than similarly sized models like Chinchilla-70B and PaLM-540B. This demonstrates their approach of scaling data over model size can work.</p>
-<p><strong>Q</strong>: What limitations or potential risks did the authors describe for large language models like LLaMA?</p>
-<p><strong>A</strong>: They analyzed model biases and toxicity using probes like RealToxicityPrompts, finding issues that need more research. They also reported on the carbon emissions from training, which were quite high. More work is needed to address these problems.</p>
-<p><strong>Q</strong>: What directions for future work did the authors suggest?</p>
-<p><strong>A</strong>: They plan to release larger models trained on more data since performance kept improving with their scaling approach. They also want to investigate instruction tuning further as a way to improve abilities rapidly.</p>
-<p><strong>Q</strong>: How does the performance of LLaMA models evolve during training? Are there any interesting trends or observations?</p>
-<p><strong>A</strong>: The paper showed performance on benchmarks improved steadily over training, correlating with reductions in training perplexity. One observation was performance on WinoGrande didn’t improve much between the 33B and 65B models, suggesting potential issues with that benchmark.</p>
-<p><strong>Q</strong>: The authors propose training compute-optimal models that minimize inference costs. Can you expand on the benefits of this approach?</p>
-<p><strong>A</strong>: Most prior work focused only on minimizing training costs for a target performance level. But inference cost is also critical when deploying models. The LLaMA approach optimizes inference by training smaller models on more data to reach the target performance at a lower inference cost.</p>
-<p><strong>Q</strong>: Were the LLaMA models fine-tuned in any way? If not, how was strong performance achieved?</p>
-<p><strong>A</strong>: No finetuning was done except for one instruction-tuned variant called LLaMA-I. The models performed well on many NLP benchmarks from pretraining on the large and diverse dataset. This demonstrates the generalization ability of the scaling approach.</p>
-<p><strong>Q</strong>: The authors mention using techniques like activation checkpointing to improve training efficiency. Can you explain what this involves?</p>
-<p><strong>A</strong>: Activation checkpointing reduces the memory and computing needed during training by avoiding recomputing certain activations during the backward pass. This is done by saving only the necessary activations from the forward pass and releasing unused activations from memory.</p>
-<p><strong>Q</strong>: How did the authors evaluate model toxicity? What conclusions did they draw from this analysis?</p>
-<p><strong>A</strong>: They tested toxicity using RealToxicityPrompts by generating completions and scoring them with Perspective API. Toxicity increased with model size, especially on respectful prompts, indicating larger models can be more toxic. However, the evaluation methodology had limitations.</p>
-<p><strong>Q</strong>: What types of NLP tasks or applications do you think LLaMA models would suit well? Are there tasks where other models may be more appropriate?</p>
-<p><strong>A</strong>: LLaMA models could be useful for open domain dialog, question answering, summarization, and other text generation applications. Their strong language modeling and few-shot performance suggest versatility. For very specialized domains like biomedical, other models pretrained on domain text may be better.</p>
-<p><strong>Q</strong>: The authors propose training even larger LLaMA models. What potential concerns or limitations would this raise?</p>
-<p><strong>A</strong>: Larger models increase risks around safety, bias, toxicity, and misuse. The compute and carbon cost also scales up. Deployment costs grow as well. So, while performance may improve further, there are many non-technical factors to consider before scaling up model size even more.</p>
-<p><strong>Q</strong>: What are some key takeaways from this work that could guide future research on large language models?</p>
-<p><strong>A</strong>: Pretraining on diverse public data can remove the need for private datasets while achieving strong performance. Compute-optimal models can minimize inference costs. Many challenges around responsible LLM development still require more research and solutions.</p>
-<p><strong>Q</strong>: Were the LLaMA models tested in a chatbot or conversational agent setting? If not, how do you think they would perform such tasks?</p>
-<p><strong>A</strong>: The paper evaluated the models on NLP benchmarks but not conversational tasks. However, their strong language modeling and few-shot abilities suggest they could perform well in open-ended dialog. Testing on conversational benchmarks could be an interesting direction for future work.</p>
-<p><strong>Q</strong>: How could we improve diversity, mitigate bias, and address other ethical risks if we deployed these models in products and services?</p>
-<p><strong>A</strong>: Many bias mitigation research is needed - techniques like adversarial debiasing, personalized bias ratings, censoring toxic generations, etc. Diversifying and filtering the training data can help. Extensive testing for different biases is required. There should be a focus on ethics and inclusivity throughout the development process.</p>
-<p><strong>Q</strong>: What do you think could be promising directions for future work on more robust and beneficial language models?</p>
-<p><strong>A</strong>: Aligning models with human values through techniques like instruction following and reinforcement learning from feedback seems promising. Expanding capabilities beyond text, like reasoning, causality, and symbol manipulation, could make models more generally intelligent. Building oversight, auditability, and control mechanisms will be important. There are many open challenges to work on.</p>
-]]></content>
-      <tags>
-        <tag>Deep Learning</tag>
-        <tag>Large Language Model</tag>
-        <tag>Paper Study</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Policy Gradient Methods</title>
     <url>/2023/03/01/Policy-Gradient-Methods/</url>
     <content><![CDATA[<h2 id="What-Are-Policy-Gradient-Methods"><a href="#What-Are-Policy-Gradient-Methods" class="headerlink" title="What Are Policy Gradient Methods"></a>What Are Policy Gradient Methods</h2><p>Policy gradient methods are a class of reinforcement learning algorithms used for <em>optimizing parametrized policies by gradient descent to maximize the expected return</em>, which is the cumulative reward received over a long-term horizon. These methods are based on updating the policy parameters such that the probabilities of actions leading to higher returns are increased. In comparison, the probabilities of actions leading to lower returns are decreased.</p>
@@ -1942,6 +2161,48 @@ Pic 3. Network Graph from Day 2
 <p>This advantage function can be estimated by a <em>“critic”</em>. The meaning of an advantage function is to tell how good it is if we take $a_t$ other than other actions at $s_t$</p>
 <p>Therefore, the gradient term becomes</p>
 <p>$$<br>\begin{aligned}<br>\nabla \hat{R} _{\theta} &amp;&#x3D; \hat{g} \\<br>&amp;&#x3D; \hat{\mathbb{E}} _{\tau \sim \pi _{\theta}(\tau)} \bigg[ A^{\theta}(\tau) \nabla \log \pi _{\theta} (\tau) \bigg] \\<br>&amp;\approx \frac{1}{N} \sum^{N} _{n&#x3D;1} \sum^{T _{n}} _{t&#x3D;1} A ^{\theta} (s^n_t, a^n_t) \nabla \log \pi _{\theta} (a^n_t | s^n_t)<br>\end{aligned}<br>$$</p>
+]]></content>
+      <tags>
+        <tag>Reinforcement Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Proximal Policy Optimization Algorithms (PPO and PPO2)</title>
+    <url>/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/</url>
+    <content><![CDATA[<p>Recall that from <a href="/2023/03/01/Off-Policy-Gradient-Methods/" title="Off-Policy Gradient Methods">Off-Policy Gradient Methods</a>, the objective function is</p>
+<p>$$<br>\begin{aligned}<br>J^{\theta’}(\theta) &amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’} (\tau)} \bigg[ \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta’}(a_t | s_t)} A^{\theta’}(s_t, a_t) \bigg]<br>\end{aligned}<br>$$</p>
+<p>We learned that from <a href="/2023/03/01/Importance-Sampling/" title="Importance Sampling">Importance Sampling</a>, the two distributions shouldn’t differ too much, therefore in PPO, they added a constraint term:</p>
+<p>$$<br>J ^{\theta’} _{PPO} (\theta) &#x3D; J ^{\theta’} (\theta) - \beta KL(\theta, \theta’)<br>$$</p>
+<p>Where $\beta$ is a weight, this constraint term ensures that $\theta$ and $\theta’$ are similar.</p>
+<span id="more"></span>
+
+<p>Before PPO, there was a method called TRPO (Trust Region Policy Optimization), and its objective function is</p>
+<p>$$<br>\begin{aligned}<br>J ^{\theta’} _{TRPO}(\theta) &amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’}(\tau)} \bigg[ \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta’}(a_t | s_t)} A ^{\theta’}(s_t, a_t) \bigg] \<br>\end{aligned}<br>$$</p>
+<p>with constrain $KL(\theta, \theta’) &lt; \delta$. We can see that PPO and TRPO are similar, but PPO puts the constraint term into its objective function. Therefore, in practice, PPO is easier to implement.</p>
+<p>$KL(\theta, \theta’)$ is to ensure that the <em>behavior</em> (output) of $\theta$ and $\theta’$ are similar, but not their parameters (weights). Think $\theta$ and $\theta’$ as neural networks. Given a state $s_t$, they both will output a distribution of actions. KL divergence is to ensure that these two distributions are similar.</p>
+<p>Overall, the method is as follows:</p>
+<ol>
+<li><p>Initiate the policy parameters $\theta^0$</p>
+</li>
+<li><p>In each iteration,</p>
+<ul>
+<li>Use  $\theta^k$ to interact with the environment to collect ${s_t, a_t}$ and compute advantage $A^{\theta^{k}}(s_t, a_t)$</li>
+<li>Find $\theta$ optimizing $J_{PPO}(\theta)$</li>
+</ul>
+<p>$$\begin{aligned}<br>J ^{\theta^{k}} _{PPO}(\theta) &amp;&#x3D; J ^{\theta ^{k}}(\theta) - \beta KL(\theta, \theta^{k}) \\<br>&amp;&#x3D; \sum _{(s_t, a_t)} \frac{ \pi _{\theta}(a_t | s_t)}{\pi _{\theta^k} (a_t | s_t)} A ^{\theta^{k}}(s_t, a_t) - \beta KL(\theta, \theta ^{k})<br>\end{aligned}<br>$$</p>
+<ul>
+<li>Pre-define maximum and minimum values for $KL$. If $KL(\theta, \theta^k) &gt; KL_{\max}$, increase $\beta$. Otherwise, decrease $\beta$.</li>
+</ul>
+</li>
+</ol>
+<p>Since $KL(\theta, \theta’)$ could increase computation overheads, they also introduce PPO2, which the objective function is</p>
+<p>$$<br>\begin{aligned}<br>   J ^{\theta^{k}} _{PPO2}(\theta) \approx \sum _{(s_t, a_t)} \min \bigg( &amp; \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta^k} (a_t | s_t)} A^{\theta^{k}}(s_t, a_t), \\<br>   &amp; \operatorname{clip} \bigg( \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta^k} (a_t | s_t)}, 1 - \epsilon, 1 + \epsilon \bigg) A ^{\theta^{k}}(s_t, a_t) \bigg)<br>   \end{aligned}<br>$$</p>
+<p>This objective is easier to implement, and ensures that $\theta$ doesn’t differ too much from $\theta^k$ by:</p>
+<ul>
+<li>When $A &gt; 0$, means that the given $(s_t, a_t)$ is good. Therefore, we should optimize $\theta$ by increasing the probability of $a$ given $s$. But, the difference between $\theta$ and $\theta^k$ is clipped by $1 + \epsilon$. See the $\min$ and $\operatorname{clip}$.</li>
+<li>Similarly, when $A &lt; 0$, Therefore, we should optimize $\theta$ by reducing the probability of $a$ given $s$. The difference between $\theta$ and $\theta^k$ is clipped by $1 - \epsilon$. See the $\min$ and $\operatorname{clip}$.</li>
+</ul>
+<p>In the PPO2 algorithm, we will no longer need to calculate the $KL$ while imposing the same constraint.</p>
 ]]></content>
       <tags>
         <tag>Reinforcement Learning</tag>
@@ -2039,48 +2300,6 @@ Pic 3. Network Graph from Day 2
         <tag>PyTorch</tag>
         <tag>PySpark</tag>
         <tag>Traffic Classification</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Proximal Policy Optimization Algorithms (PPO and PPO2)</title>
-    <url>/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/</url>
-    <content><![CDATA[<p>Recall that from <a href="/2023/03/01/Off-Policy-Gradient-Methods/" title="Off-Policy Gradient Methods">Off-Policy Gradient Methods</a>, the objective function is</p>
-<p>$$<br>\begin{aligned}<br>J^{\theta’}(\theta) &amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’} (\tau)} \bigg[ \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta’}(a_t | s_t)} A^{\theta’}(s_t, a_t) \bigg]<br>\end{aligned}<br>$$</p>
-<p>We learned that from <a href="/2023/03/01/Importance-Sampling/" title="Importance Sampling">Importance Sampling</a>, the two distributions shouldn’t differ too much, therefore in PPO, they added a constraint term:</p>
-<p>$$<br>J ^{\theta’} _{PPO} (\theta) &#x3D; J ^{\theta’} (\theta) - \beta KL(\theta, \theta’)<br>$$</p>
-<p>Where $\beta$ is a weight, this constraint term ensures that $\theta$ and $\theta’$ are similar.</p>
-<span id="more"></span>
-
-<p>Before PPO, there was a method called TRPO (Trust Region Policy Optimization), and its objective function is</p>
-<p>$$<br>\begin{aligned}<br>J ^{\theta’} _{TRPO}(\theta) &amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’}(\tau)} \bigg[ \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta’}(a_t | s_t)} A ^{\theta’}(s_t, a_t) \bigg] \<br>\end{aligned}<br>$$</p>
-<p>with constrain $KL(\theta, \theta’) &lt; \delta$. We can see that PPO and TRPO are similar, but PPO puts the constraint term into its objective function. Therefore, in practice, PPO is easier to implement.</p>
-<p>$KL(\theta, \theta’)$ is to ensure that the <em>behavior</em> (output) of $\theta$ and $\theta’$ are similar, but not their parameters (weights). Think $\theta$ and $\theta’$ as neural networks. Given a state $s_t$, they both will output a distribution of actions. KL divergence is to ensure that these two distributions are similar.</p>
-<p>Overall, the method is as follows:</p>
-<ol>
-<li><p>Initiate the policy parameters $\theta^0$</p>
-</li>
-<li><p>In each iteration,</p>
-<ul>
-<li>Use  $\theta^k$ to interact with the environment to collect ${s_t, a_t}$ and compute advantage $A^{\theta^{k}}(s_t, a_t)$</li>
-<li>Find $\theta$ optimizing $J_{PPO}(\theta)$</li>
-</ul>
-<p>$$\begin{aligned}<br>J ^{\theta^{k}} _{PPO}(\theta) &amp;&#x3D; J ^{\theta ^{k}}(\theta) - \beta KL(\theta, \theta^{k}) \\<br>&amp;&#x3D; \sum _{(s_t, a_t)} \frac{ \pi _{\theta}(a_t | s_t)}{\pi _{\theta^k} (a_t | s_t)} A ^{\theta^{k}}(s_t, a_t) - \beta KL(\theta, \theta ^{k})<br>\end{aligned}<br>$$</p>
-<ul>
-<li>Pre-define maximum and minimum values for $KL$. If $KL(\theta, \theta^k) &gt; KL_{\max}$, increase $\beta$. Otherwise, decrease $\beta$.</li>
-</ul>
-</li>
-</ol>
-<p>Since $KL(\theta, \theta’)$ could increase computation overheads, they also introduce PPO2, which the objective function is</p>
-<p>$$<br>\begin{aligned}<br>   J ^{\theta^{k}} _{PPO2}(\theta) \approx \sum _{(s_t, a_t)} \min \bigg( &amp; \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta^k} (a_t | s_t)} A^{\theta^{k}}(s_t, a_t), \\<br>   &amp; \operatorname{clip} \bigg( \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta^k} (a_t | s_t)}, 1 - \epsilon, 1 + \epsilon \bigg) A ^{\theta^{k}}(s_t, a_t) \bigg)<br>   \end{aligned}<br>$$</p>
-<p>This objective is easier to implement, and ensures that $\theta$ doesn’t differ too much from $\theta^k$ by:</p>
-<ul>
-<li>When $A &gt; 0$, means that the given $(s_t, a_t)$ is good. Therefore, we should optimize $\theta$ by increasing the probability of $a$ given $s$. But, the difference between $\theta$ and $\theta^k$ is clipped by $1 + \epsilon$. See the $\min$ and $\operatorname{clip}$.</li>
-<li>Similarly, when $A &lt; 0$, Therefore, we should optimize $\theta$ by reducing the probability of $a$ given $s$. The difference between $\theta$ and $\theta^k$ is clipped by $1 - \epsilon$. See the $\min$ and $\operatorname{clip}$.</li>
-</ul>
-<p>In the PPO2 algorithm, we will no longer need to calculate the $KL$ while imposing the same constraint.</p>
-]]></content>
-      <tags>
-        <tag>Reinforcement Learning</tag>
       </tags>
   </entry>
   <entry>
@@ -2228,18 +2447,6 @@ Pic 3. Network Graph from Day 2
       </tags>
   </entry>
   <entry>
-    <title>Summary of Malware Detection By Eating a Whole EXE in One Picture</title>
-    <url>/2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/</url>
-    <content><![CDATA[<p><img src="/images/eating-whole-files/pasted-0.png"></p>
-]]></content>
-      <tags>
-        <tag>Deep Learning</tag>
-        <tag>Machine Learning</tag>
-        <tag>Malware Detection</tag>
-        <tag>Paper Summary</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>The Raw Output of LLM is a Sequence</title>
     <url>/2026/10/19/The-Raw-Output-of-LLM-is-a-Sequence/</url>
     <content><![CDATA[<p>I’m writing this post mostly as a reminder to myself. Even though I learned this concept a long time ago, I still find myself coming back to these fundamentals whenever a new training technique comes along.</p>
@@ -2333,8 +2540,20 @@ Pic 3. Network Graph from Day 2
       </tags>
   </entry>
   <entry>
+    <title>Summary of Malware Detection By Eating a Whole EXE in One Picture</title>
+    <url>/2020/01/15/Summary-of-Malware-Detection-By-Eating-a-Whole-EXE-in-One-Picture/</url>
+    <content><![CDATA[<p><img src="/images/eating-whole-files/pasted-0.png"></p>
+]]></content>
+      <tags>
+        <tag>Deep Learning</tag>
+        <tag>Machine Learning</tag>
+        <tag>Malware Detection</tag>
+        <tag>Paper Summary</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>World Modeling for LLM Agent - Predicting or Acting in the Environment</title>
-    <url>/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/</url>
+    <url>/2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/</url>
     <content><![CDATA[<p>Agentic reinforcement learning usually trains only on the agent’s own tokens: the commands it writes. The tool outputs it reads, such as query results, error messages and table histories, are masked out. The learning signal is one scalar reward per episode.</p>
 <p>ECHO (<a href="https://arxiv.org/abs/2605.24517">Shrivastava et al., 2026</a>) and related work (<a href="https://arxiv.org/abs/2606.02388">PaW</a>) add a second signal. They put a cross-entropy loss on the observation tokens, so the model also learns to predict what the environment will say. They claim for</p>
 <ul>
@@ -2904,225 +3123,6 @@ Pic 3. Network Graph from Day 2
 <p>The observation loss works against this. It trains the model to predict what the environment wrote, on every step and on the same weights the policy uses, which the policy loss doesn’t do.</p>
 <p>Also, the observation loss doesn’t stop the model from learning. The ECHO arms submit and alter first more often than their base models do. The loss stopped the collapse, and that left RL free to strengthen the habits that win.</p>
 <p>The way to find out is to train GRPO with a KL penalty, on this recipe, and compare it with the same ECHO arms. If it closes the gap, the effect is regularization. Any gap that remains could be the world model.</p>
-]]></content>
-      <tags>
-        <tag>Deep Learning</tag>
-        <tag>Machine Learning</tag>
-        <tag>Reinforcement Learning</tag>
-        <tag>Large Language Model</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Lessons Learned From World Model Training for LLM Agent</title>
-    <url>/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/</url>
-    <content><![CDATA[<p>In my <a href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment">previous post</a>, I trained an LLM agent on Delta Lake tasks with GRPO and with ECHO. I compared how well each model predicts its tool outputs and how many tasks it solves. That post was already long, so I left out most of what happened on the way to those results. This post covers the problems I ran into, the training metrics that pointed to them, why I read them the way I did, and what I changed.</p>
-<p>The setup, briefly:</p>
-<ul>
-<li>Policy: NVIDIA Nemotron 3 Nano 4B, non-thinking. It is a hybrid model that keeps most of its state in Mamba-2 layers and has four attention layers.</li>
-<li>Training: NeMo RL 0.7 on the Megatron backend, with vLLM as the sampler. GRPO with 8 prompts × 8 rollouts per step, for 90 steps.</li>
-<li>Arms: GRPO, ECHO with $\lambda&#x3D;0.005$ and ECHO with $\lambda&#x3D;0.02$, one seed each.</li>
-<li>Hardware: each arm ran on one H200 on Modal. A run took about 4 hours and cost about $23.</li>
-<li>Environment: a Databricks-style simulator built on Spark Connect and Delta Lake. The agent has three tools, <code>run_sql</code>, <code>run_python</code> and <code>submit</code>, and a verifier checks the final state of the tables.</li>
-</ul>
-<p>The code is at <a href="https://github.com/munhouiani/delta_world">munhouiani&#x2F;delta_world</a>.</p>
-<span id="more"></span>
-
-<h2 id="Before-Training"><a href="#Before-Training" class="headerlink" title="Before Training"></a>Before Training</h2><h3 id="Base-Model-Claims-Success-Without-Acting"><a href="#Base-Model-Claims-Success-Without-Acting" class="headerlink" title="Base Model Claims Success Without Acting"></a>Base Model Claims Success Without Acting</h3><p>Base Nemotron could not do these tasks. When I asked it to restore a damaged table, it would query the table and then claim the job was done, without ever running <code>RESTORE</code>. In a pilot, it ran 2 <code>RESTORE</code>s in 48 attempts and solved about 5% of dev tasks, none in family A (time travel) or D (clustering). Here is an example of execution:</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Task: A test job ran an INSERT OVERWRITE against workspace.ops.invoices ... Restore the</span><br><span class="line">table to exactly the state it was in immediately before that operation, using Delta time</span><br><span class="line">travel.</span><br><span class="line"></span><br><span class="line">&gt; SELECT * FROM workspace.ops.invoices</span><br><span class="line">&gt; SELECT * FROM workspace.ops.invoices</span><br><span class="line">&gt; submit(&quot;Table restored to original state via Delta time travel.&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>The verifier reads the table’s final state and ignores what the agent says it did, so this episode scores 0. That is what a verifier should do, but it left RL with nothing to learn from. When all 8 rollouts in a group fail, every advantage in the group is zero, and the group contributes no gradient.</p>
-<p>I first tried few-shot examples of the agent loop in the system prompt. That made things worse: family C (schema evolution) fell from 0.15 to 0.02.</p>
-<p>What worked was a light supervised fine-tune on verified episodes from a teacher model, Claude Haiku 5.5, trained on the assistant’s tokens only. The amount of data has a significant impact:</p>
-<table>
-<thead>
-<tr>
-<th>Teacher episodes per family</th>
-<th>Result</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>10</td>
-<td>no better than the base model</td>
-</tr>
-<tr>
-<td>25</td>
-<td>a usable start, with every family except D above zero</td>
-</tr>
-<tr>
-<td>100</td>
-<td>0.77 on dev, which leaves little room for RL to show anything</td>
-</tr>
-</tbody></table>
-<p>I used 25 per family, which I call S0. It scores 0.240 on dev and is the starting point for all three arms.</p>
-<p><strong>Lesson: Don’t rush into RL. Check that your base model produces a learning signal and has room to improve.</strong></p>
-<h3 id="Slow-Simulator"><a href="#Slow-Simulator" class="headerlink" title="Slow Simulator"></a>Slow Simulator</h3><p>A training step waits for all 64 episodes, so at first the simulator’s speed set the cost of the whole experiment. Delta commits took most of the time: a <code>MERGE</code> costs about 1s and a <code>RESTORE</code> about 2s. Setting up and verifying a task took 65% of an episode’s time. Under load, the Spark JVM was CPU-bound, because it compiled generated code for every new query plan.</p>
-<p>I ended up turning off Spark’s code generation and using Hadoop’s raw local filesystem. One episode went from 8.3 s to 4.5 s, and throughput at 8 concurrent episodes rose from 0.26 to 0.58 episodes per second. These changes were meant to be invisible to the agent, but the reinforcement learning cycle runs faster (and saves me a lot of money).</p>
-<p><strong>Lesson: The bottleneck of an RL cycle might not be GPU training. Finding and fixing it saves a lot of money.</strong></p>
-<h2 id="During-Training"><a href="#During-Training" class="headerlink" title="During Training"></a>During Training</h2><p>Every run logged about a hundred metrics to Weights &amp; Biases at each step. The default dashboard shows reward and loss, and those were rarely where a problem showed first. These are the signals that told me something:</p>
-<table>
-<thead>
-<tr>
-<th>Signal</th>
-<th>Healthy</th>
-<th>What I saw</th>
-<th>What I did</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Step-1 reward</td>
-<td>close to S0’s pass@1 (0.240)</td>
-<td>0.27-0.33</td>
-<td>nothing</td>
-</tr>
-<tr>
-<td>Worst sequence’s sampler&#x2F;trainer probability ratio</td>
-<td>about 1.01</td>
-<td>$10^{12}$ to $10^{24}$ on about half the early steps</td>
-<td>stopped all arms, found the cause, relaunched</td>
-</tr>
-<tr>
-<td>Groups where all 8 rollouts failed</td>
-<td>falling</td>
-<td>ECHO’s fell; GRPO’s fell, then rose</td>
-<td>broke it down by family</td>
-</tr>
-<tr>
-<td>The starting model’s habits</td>
-<td>stable</td>
-<td>GRPO’s <code>submit</code> share fell from 0.45 to 0.02</td>
-<td>wrote down how to read the results</td>
-</tr>
-<tr>
-<td>Policy entropy</td>
-<td>flat or slowly falling</td>
-<td>ECHO’s rose 2.3x and 3.2x; GRPO’s halved</td>
-<td>watched</td>
-</tr>
-<tr>
-<td>ECHO’s observation loss</td>
-<td>falling as reward rises</td>
-<td>fell while reward collapsed</td>
-<td>read it next to truncation</td>
-</tr>
-<tr>
-<td>Training reward</td>
-<td>tracks the evaluation</td>
-<td>matched overall, hid a lost family</td>
-<td>evaluated by family at steps 30, 60 and 90</td>
-</tr>
-</tbody></table>
-<h3 id="The-First-Step"><a href="#The-First-Step" class="headerlink" title="The First Step"></a>The First Step</h3><p>Step 1 samples S0 on tasks from the same generators as the evaluation, so I expected its batch reward to land near S0’s pass@1 of 0.240. That only holds if the sampler settings match. NeMo RL’s default sampling temperature is 1.0 and my evaluation uses 0.6, so I set 0.6 before launch.</p>
-<p>The three arms’ step-1 rewards were 0.27, 0.31 and 0.33. All three sample the same S0 on the same prompts at step 1, so their differences are sampling noise alone. A batch of 64 rollouts on only 8 prompts is close enough to 0.24, and I changed nothing. The point is to know what step 1 should show before launching, and to stop if it shows something else.</p>
-<h3 id="The-Sampler-and-The-Trainer-Disagreed"><a href="#The-Sampler-and-The-Trainer-Disagreed" class="headerlink" title="The Sampler and The Trainer Disagreed"></a>The Sampler and The Trainer Disagreed</h3><p>In NeMo RL, vLLM samples the rollouts and Megatron computes the gradients, both from the same weights. The update treats the sampled tokens as if Megatron had sampled them, so if the two engines disagree, every update is off-policy. NeMo RL logs the disagreement as the generation KL error, and as <code>max_seq_mult_prob_error</code>, the probability ratio of the worst sequence in the batch. When the engines agree, the KL error is about 3e-4 and the worst ratio about 1.01.</p>
-<p>At the first launch, both metrics spiked on about half of the early steps, in every arm, GRPO included. The KL error reached 0.005-0.056, and the worst sequence’s ratio reached $10^{12}$ to $10^{24}$.</p>
-<p><img src="/images/echo-model-lessons-learned/monitor-mismatch.svg" alt="Worst-sequence probability ratio per step, and corrupted rollouts per vLLM setting"></p>
-<p>A few sequences carried each spike. In the per-step sample dumps, their generation turned to garbage right after a tool result:</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&quot; A Find E проекта E ![ E cereal gam A In The&quot;</span><br></pre></td></tr></table></figure>
-
-<p>vLLM had sampled those tokens at a log-probability of about -0.7, and Megatron scored them at -35 to -56. 33 of GRPO’s first 512 rollouts (6.4%) were corrupted like this. Nearly all of them scored 0, so the trainer was learning from sampler garbage as if it were the policy’s own failures, and the group baselines shifted with it. I stopped all three arms at steps 10-13.</p>
-<p>My first diagnosis was wrong. vLLM’s start-up log warned that prefix caching on this hybrid model caches the Mamba state in an experimental mode. Multi-turn rollouts reuse prefixes all the time, so prefix caching looked like the cause, and I turned it off. Corruption went from 6% of rollouts to 52%, on every step. Without the cache, every long prefill ran in 2,048-token chunks.</p>
-<p>So I stopped guessing and changed one setting at a time, in 4-step runs, counting corrupted rollouts directly from the sample dumps. A rollout counted as corrupted if any of its tokens differed between the two engines by more than 10 nats.</p>
-<table>
-<thead>
-<tr>
-<th>Prefix caching</th>
-<th>Prefill chunks</th>
-<th>CUDA graphs</th>
-<th>Corrupted rollouts</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>on</td>
-<td>2,048</td>
-<td>on (the first launch)</td>
-<td>33&#x2F;512 (6%)</td>
-</tr>
-<tr>
-<td>off</td>
-<td>2,048</td>
-<td>on</td>
-<td>265&#x2F;512 (52%)</td>
-</tr>
-<tr>
-<td>off</td>
-<td>8,192</td>
-<td>on</td>
-<td>13&#x2F;256 (5%, all in step 1)</td>
-</tr>
-<tr>
-<td>on</td>
-<td>8,192</td>
-<td>on</td>
-<td>0&#x2F;256 (only 4 steps, not conclusive on its own)</td>
-</tr>
-<tr>
-<td>off</td>
-<td>2,048</td>
-<td>decode only</td>
-<td>177&#x2F;256 (69%)</td>
-</tr>
-<tr>
-<td>off</td>
-<td>2,048</td>
-<td>on, eager compile backend</td>
-<td>102&#x2F;256 (40%)</td>
-</tr>
-<tr>
-<td>off</td>
-<td>2,048</td>
-<td>off (eager)</td>
-<td>0&#x2F;256</td>
-</tr>
-</tbody></table>
-<p>The cause is vLLM’s CUDA graphs. With graphs on, every faster setting I tried corrupted rollouts. Graphs on decoding alone were the worst, so graph-captured decoding itself corrupts the Mamba state. Larger chunks and prefix caching only made bad batches rarer, which is why the first launch saw 6% and not 50%. In eager mode no rollout was corrupted, and the largest gap between the engines on any token was 0.90 nats.</p>
-<p>Running in eager mode costs speed. During my diagnosis, steps were about 60% slower with eager mode. I had no choice but to relaunch the three arms in eager mode, and made eager the default for every vLLM in the project, to keep training correct.</p>
-<p><strong>Lesson: Capture, sample, and watch the worst sequence in each batch.</strong></p>
-<h3 id="Groups-With-Nothing-To-Learn-From"><a href="#Groups-With-Nothing-To-Learn-From" class="headerlink" title="Groups With Nothing To Learn From"></a>Groups With Nothing To Learn From</h3><p>GRPO’s advantage is each rollout’s reward minus its group’s mean. A group whose 8 rollouts all fail, or all succeed, contributes no gradient. NeMo RL logs the share of each kind, and I expected the all-fail share to fall as the policy improved.</p>
-<p><img src="/images/echo-model-lessons-learned/monitor-no-signal.svg" alt="Share of groups where all rollouts failed, and of groups with mixed outcomes"></p>
-<p>The ECHO arms followed that path, from 39-43% of groups over steps 1-10 to 10-21% from step 21 on. GRPO’s fell to 28% over steps 21-30, then rose again and ended at 35%. Groups with mixed outcomes were common from the start: 50-72% at step 1.</p>
-<p>I learned three things from this. First, GRPO had a learning signal from step 1. That is not the sparse-reward setting that motivates ECHO, where most groups fail and the observation loss becomes the main teacher. Second, GRPO’s late rise came from a family it had lost, not from tasks it never learned. When I broke the share down by family, using NeMo RL’s per-sample logs, GRPO’s family-E groups failed outright in every batch I sampled from step 30 to step 60. The batch mean doesn’t show that. Third, the ECHO arms’ all-fail share settled at 16-20% from step 51. That floor is close to the share of training prompts that no model ever solved.</p>
-<p><strong>Lesson: Understand the RL algorithm.</strong></p>
-<h2 id="After-Training-Tasks-No-Model-Learned"><a href="#After-Training-Tasks-No-Model-Learned" class="headerlink" title="After Training: Tasks No Model Learned"></a>After Training: Tasks No Model Learned</h2><p>After training, I checked the instances that no model ever solved: 16 on dev and 28 on test-ood-hard, unsolved in 16 samples across S0 and the three step-90 arms. My first worry was broken tasks, but the scripted solver solves all 44. Most of them belong to two kinds of task that no model learned, before or after training:</p>
-<table>
-<thead>
-<tr>
-<th>Kind</th>
-<th>Solved, dev</th>
-<th>Solved, test-ood-hard</th>
-<th>What the models do</th>
-<th>The step no model takes</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>C, a column widened from <code>INT</code> to <code>BIGINT</code></td>
-<td>0&#x2F;20</td>
-<td>0&#x2F;40</td>
-<td><code>ALTER COLUMN value TYPE BIGINT</code>, which is rejected</td>
-<td>enable <code>delta.enableTypeWidening</code> first</td>
-</tr>
-<tr>
-<td>D, clustered on the wrong column</td>
-<td>1&#x2F;48 for $\lambda&#x3D;0.02$, 0&#x2F;48 for the rest</td>
-<td>0&#x2F;44</td>
-<td><code>CLUSTER BY</code> the filtered column, then a plain <code>OPTIMIZE</code>, which reclusters nothing</td>
-<td><code>OPTIMIZE ... FULL</code></td>
-</tr>
-</tbody></table>
-<p>Their neighbours were learned. Renamed columns went from 2 of 32 for S0 to 27-30 of 32 for the trained arms, and unclustered tables went from 1 of 48 to 41-47 of 48. Each of the two failing kinds needs one Delta feature that the models almost never used. The environment gives no hint, just as Databricks doesn’t: the rejected <code>ALTER</code> returns the workspace’s own message, “ALTER TABLE CHANGE COLUMN is not supported for changing column value from INT to BIGINT”, which doesn’t mention type widening.</p>
-<p>Neither loss can reach these tasks. A group whose 8 rollouts all fail gives GRPO no gradient. ECHO’s observation loss can’t help either: the missing step almost never runs, so its output is almost never there to be predicted. These tasks are 16.4% of the training prompts, and they cap every arm at about 0.86 on dev and 0.82 on test-ood-hard.</p>
-<p><strong>Lesson: Understand the failure and design a better guide for the model.</strong></p>
-<h2 id="What-I-Would-Put-On-the-Dashboard-From-The-Start"><a href="#What-I-Would-Put-On-the-Dashboard-From-The-Start" class="headerlink" title="What I Would Put On the Dashboard From The Start"></a>What I Would Put On the Dashboard From The Start</h2><p>If I ran this again, these are the panels I would set up before step 1, in order:</p>
-<ol>
-<li>Step-1 reward against the starting model’s evaluation.</li>
-<li>The worst sequence’s sampler&#x2F;trainer probability ratio, and a count of corrupted rollouts from the sample dumps.</li>
-<li>The share of groups where every rollout failed, per family.</li>
-<li>The starting model’s habits in the training batches: how episodes end, and the commands that decide each family.</li>
-<li>Policy entropy and generated length.</li>
-<li>Any auxiliary loss, next to reward and the truncation rate.</li>
-<li>Step time split into rollout and training, the number of episodes vLLM is generating through the rollout, and environment errors.</li>
-<li>A held-out evaluation every 30 steps, broken down by family.</li>
-</ol>
-<p>Reward and loss alone would have missed most of the problems in this post.</p>
 ]]></content>
       <tags>
         <tag>Deep Learning</tag>

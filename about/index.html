@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css?v=mwo8m1zz">
+<link rel="stylesheet" href="/css/main.css?v=mwo8pksg">
 
 
 
@@ -289,9 +289,9 @@
 <li>A better world model did not always mean a better agent, and debugging the training run took most of the effort.</li>
 </ul>
 <p class="about-tags"><span>LLM agents</span><span>GRPO</span><span>NeMo RL</span><span>vLLM</span><span>Delta Lake</span></p>
-<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_world"><i class="fab fa-github"></i> Code</a><a href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/"><i class="fa fa-file-lines"></i> Results</a><a href="/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/"><i class="fa fa-file-lines"></i> Lessons learned</a></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_world"><i class="fab fa-github"></i> Code</a><a href="/2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/"><i class="fa fa-file-lines"></i> Results</a><a href="/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/"><i class="fa fa-file-lines"></i> Lessons learned</a></p>
 </div>
-<figure class="about-featured-figure"><a href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/"><img src="/images/echo-model/learning-curve.svg" alt="Dev pass@1 at training steps 0 to 90 for GRPO and two ECHO settings" loading="lazy"></a><figcaption>Dev pass@1 during training. With task family E left out, the three curves stay close.</figcaption></figure>
+<figure class="about-featured-figure"><a href="/2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/"><img src="/images/echo-model/learning-curve.svg" alt="Dev pass@1 at training steps 0 to 90 for GRPO and two ECHO settings" loading="lazy"></a><figcaption>Dev pass@1 during training. With task family E left out, the three curves stay close.</figcaption></figure>
 </div>
 
 <h2 id="Projects"><a href="#Projects" class="headerlink" title="Projects"></a>Projects</h2><div class="about-grid">
@@ -317,7 +317,7 @@
 <h3>MIDAS</h3>
 <p>Pip-installable Python build of MIDAS, MIDAS-R and MIDAS-F for streaming edge anomaly detection, with an example notebook on a real dataset.</p>
 <p class="about-tags"><span>Python</span><span>C++</span><span>Streaming</span></p>
-<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/MIDAS"><i class="fab fa-github"></i> Code</a><a href="/2021/03/27/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/MIDAS"><i class="fab fa-github"></i> Code</a><a href="/2021/03/26/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/"><i class="fa fa-file-lines"></i> Write-up</a></p>
 </div>
 <div class="about-card">
 <h3>OOD detection with kNN</h3>
@@ -329,7 +329,7 @@
 <h3>Rendezvous architecture</h3>
 <p>Stream-first model serving with production, canary and decoy models behind one front end, message passing over Pulsar, and logs shipped to Elasticsearch.</p>
 <p class="about-tags"><span>Pulsar</span><span>Elasticsearch</span><span>Docker</span></p>
-<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/rendezvous-arch"><i class="fab fa-github"></i> Code</a><a href="/2022/02/09/Simple-Implementation-of-Rendevzous-Architecture-for-Machine-Learning-Services/"><i class="fa fa-file-lines"></i> Write-up</a></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/rendezvous-arch"><i class="fab fa-github"></i> Code</a><a href="/2022/02/08/Simple-Implementation-of-Rendevzous-Architecture-for-Machine-Learning-Services/"><i class="fa fa-file-lines"></i> Write-up</a></p>
 </div>
 <div class="about-card">
 <h3>Drug Listings Dataset</h3>
@@ -359,7 +359,7 @@
 <div class="about-series-item">
 <h3>Language models</h3>
 <ul>
-<li><a href="/2026/10/19/The-Raw-Output-of-LLM-is-a-Sequence/">The Raw Output of LLM is a Sequence</a></li>
+<li><a href="/2026/10/18/The-Raw-Output-of-LLM-is-a-Sequence/">The Raw Output of LLM is a Sequence</a></li>
 <li><a href="/2023/08/14/Byte-Pair-Encoding-BPE/">Byte-Pair Encoding (BPE)</a></li>
 <li><a href="/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/">Paper study: LLaMA</a></li>
 <li><a href="/2023/08/11/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/">Paper study: LLaMA 2</a></li>
@@ -417,6 +417,13 @@
 </noscript>
 <script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"munhousblog","count":true,"i18n":{"disqus":"disqus"}}</script>
 <script src="/js/third-party/comments/disqus.js" defer></script>
+<script>
+  window.addEventListener('mouseup', event => {
+    if (event.target.matches && event.target.matches('.main')) {
+      event.stopImmediatePropagation();
+    }
+  }, true);
+</script>
 
 </body>
 </html>

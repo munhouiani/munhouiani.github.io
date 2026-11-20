@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css?v=mwo8m1zz">
+<link rel="stylesheet" href="/css/main.css?v=mwo8pksg">
 
 
 
@@ -241,7 +241,7 @@
     <header class="post-header">
       <div class="post-meta-container">
         <time itemprop="dateCreated"
-              datetime="2026-10-19T18:01:27+08:00"
+              datetime="2026-10-19T11:01:27+08:00"
               content="2026-10-19">
           10-19
         </time>
@@ -300,6 +300,13 @@
 </noscript>
 <script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"munhousblog","count":true,"i18n":{"disqus":"disqus"}}</script>
 <script src="/js/third-party/comments/disqus.js" defer></script>
+<script>
+  window.addEventListener('mouseup', event => {
+    if (event.target.matches && event.target.matches('.main')) {
+      event.stopImmediatePropagation();
+    }
+  }, true);
+</script>
 
 </body>
 </html>
