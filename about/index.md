@@ -2,7 +2,7 @@
 title: "About Mun Hou"
 source: https://blog.munhou.com/about/
 date: 2026-11-16
-updated: 2026-11-16
+updated: 2026-11-23
 ---
 
 # About Mun Hou
@@ -37,9 +37,9 @@ An agent that works on Delta Lake tables in a Databricks-style workspace, traine
 
 LLM agentsGRPONeMo RLvLLMDelta Lake
 
-[Code](https://github.com/munhouiani/delta_world) [Results](https://blog.munhou.com/2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/) [Lessons learned](https://blog.munhou.com/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/)
+[Code](https://github.com/munhouiani/delta_world) [Results](https://blog.munhou.com/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/) [Lessons learned](https://blog.munhou.com/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/)
 
-[![Dev pass@1 at training steps 0 to 90 for GRPO and two ECHO settings](https://blog.munhou.com/images/echo-model/learning-curve.svg)](https://blog.munhou.com/2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/)
+[![Dev pass@1 at training steps 0 to 90 for GRPO and two ECHO settings](https://blog.munhou.com/images/echo-model/learning-curve.svg)](https://blog.munhou.com/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/)
 
 Dev pass@1 during training. With task family E left out, the three curves stay close.
 
@@ -51,7 +51,7 @@ PyTorch reimplementation of a CNN that classifies encrypted network traffic by a
 
 PyTorchPySparkTraffic classification
 
-[Code](https://github.com/munhouiani/Deep-Packet) [Write-up](https://blog.munhou.com/2020/04/05/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Tra%EF%AC%83c-Classi%EF%AC%81cation-Using-Deep-Learning/)
+[Code](https://github.com/munhouiani/Deep-Packet) [Write-up](https://blog.munhou.com/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Traffic-Classification-Using-Deep-Learning/)
 
 ### LuNet
 
@@ -67,7 +67,7 @@ Variational autoencoder for network anomaly detection, trained on noisy, unlabel
 
 PyTorchVAEAnomaly detection
 
-[Code](https://github.com/munhouiani/GEE) [Write-up](https://blog.munhou.com/2020/07/12/Pytorch-Implementation-of-GEE-A-Gradient-based-Explainable-Variational-Autoencoder-for-Network-Anomaly-Detection/)
+[Code](https://github.com/munhouiani/GEE) [Write-up](https://blog.munhou.com/Pytorch-Implementation-of-GEE-A-Gradient-based-Explainable-Variational-Autoencoder-for-Network-Anomaly-Detection/)
 
 ### MIDAS
 
@@ -75,7 +75,7 @@ Pip-installable Python build of MIDAS, MIDAS-R and MIDAS-F for streaming edge an
 
 PythonC++Streaming
 
-[Code](https://github.com/munhouiani/MIDAS) [Write-up](https://blog.munhou.com/2021/03/26/Network-Anomaly-Detection-with%20MIDAS-MIDAS-R-and-MIDAS-F/)
+[Code](https://github.com/munhouiani/MIDAS) [Write-up](https://blog.munhou.com/Network-Anomaly-Detection-with-MIDAS-MIDAS-R-and-MIDAS-F/)
 
 ### OOD detection with kNN
 
@@ -83,7 +83,7 @@ Out-of-distribution detection from ResNet-18 embeddings on CIFAR-10, using FAISS
 
 PyTorchFAISSOOD
 
-[Code](https://github.com/munhouiani/ood-knn) [Write-up](https://blog.munhou.com/2022/12/01/Detecting%20Out-of-Distribution%20Samples%20with%20Knn/)
+[Code](https://github.com/munhouiani/ood-knn) [Write-up](https://blog.munhou.com/Detecting-Out-of-Distribution-Samples-with-Knn/)
 
 ### Rendezvous architecture
 
@@ -91,7 +91,7 @@ Stream-first model serving with production, canary and decoy models behind one f
 
 PulsarElasticsearchDocker
 
-[Code](https://github.com/munhouiani/rendezvous-arch) [Write-up](https://blog.munhou.com/2022/02/08/Simple-Implementation-of-Rendevzous-Architecture-for-Machine-Learning-Services/)
+[Code](https://github.com/munhouiani/rendezvous-arch) [Write-up](https://blog.munhou.com/Simple-Implementation-of-Rendevzous-Architecture-for-Machine-Learning-Services/)
 
 ### Drug Listings Dataset
 
@@ -99,7 +99,7 @@ A cleaned CSV of drug listings extracted from Gwern's darknet market archives, c
 
 DatasetData cleaning
 
-[Data](https://github.com/munhouiani/Drug-Listings-Dataset) [Write-up](https://blog.munhou.com/2021/09/29/Drug-Listing-Dataset/)
+[Data](https://github.com/munhouiani/Drug-Listings-Dataset) [Write-up](https://blog.munhou.com/Drug-Listing-Dataset/)
 
 ### Petastorm demo
 
@@ -107,24 +107,24 @@ Feeding Parquet files written by PySpark straight into a PyTorch training loop w
 
 PySparkPyTorchPetastorm
 
-[Code](https://github.com/munhouiani/petastorm-demo) [Write-up](https://blog.munhou.com/2020/01/16/Data-Pipeline-From-Pyspark-to-Pytorch/)
+[Code](https://github.com/munhouiani/petastorm-demo) [Write-up](https://blog.munhou.com/Data-Pipeline-From-Pyspark-to-Pytorch/)
 
 ## Writing
 
 ### Reinforcement learning, from the ground up
 
-1.  [Importance Sampling](https://blog.munhou.com/2023/03/01/Importance-Sampling/)
-2.  [Policy Gradient Methods](https://blog.munhou.com/2023/03/01/Policy-Gradient-Methods/)
-3.  [Off-Policy Gradient Methods](https://blog.munhou.com/2023/03/01/Off-Policy-Gradient-Methods/)
-4.  [PPO and PPO2](https://blog.munhou.com/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/)
-5.  [From PPO to GDPO](https://blog.munhou.com/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/)
+1.  [Importance Sampling](https://blog.munhou.com/Importance-Sampling/)
+2.  [Policy Gradient Methods](https://blog.munhou.com/Policy-Gradient-Methods/)
+3.  [Off-Policy Gradient Methods](https://blog.munhou.com/Off-Policy-Gradient-Methods/)
+4.  [PPO and PPO2](https://blog.munhou.com/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/)
+5.  [From PPO to GDPO](https://blog.munhou.com/From-PPO-to-GDPO-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/)
 
 ### Language models
 
--   [The Raw Output of LLM is a Sequence](https://blog.munhou.com/2026/10/18/The-Raw-Output-of-LLM-is-a-Sequence/)
--   [Byte-Pair Encoding (BPE)](https://blog.munhou.com/2023/08/14/Byte-Pair-Encoding-BPE/)
--   [Paper study: LLaMA](https://blog.munhou.com/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/)
--   [Paper study: LLaMA 2](https://blog.munhou.com/2023/08/11/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/)
+-   [The Raw Output of LLM is a Sequence](https://blog.munhou.com/The-Raw-Output-of-LLM-is-a-Sequence/)
+-   [Byte-Pair Encoding (BPE)](https://blog.munhou.com/Byte-Pair-Encoding-BPE/)
+-   [Paper study: LLaMA](https://blog.munhou.com/Paper-Study-LLaMA-Open-and-Efficient-Foundation-Language-Models/)
+-   [Paper study: LLaMA 2](https://blog.munhou.com/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/)
 
 Everything else is in the [archive](https://blog.munhou.com/archives/) and under [tags](https://blog.munhou.com/tags/).
 

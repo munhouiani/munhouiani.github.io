@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css?v=mwo9udp1">
+<link rel="stylesheet" href="/css/main.css?v=mwtmdem0">
 
 
 
@@ -233,7 +233,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -251,7 +251,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/" class="post-title-link" itemprop="url">Lessons Learned From World Model Training for LLM Agent</a>
+          <a href="/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/" class="post-title-link" itemprop="url">Lessons Learned From World Model Training for LLM Agent</a>
         </h2>
 
         <div class="post-meta-container">
@@ -262,14 +262,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2026-11-14 00:49:11" itemprop="dateCreated datePublished" datetime="2026-11-14T00:49:11+08:00">2026-11-14</time>
+      <time title="Created: 2026-11-13 08:49:11" itemprop="dateCreated datePublished" datetime="2026-11-13T08:49:11-08:00">2026-11-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -281,8 +281,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Lessons-Learned-During-World-Model-Training-for-LLM-Agent/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -296,7 +296,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>In my <a href="/2026/11/07/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment">previous post</a>, I trained an LLM agent on Delta Lake tasks with GRPO and with ECHO. I compared how well each model predicts its tool outputs and how many tasks it solves. That post was already long, so I left out most of what happened on the way to those results. This post covers the problems I ran into, the training metrics that pointed to them, why I read them the way I did, and what I changed.</p>
+          <p>In my <a href="/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/">previous post</a>, I trained an LLM agent on Delta Lake tasks with GRPO and with ECHO. I compared how well each model predicts its tool outputs and how many tasks it solves. That post was already long, so I left out most of what happened on the way to those results. This post covers the problems I ran into, the training metrics that pointed to them, why I read them the way I did, and what I changed.</p>
 <p>The setup, briefly:</p>
 <ul>
 <li>Policy: NVIDIA Nemotron 3 Nano 4B, non-thinking. It is a hybrid model that keeps most of its state in Mamba-2 layers and has four attention layers.</li>
@@ -308,7 +308,7 @@
 <p>The code is at <a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_world">munhouiani&#x2F;delta_world</a>.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/11/13/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/#more" rel="contents">
+              <a class="btn" href="/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -339,7 +339,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -357,7 +357,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/" class="post-title-link" itemprop="url">World Modeling for LLM Agent - Predicting or Acting in the Environment</a>
+          <a href="/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/" class="post-title-link" itemprop="url">World Modeling for LLM Agent - Predicting or Acting in the Environment</a>
         </h2>
 
         <div class="post-meta-container">
@@ -368,14 +368,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2026-11-07 00:42:04" itemprop="dateCreated datePublished" datetime="2026-11-07T00:42:04+08:00">2026-11-07</time>
+      <time title="Created: 2026-11-07 00:42:04" itemprop="dateCreated datePublished" datetime="2026-11-07T00:42:04-08:00">2026-11-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -387,8 +387,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/" itemprop="commentCount"></span>
+    <a title="disqus" href="/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -412,7 +412,7 @@
 <p>The intuition is that an agent that knows what a command will do should choose commands better.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/11/06/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/#more" rel="contents">
+              <a class="btn" href="/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -443,7 +443,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2026/10/19/The-Raw-Output-of-LLM-is-a-Sequence/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/The-Raw-Output-of-LLM-is-a-Sequence/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -461,7 +461,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/10/19/The-Raw-Output-of-LLM-is-a-Sequence/" class="post-title-link" itemprop="url">The Raw Output of LLM is a Sequence</a>
+          <a href="/The-Raw-Output-of-LLM-is-a-Sequence/" class="post-title-link" itemprop="url">The Raw Output of LLM is a Sequence</a>
         </h2>
 
         <div class="post-meta-container">
@@ -472,14 +472,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2026-10-19 11:01:27" itemprop="dateCreated datePublished" datetime="2026-10-19T11:01:27+08:00">2026-10-19</time>
+      <time title="Created: 2026-10-19 11:01:27" itemprop="dateCreated datePublished" datetime="2026-10-19T11:01:27-07:00">2026-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -491,8 +491,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2026/10/19/The-Raw-Output-of-LLM-is-a-Sequence/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/10/19/The-Raw-Output-of-LLM-is-a-Sequence/" itemprop="commentCount"></span>
+    <a title="disqus" href="/The-Raw-Output-of-LLM-is-a-Sequence/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="The-Raw-Output-of-LLM-is-a-Sequence/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -511,7 +511,7 @@
 <p>Most tutorials illustrate next-token prediction like the picture on the left: text in, one token out. That’s fine as a mental model, but it doesn’t match what we see in the actual architecture and its outputs.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/10/19/The-Raw-Output-of-LLM-is-a-Sequence/#more" rel="contents">
+              <a class="btn" href="/The-Raw-Output-of-LLM-is-a-Sequence/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -542,7 +542,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/From-PPO-to-GDPO-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -560,7 +560,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/" class="post-title-link" itemprop="url">From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms</a>
+          <a href="/From-PPO-to-GDPO-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/" class="post-title-link" itemprop="url">From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms</a>
         </h2>
 
         <div class="post-meta-container">
@@ -571,14 +571,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2026-01-14 21:54:00" itemprop="dateCreated datePublished" datetime="2026-01-14T21:54:00+08:00">2026-01-14</time>
+      <time title="Created: 2026-01-14 05:54:00" itemprop="dateCreated datePublished" datetime="2026-01-14T05:54:00-08:00">2026-01-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -590,8 +590,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/01/14/From-PPO-to-GDPO-—-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/" itemprop="commentCount"></span>
+    <a title="disqus" href="/From-PPO-to-GDPO-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="From-PPO-to-GDPO-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -623,7 +623,7 @@
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/01/14/From-PPO-to-GDPO-%E2%80%94-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/#more" rel="contents">
+              <a class="btn" href="/From-PPO-to-GDPO-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -654,7 +654,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/08/14/Byte-Pair-Encoding-BPE/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/Byte-Pair-Encoding-BPE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -672,7 +672,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/14/Byte-Pair-Encoding-BPE/" class="post-title-link" itemprop="url">Byte-Pair-Encoding (BPE)</a>
+          <a href="/Byte-Pair-Encoding-BPE/" class="post-title-link" itemprop="url">Byte-Pair-Encoding (BPE)</a>
         </h2>
 
         <div class="post-meta-container">
@@ -683,14 +683,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-08-14 18:31:00" itemprop="dateCreated datePublished" datetime="2023-08-14T18:31:00+08:00">2023-08-14</time>
+      <time title="Created: 2023-08-14 03:31:00" itemprop="dateCreated datePublished" datetime="2023-08-14T03:31:00-07:00">2023-08-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -702,8 +702,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2023/08/14/Byte-Pair-Encoding-BPE/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/08/14/Byte-Pair-Encoding-BPE/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Byte-Pair-Encoding-BPE/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Byte-Pair-Encoding-BPE/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -720,7 +720,7 @@
           <h1 id="Byte-Pair-Encoding"><a href="#Byte-Pair-Encoding" class="headerlink" title="Byte-Pair Encoding"></a>Byte-Pair Encoding</h1><h2 id="What-is-Byte-Pair-Encoding"><a href="#What-is-Byte-Pair-Encoding" class="headerlink" title="What is Byte-Pair Encoding"></a>What is Byte-Pair Encoding</h2><p>Byte-pair encoding (BPE) is a compression algorithm that can be used for text tokenization.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/08/14/Byte-Pair-Encoding-BPE/#more" rel="contents">
+              <a class="btn" href="/Byte-Pair-Encoding-BPE/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -751,7 +751,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/08/11/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -769,7 +769,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/11/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/" class="post-title-link" itemprop="url">Paper Study: LLaMA 2 Open Foundation and Fine-Tuned Chat Models</a>
+          <a href="/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/" class="post-title-link" itemprop="url">Paper Study: LLaMA 2 Open Foundation and Fine-Tuned Chat Models</a>
         </h2>
 
         <div class="post-meta-container">
@@ -780,14 +780,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-08-12 00:08:00" itemprop="dateCreated datePublished" datetime="2023-08-12T00:08:00+08:00">2023-08-12</time>
+      <time title="Created: 2023-08-11 09:08:00" itemprop="dateCreated datePublished" datetime="2023-08-11T09:08:00-07:00">2023-08-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -799,8 +799,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2023/08/11/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/08/11/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -817,7 +817,7 @@
           <h1 id="LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models"><a href="#LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models" class="headerlink" title="LLaMA 2 Open Foundation and Fine-Tuned Chat Models"></a>LLaMA 2 Open Foundation and Fine-Tuned Chat Models</h1><h2 id="📖-Abstract"><a href="#📖-Abstract" class="headerlink" title="📖 Abstract"></a>📖 Abstract</h2><p>In this work, we develop and release Llama 2, a collection of pretrained and ﬁne-tuned large language models (LLMs) ranging in scale from 7 billion to 70 billion parameters. Our ﬁne-tuned LLMs, called LLaMA 2-Chat are optimized for dialogue use cases. Our models outperform open-source chat models on most benchmarks we tested, and based on our human evaluations for helpfulness and safety, may be a suitable substitute for closedsource models. We provide a detailed description of our approach to ﬁne-tuning and safety improvements of LLaMA 2-Chat in order to enable the community to build on our work and contribute to the responsible development of LLMs.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/08/11/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/#more" rel="contents">
+              <a class="btn" href="/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -848,7 +848,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/Paper-Study-LLaMA-Open-and-Efficient-Foundation-Language-Models/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -866,7 +866,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/" class="post-title-link" itemprop="url">Paper Study: LLaMA Open and Efﬁcient Foundation Language Models</a>
+          <a href="/Paper-Study-LLaMA-Open-and-Efficient-Foundation-Language-Models/" class="post-title-link" itemprop="url">Paper Study: LLaMA Open and Efﬁcient Foundation Language Models</a>
         </h2>
 
         <div class="post-meta-container">
@@ -877,14 +877,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-08-11 07:43:00" itemprop="dateCreated datePublished" datetime="2023-08-11T07:43:00+08:00">2023-08-11</time>
+      <time title="Created: 2023-08-10 16:43:00" itemprop="dateCreated datePublished" datetime="2023-08-10T16:43:00-07:00">2023-08-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -896,8 +896,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/08/10/Paper-Study-LLaMA-Open-and-Efﬁcient-Foundation-Language-Models/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Paper-Study-LLaMA-Open-and-Efficient-Foundation-Language-Models/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Paper-Study-LLaMA-Open-and-Efficient-Foundation-Language-Models/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -914,7 +914,7 @@
           <h1 id="LLaMA-Open-and-Efﬁcient-Foundation-Language-Models"><a href="#LLaMA-Open-and-Efﬁcient-Foundation-Language-Models" class="headerlink" title="LLaMA Open and Efﬁcient Foundation Language Models"></a>LLaMA Open and Efﬁcient Foundation Language Models</h1><h2 id="📖-Abstract"><a href="#📖-Abstract" class="headerlink" title="📖 Abstract"></a>📖 Abstract</h2><p>We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively, without resorting to proprietary and inaccessible datasets. In particular, LLaMA-13B outperforms GPT-3 (175B) on most benchmarks, and LLaMA65B is competitive with the best models, Chinchilla-70B and PaLM-540B. We release all our models to the research community.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/08/10/Paper-Study-LLaMA-Open-and-Ef%EF%AC%81cient-Foundation-Language-Models/#more" rel="contents">
+              <a class="btn" href="/Paper-Study-LLaMA-Open-and-Efficient-Foundation-Language-Models/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -945,7 +945,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -963,7 +963,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" class="post-title-link" itemprop="url">Proximal Policy Optimization Algorithms (PPO and PPO2)</a>
+          <a href="/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" class="post-title-link" itemprop="url">Proximal Policy Optimization Algorithms (PPO and PPO2)</a>
         </h2>
 
         <div class="post-meta-container">
@@ -974,14 +974,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-03-02 00:11:00" itemprop="dateCreated datePublished" datetime="2023-03-02T00:11:00+08:00">2023-03-02</time>
+      <time title="Created: 2023-03-01 08:11:00" itemprop="dateCreated datePublished" datetime="2023-03-01T08:11:00-08:00">2023-03-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -993,8 +993,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1008,14 +1008,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Recall that from <a href="/2023/03/01/Off-Policy-Gradient-Methods/" title="Off-Policy Gradient Methods">Off-Policy Gradient Methods</a>, the objective function is</p>
+          <p>Recall that from <a href="/Off-Policy-Gradient-Methods/" title="Off-Policy Gradient Methods">Off-Policy Gradient Methods</a>, the objective function is</p>
 <p>$$<br>\begin{aligned}<br>J^{\theta’}(\theta) &amp;&#x3D; \hat{\mathbb{E}} _{(s_t, a_t) \sim \pi _{\theta’} (\tau)} \bigg[ \frac{\pi _{\theta}(a_t | s_t)}{\pi _{\theta’}(a_t | s_t)} A^{\theta’}(s_t, a_t) \bigg]<br>\end{aligned}<br>$$</p>
-<p>We learned that from <a href="/2023/03/01/Importance-Sampling/" title="Importance Sampling">Importance Sampling</a>, the two distributions shouldn’t differ too much, therefore in PPO, they added a constraint term:</p>
+<p>We learned that from <a href="/Importance-Sampling/" title="Importance Sampling">Importance Sampling</a>, the two distributions shouldn’t differ too much, therefore in PPO, they added a constraint term:</p>
 <p>$$<br>J ^{\theta’} _{PPO} (\theta) &#x3D; J ^{\theta’} (\theta) - \beta KL(\theta, \theta’)<br>$$</p>
 <p>Where $\beta$ is a weight, this constraint term ensures that $\theta$ and $\theta’$ are similar.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/03/01/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/#more" rel="contents">
+              <a class="btn" href="/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1046,7 +1046,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/03/01/Off-Policy-Gradient-Methods/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/Off-Policy-Gradient-Methods/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -1064,7 +1064,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/03/01/Off-Policy-Gradient-Methods/" class="post-title-link" itemprop="url">Off-Policy Gradient Methods</a>
+          <a href="/Off-Policy-Gradient-Methods/" class="post-title-link" itemprop="url">Off-Policy Gradient Methods</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1075,14 +1075,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-03-01 21:49:00" itemprop="dateCreated datePublished" datetime="2023-03-01T21:49:00+08:00">2023-03-01</time>
+      <time title="Created: 2023-03-01 05:49:00" itemprop="dateCreated datePublished" datetime="2023-03-01T05:49:00-08:00">2023-03-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -1094,8 +1094,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2023/03/01/Off-Policy-Gradient-Methods/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/01/Off-Policy-Gradient-Methods/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Off-Policy-Gradient-Methods/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Off-Policy-Gradient-Methods/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1109,7 +1109,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Recall that from <a href="/2023/03/01/Policy-Gradient-Methods/" title="Policy Gradient Methods">Policy Gradient Methods</a>, the calculation of gradient is</p>
+          <p>Recall that from <a href="/Policy-Gradient-Methods/" title="Policy Gradient Methods">Policy Gradient Methods</a>, the calculation of gradient is</p>
 <p>$$<br>\begin{aligned}<br>\nabla \hat{R} _{\theta} &amp;&#x3D; \hat{ \mathbb{E}} _{\tau \sim \pi _{\theta}(\tau)} \bigg[ R(\tau) \nabla \log \pi _{\theta} (\tau) \bigg]<br>\end{aligned}<br>$$</p>
 <p>where</p>
 <ul>
@@ -1125,7 +1125,7 @@
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/03/01/Off-Policy-Gradient-Methods/#more" rel="contents">
+              <a class="btn" href="/Off-Policy-Gradient-Methods/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1156,7 +1156,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/2023/03/01/Policy-Gradient-Methods/">
+    <link itemprop="mainEntityOfPage" href="https://blog.munhou.com/Policy-Gradient-Methods/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/profile.jpg">
@@ -1174,7 +1174,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/03/01/Policy-Gradient-Methods/" class="post-title-link" itemprop="url">Policy Gradient Methods</a>
+          <a href="/Policy-Gradient-Methods/" class="post-title-link" itemprop="url">Policy Gradient Methods</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1185,14 +1185,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-03-01 21:22:00" itemprop="dateCreated datePublished" datetime="2023-03-01T21:22:00+08:00">2023-03-01</time>
+      <time title="Created: 2023-03-01 05:22:00" itemprop="dateCreated datePublished" datetime="2023-03-01T05:22:00-08:00">2023-03-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-11-17 06:07:50" itemprop="dateModified" datetime="2026-11-17T06:07:50+08:00">2026-11-17</time>
+      <time title="Modified: 2026-11-23 10:48:48" itemprop="dateModified" datetime="2026-11-23T10:48:48-08:00">2026-11-23</time>
     </span>
 
   
@@ -1204,8 +1204,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2023/03/01/Policy-Gradient-Methods/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/03/01/Policy-Gradient-Methods/" itemprop="commentCount"></span>
+    <a title="disqus" href="/Policy-Gradient-Methods/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Policy-Gradient-Methods/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1223,7 +1223,7 @@
 <p>Iteratively optimizing the policy using this approach makes it possible to arrive at an optimal policy that maximizes the expected return. This technique has proven effective in solving complex decision-making problems in various fields, including robotics, game playing, and natural language processing.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/03/01/Policy-Gradient-Methods/#more" rel="contents">
+              <a class="btn" href="/Policy-Gradient-Methods/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
