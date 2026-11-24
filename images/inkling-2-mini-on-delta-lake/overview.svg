@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 354" width="760" height="354" role="img" aria-label="Tasks solved and bits per byte on tool outputs for Qwen3.8-27B, Inkling 2 Mini, Nemotron 3.5 Lightning and echo-020">
+<title>Tasks solved and bits per byte on tool outputs for Qwen3.8-27B, Inkling 2 Mini, Nemotron 3.5 Lightning and echo-020</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #6f6d68; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .bar { stroke: none; } .soft { fill-opacity: 0.38; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .whisk { fill: none; stroke-width: 2; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  .tk-env { fill: #eda100; } .tk-act { fill: #6250d6; } .on { fill: #0b0b0b; } .onw { fill: #ffffff; }
+  .tk-off { fill: none; stroke: #c3c2b7; stroke-width: 1; }
+  .band { fill: #f0efec; stroke: #c3c2b7; stroke-width: 1; }
+  .hid { fill: none; stroke: #898781; stroke-width: 1; stroke-dasharray: 4 3; }
+  .hl { fill: #f3efe2; } .hot { fill: #fbe3c8; stroke: #eb6834; stroke-width: 1.5; }
+  .flow { stroke: #898781; stroke-width: 1.5; fill: none; } .flowhead { fill: #898781; }
+  .query { stroke: #0b0b0b; stroke-width: 1.5; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; } .muted { fill: #a3a19a; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .bar { stroke: none; } .whisk { fill: none; }
+    .tk-env { fill: #c98500; } .tk-act { fill: #9085e9; } .onw { fill: #0b0b0b; }
+    .tk-off { stroke: #52514e; } .band { fill: #2c2c2a; stroke: #383835; }
+    .hl { fill: #2a271c; } .hot { fill: #4a2c1a; stroke: #d95926; } .query { stroke: #f0efec; }
+  }
+</style>
+<defs>
+  <marker id="flowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="flowhead" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<rect class="surface" x="0" y="0" width="760" height="354"/>
+<text class="ink" x="24.0" y="26.0" font-size="17" text-anchor="start" font-weight="600">Delta-World: four models, two scores</text>
+<text class="ink" x="200.0" y="60.0" font-size="14" text-anchor="start" font-weight="600">Tasks solved</text>
+<text class="ink2" x="200.0" y="78.0" font-size="12" text-anchor="start" font-weight="normal">higher is better</text>
+<text class="ink" x="500.0" y="60.0" font-size="14" text-anchor="start" font-weight="600">Predicting tool outputs</text>
+<text class="ink2" x="500.0" y="78.0" font-size="12" text-anchor="start" font-weight="normal">bits per byte, lower is better</text>
+<text class="ink" x="24.0" y="119.0" font-size="13.5" text-anchor="start" font-weight="600">Qwen3.8-27B</text>
+<text class="muted" x="24.0" y="135.0" font-size="11" text-anchor="start" font-weight="normal">27B</text>
+<path class="s2 bar" d="M200.0,109.0 H379.8 Q383.8,109.0 383.8,113.0 V129.0 Q383.8,133.0 379.8,133.0 H200.0 Z"><title>Qwen3.8-27B: pass@1 0.700 on test-ood-hard</title></path>
+<text class="ink" x="391.8" y="126.0" font-size="15" text-anchor="start" font-weight="600">70%</text>
+<path class="s2 bar" d="M500.0,109.0 H657.4 Q661.4,109.0 661.4,113.0 V129.0 Q661.4,133.0 657.4,133.0 H500.0 Z"><title>Qwen3.8-27B: 5.70 bits per predictable byte</title></path>
+<text class="ink" x="669.4" y="126.0" font-size="15" text-anchor="start" font-weight="600">5.70</text>
+<rect class="hl" x="14.0" y="148.0" width="732.0" height="52.0" rx="6"></rect>
+<text class="ink" x="24.0" y="173.0" font-size="13.5" text-anchor="start" font-weight="600">Inkling 2 Mini</text>
+<text class="muted" x="24.0" y="189.0" font-size="11" text-anchor="start" font-weight="normal">26.4B, 3.4B active</text>
+<path class="s4 bar" d="M200.0,163.0 H350.9 Q354.9,163.0 354.9,167.0 V183.0 Q354.9,187.0 350.9,187.0 H200.0 Z"><title>Inkling 2 Mini: pass@1 0.590 on test-ood-hard</title></path>
+<text class="ink" x="362.9" y="180.0" font-size="15" text-anchor="start" font-weight="600">59%</text>
+<path class="s4 bar" d="M500.0,163.0 H563.8 Q567.8,163.0 567.8,167.0 V183.0 Q567.8,187.0 563.8,187.0 H500.0 Z"><title>Inkling 2 Mini: 2.39 bits per predictable byte</title></path>
+<text class="ink" x="575.8" y="180.0" font-size="15" text-anchor="start" font-weight="600">2.39</text>
+<text class="ink" x="24.0" y="227.0" font-size="13.5" text-anchor="start" font-weight="600">Nemotron 3.5 Lightning</text>
+<text class="muted" x="24.0" y="243.0" font-size="11" text-anchor="start" font-weight="normal">30B, 3B active</text>
+<path class="s3 bar" d="M200.0,217.0 H281.0 Q285.0,217.0 285.0,221.0 V237.0 Q285.0,241.0 281.0,241.0 H200.0 Z"><title>Nemotron 3.5 Lightning: pass@1 0.324 on test-ood-hard</title></path>
+<text class="ink" x="293.0" y="234.0" font-size="15" text-anchor="start" font-weight="600">32%</text>
+<path class="s3 bar" d="M500.0,217.0 H530.1 Q534.1,217.0 534.1,221.0 V237.0 Q534.1,241.0 530.1,241.0 H500.0 Z"><title>Nemotron 3.5 Lightning: 1.20 bits per predictable byte</title></path>
+<text class="ink" x="542.1" y="234.0" font-size="15" text-anchor="start" font-weight="600">1.20</text>
+<line class="axis" x1="24.0" y1="260.0" x2="736.0" y2="260.0"/>
+<text class="ink" x="24.0" y="291.0" font-size="13.5" text-anchor="start" font-weight="600">echo-020</text>
+<text class="muted" x="24.0" y="307.0" font-size="11" text-anchor="start" font-weight="normal">4B, trained here</text>
+<path class="s1 bar" d="M200.0,281.0 H382.7 Q386.7,281.0 386.7,285.0 V301.0 Q386.7,305.0 382.7,305.0 H200.0 Z"><title>echo-020: pass@1 0.711 on test-ood-hard</title></path>
+<text class="ink" x="394.7" y="298.0" font-size="15" text-anchor="start" font-weight="600">71%</text>
+<path class="s1 bar" d="M500.0,281.0 H520.6 Q524.6,281.0 524.6,285.0 V301.0 Q524.6,305.0 520.6,305.0 H500.0 Z"><title>echo-020: 0.87 bits per predictable byte</title></path>
+<text class="ink" x="532.6" y="298.0" font-size="15" text-anchor="start" font-weight="600">0.87</text>
+<text class="muted" x="24.0" y="340.0" font-size="11" text-anchor="start" font-weight="normal">Tasks solved: pass@1 on test-ood-hard. Predicting: the predictable part of the outputs in 800 dev episodes.</text>
+</svg>

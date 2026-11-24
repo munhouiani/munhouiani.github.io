@@ -2,7 +2,7 @@
 title: "The Raw Output of LLM is a Sequence"
 source: https://blog.munhou.com/The-Raw-Output-of-LLM-is-a-Sequence/
 date: 2026-10-19
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [Deep Learning, Machine Learning, Large Language Model]
 ---
 

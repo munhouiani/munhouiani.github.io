@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 290" width="760" height="290" role="img" aria-label="Acting scores the final table of the model&#x27;s own episode; predicting scores how likely the model finds the tool outputs of recorded episodes">
+<title>Acting scores the final table of the model&#x27;s own episode; predicting scores how likely the model finds the tool outputs of recorded episodes</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #6f6d68; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .bar { stroke: none; } .soft { fill-opacity: 0.38; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .whisk { fill: none; stroke-width: 2; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  .tk-env { fill: #eda100; } .tk-act { fill: #6250d6; } .on { fill: #0b0b0b; } .onw { fill: #ffffff; }
+  .tk-off { fill: none; stroke: #c3c2b7; stroke-width: 1; }
+  .band { fill: #f0efec; stroke: #c3c2b7; stroke-width: 1; }
+  .hid { fill: none; stroke: #898781; stroke-width: 1; stroke-dasharray: 4 3; }
+  .hl { fill: #f3efe2; } .hot { fill: #fbe3c8; stroke: #eb6834; stroke-width: 1.5; }
+  .flow { stroke: #898781; stroke-width: 1.5; fill: none; } .flowhead { fill: #898781; }
+  .query { stroke: #0b0b0b; stroke-width: 1.5; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; } .muted { fill: #a3a19a; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .bar { stroke: none; } .whisk { fill: none; }
+    .tk-env { fill: #c98500; } .tk-act { fill: #9085e9; } .onw { fill: #0b0b0b; }
+    .tk-off { stroke: #52514e; } .band { fill: #2c2c2a; stroke: #383835; }
+    .hl { fill: #2a271c; } .hot { fill: #4a2c1a; stroke: #d95926; } .query { stroke: #f0efec; }
+  }
+</style>
+<defs>
+  <marker id="flowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="flowhead" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<rect class="surface" x="0" y="0" width="760" height="290"/>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">One task, two scores</text>
+<text class="ink2" x="24.0" y="42.0" font-size="12" text-anchor="start" font-weight="normal">The same environment, used twice. Colored boxes are the tokens each score looks at.</text>
+<rect class="tk-act" x="24.0" y="55.0" width="22.0" height="14.0" rx="3"></rect>
+<text class="ink2" x="52.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">written by the model</text>
+<rect class="tk-env" x="190.0" y="55.0" width="22.0" height="14.0" rx="3"></rect>
+<text class="ink2" x="218.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">returned by the tool</text>
+<rect class="tk-off" x="350.0" y="55.0" width="22.0" height="14.0" rx="3"></rect>
+<text class="ink2" x="378.0" y="66.0" font-size="12" text-anchor="start" font-weight="normal">read, not scored</text>
+<text class="ink" x="24.0" y="100.0" font-size="13" text-anchor="start" font-weight="600">Acting: the model runs its own episode</text>
+<rect class="tk-off" x="24.0" y="112.0" width="46.0" height="26.0" rx="4"></rect>
+<text class="muted mono" x="47.0" y="129.0" font-size="11" text-anchor="middle" font-weight="normal">task</text>
+<rect class="tk-act" x="75.0" y="112.0" width="124.0" height="26.0" rx="4"></rect>
+<text class="onw mono" x="137.0" y="129.0" font-size="11" text-anchor="middle" font-weight="normal">DESCRIBE HISTORY</text>
+<rect class="tk-off" x="204.0" y="112.0" width="58.0" height="26.0" rx="4"></rect>
+<text class="muted mono" x="233.0" y="129.0" font-size="11" text-anchor="middle" font-weight="normal">output</text>
+<rect class="tk-act" x="267.0" y="112.0" width="92.0" height="26.0" rx="4"></rect>
+<text class="onw mono" x="313.0" y="129.0" font-size="11" text-anchor="middle" font-weight="normal">RESTORE ...</text>
+<rect class="tk-off" x="364.0" y="112.0" width="58.0" height="26.0" rx="4"></rect>
+<text class="muted mono" x="393.0" y="129.0" font-size="11" text-anchor="middle" font-weight="normal">output</text>
+<rect class="tk-act" x="427.0" y="112.0" width="58.0" height="26.0" rx="4"></rect>
+<text class="onw mono" x="456.0" y="129.0" font-size="11" text-anchor="middle" font-weight="normal">submit</text>
+<line class="flow" x1="492.0" y1="125.0" x2="524.0" y2="125.0" marker-end="url(#flowhead)"/>
+<rect class="band" x="528.0" y="102.0" width="208.0" height="46.0" rx="6"></rect>
+<text class="ink" x="632.0" y="121.0" font-size="12" text-anchor="middle" font-weight="normal">verifier checks the final table</text>
+<text class="ink2" x="632.0" y="138.0" font-size="12" text-anchor="middle" font-weight="normal">pass or fail, averaged: pass@1</text>
+<line class="grid" x1="24.0" y1="172.0" x2="736.0" y2="172.0"/>
+<text class="ink" x="24.0" y="198.0" font-size="13" text-anchor="start" font-weight="600">Predicting: every model reads the same recorded episodes</text>
+<rect class="tk-off" x="24.0" y="210.0" width="46.0" height="26.0" rx="4"></rect>
+<text class="muted mono" x="47.0" y="227.0" font-size="11" text-anchor="middle" font-weight="normal">task</text>
+<rect class="tk-off" x="75.0" y="210.0" width="124.0" height="26.0" rx="4"></rect>
+<text class="muted mono" x="137.0" y="227.0" font-size="11" text-anchor="middle" font-weight="normal">DESCRIBE HISTORY</text>
+<rect class="tk-env" x="204.0" y="210.0" width="58.0" height="26.0" rx="4"></rect>
+<text class="on mono" x="233.0" y="227.0" font-size="11" text-anchor="middle" font-weight="normal">output</text>
+<rect class="tk-off" x="267.0" y="210.0" width="92.0" height="26.0" rx="4"></rect>
+<text class="muted mono" x="313.0" y="227.0" font-size="11" text-anchor="middle" font-weight="normal">RESTORE ...</text>
+<rect class="tk-env" x="364.0" y="210.0" width="58.0" height="26.0" rx="4"></rect>
+<text class="on mono" x="393.0" y="227.0" font-size="11" text-anchor="middle" font-weight="normal">output</text>
+<rect class="tk-off" x="427.0" y="210.0" width="58.0" height="26.0" rx="4"></rect>
+<text class="muted mono" x="456.0" y="227.0" font-size="11" text-anchor="middle" font-weight="normal">submit</text>
+<line class="flow" x1="492.0" y1="223.0" x2="524.0" y2="223.0" marker-end="url(#flowhead)"/>
+<rect class="band" x="528.0" y="200.0" width="208.0" height="46.0" rx="6"></rect>
+<text class="ink" x="632.0" y="219.0" font-size="12" text-anchor="middle" font-weight="normal">how surprised is the model</text>
+<text class="ink2" x="632.0" y="236.0" font-size="12" text-anchor="middle" font-weight="normal">by each output? bits per byte</text>
+<text class="muted" x="24.0" y="274.0" font-size="11" text-anchor="start" font-weight="normal">800 recorded dev episodes, 200 from each of the four models; 6,651 outputs, 2,284,385 bytes, the same for every model.</text>
+</svg>

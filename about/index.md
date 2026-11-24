@@ -2,7 +2,7 @@
 title: "About Mun Hou"
 source: https://blog.munhou.com/about/
 date: 2026-11-16
-updated: 2026-11-23
+updated: 2026-11-24
 ---
 
 # About Mun Hou

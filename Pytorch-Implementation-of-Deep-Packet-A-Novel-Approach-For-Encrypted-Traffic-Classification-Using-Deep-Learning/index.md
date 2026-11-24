@@ -2,7 +2,7 @@
 title: "Pytorch Implementation of Deep Packet: A Novel Approach For Encrypted Traﬃc Classiﬁcation Using Deep Learning"
 source: https://blog.munhou.com/Pytorch-Implementation-of-Deep-Packet-A-Novel-Approach-For-Encrypted-Traffic-Classification-Using-Deep-Learning/
 date: 2020-04-05
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [Deep Learning, PyTorch, PySpark, Traffic Classification]
 ---
 

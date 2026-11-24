@@ -2,7 +2,7 @@
 title: "Lessons Learned From World Model Training for LLM Agent"
 source: https://blog.munhou.com/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/
 date: 2026-11-13
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [Deep Learning, Machine Learning, Reinforcement Learning, Large Language Model]
 ---
 

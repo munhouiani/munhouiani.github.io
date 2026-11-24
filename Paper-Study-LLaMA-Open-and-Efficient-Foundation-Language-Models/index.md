@@ -2,7 +2,7 @@
 title: "Paper Study: LLaMA Open and Efﬁcient Foundation Language Models"
 source: https://blog.munhou.com/Paper-Study-LLaMA-Open-and-Efficient-Foundation-Language-Models/
 date: 2023-08-10
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [Deep Learning, Large Language Model, Paper Study]
 ---
 

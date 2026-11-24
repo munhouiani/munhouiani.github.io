@@ -2,7 +2,7 @@
 title: "Paper Study: LLaMA 2 Open Foundation and Fine-Tuned Chat Models"
 source: https://blog.munhou.com/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/
 date: 2023-08-11
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [Deep Learning, Large Language Model, Paper Study]
 ---
 

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 352" width="760" height="352" role="img" aria-label="pass@1 per task family on test-ood-hard for four models">
+<title>pass@1 per task family on test-ood-hard for four models</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #6f6d68; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .bar { stroke: none; } .soft { fill-opacity: 0.38; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .whisk { fill: none; stroke-width: 2; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  .tk-env { fill: #eda100; } .tk-act { fill: #6250d6; } .on { fill: #0b0b0b; } .onw { fill: #ffffff; }
+  .tk-off { fill: none; stroke: #c3c2b7; stroke-width: 1; }
+  .band { fill: #f0efec; stroke: #c3c2b7; stroke-width: 1; }
+  .hid { fill: none; stroke: #898781; stroke-width: 1; stroke-dasharray: 4 3; }
+  .hl { fill: #f3efe2; } .hot { fill: #fbe3c8; stroke: #eb6834; stroke-width: 1.5; }
+  .flow { stroke: #898781; stroke-width: 1.5; fill: none; } .flowhead { fill: #898781; }
+  .query { stroke: #0b0b0b; stroke-width: 1.5; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; } .muted { fill: #a3a19a; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .bar { stroke: none; } .whisk { fill: none; }
+    .tk-env { fill: #c98500; } .tk-act { fill: #9085e9; } .onw { fill: #0b0b0b; }
+    .tk-off { stroke: #52514e; } .band { fill: #2c2c2a; stroke: #383835; }
+    .hl { fill: #2a271c; } .hot { fill: #4a2c1a; stroke: #d95926; } .query { stroke: #f0efec; }
+  }
+</style>
+<defs>
+  <marker id="flowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="flowhead" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<rect class="surface" x="0" y="0" width="760" height="352"/>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">C and D are hard for every model; A and E separate them</text>
+<text class="ink2" x="24.0" y="42.0" font-size="12" text-anchor="start" font-weight="normal">pass@1 on test-ood-hard, 40 instances × 4 samples per family</text>
+<circle class="s1" cx="29.0" cy="64" r="5"/>
+<text class="ink2" x="39.0" y="68.0" font-size="12" text-anchor="start" font-weight="normal">echo-020 (trained here)</text>
+<circle class="s3" cx="212.9" cy="64" r="5"/>
+<text class="ink2" x="222.9" y="68.0" font-size="12" text-anchor="start" font-weight="normal">Nemotron 3.5 Lightning</text>
+<circle class="s4" cx="390.5" cy="64" r="5"/>
+<text class="ink2" x="400.5" y="68.0" font-size="12" text-anchor="start" font-weight="normal">Inkling 2 Mini</text>
+<circle class="s2" cx="517.7" cy="64" r="5"/>
+<text class="ink2" x="527.7" y="68.0" font-size="12" text-anchor="start" font-weight="normal">Qwen3.8-27B</text>
+<line class="grid" x1="170.0" y1="86.0" x2="170.0" y2="318.0"/>
+<text class="muted" x="170.0" y="336.0" font-size="11" text-anchor="middle" font-weight="normal">0</text>
+<line class="grid" x1="307.5" y1="86.0" x2="307.5" y2="318.0"/>
+<text class="muted" x="307.5" y="336.0" font-size="11" text-anchor="middle" font-weight="normal">0.25</text>
+<line class="grid" x1="445.0" y1="86.0" x2="445.0" y2="318.0"/>
+<text class="muted" x="445.0" y="336.0" font-size="11" text-anchor="middle" font-weight="normal">0.5</text>
+<line class="grid" x1="582.5" y1="86.0" x2="582.5" y2="318.0"/>
+<text class="muted" x="582.5" y="336.0" font-size="11" text-anchor="middle" font-weight="normal">0.75</text>
+<line class="grid" x1="720.0" y1="86.0" x2="720.0" y2="318.0"/>
+<text class="muted" x="720.0" y="336.0" font-size="11" text-anchor="middle" font-weight="normal">1</text>
+<text class="ink" x="24.0" y="110.0" font-size="13" text-anchor="start" font-weight="600">A</text>
+<text class="ink2" x="44.0" y="110.0" font-size="12" text-anchor="start" font-weight="normal">time travel</text>
+<line class="link" x1="211.2" y1="106.0" x2="620.3" y2="106.0"/>
+<circle class="s1 ring" cx="579.1" cy="95.5" r="5"><title>A: echo-020 (trained here) 0.74</title></circle>
+<circle class="s3 ring" cx="228.4" cy="102.5" r="5"><title>A: Nemotron 3.5 Lightning 0.11</title></circle>
+<circle class="s4 ring" cx="211.2" cy="109.5" r="5"><title>A: Inkling 2 Mini 0.07</title></circle>
+<circle class="s2 ring" cx="620.3" cy="116.5" r="5"><title>A: Qwen3.8-27B 0.82</title></circle>
+<text class="ink" x="24.0" y="156.0" font-size="13" text-anchor="start" font-weight="600">B</text>
+<text class="ink2" x="44.0" y="156.0" font-size="12" text-anchor="start" font-weight="normal">MERGE</text>
+<line class="link" x1="620.3" y1="152.0" x2="720.0" y2="152.0"/>
+<circle class="s1 ring" cx="713.1" cy="141.5" r="5"><title>B: echo-020 (trained here) 0.99</title></circle>
+<circle class="s3 ring" cx="620.3" cy="148.5" r="5"><title>B: Nemotron 3.5 Lightning 0.82</title></circle>
+<circle class="s4 ring" cx="720.0" cy="155.5" r="5"><title>B: Inkling 2 Mini 1.00</title></circle>
+<circle class="s2 ring" cx="699.4" cy="162.5" r="5"><title>B: Qwen3.8-27B 0.96</title></circle>
+<text class="ink" x="24.0" y="202.0" font-size="13" text-anchor="start" font-weight="600">C</text>
+<text class="ink2" x="44.0" y="202.0" font-size="12" text-anchor="start" font-weight="normal">schema evolution</text>
+<line class="link" x1="379.7" y1="198.0" x2="500.0" y2="198.0"/>
+<circle class="s1 ring" cx="482.8" cy="187.5" r="5"><title>C: echo-020 (trained here) 0.57</title></circle>
+<circle class="s3 ring" cx="379.7" cy="194.5" r="5"><title>C: Nemotron 3.5 Lightning 0.38</title></circle>
+<circle class="s4 ring" cx="500.0" cy="201.5" r="5"><title>C: Inkling 2 Mini 0.60</title></circle>
+<circle class="s2 ring" cx="500.0" cy="208.5" r="5"><title>C: Qwen3.8-27B 0.60</title></circle>
+<text class="ink" x="24.0" y="248.0" font-size="13" text-anchor="start" font-weight="600">D</text>
+<text class="ink2" x="44.0" y="248.0" font-size="12" text-anchor="start" font-weight="normal">clustering</text>
+<line class="link" x1="180.3" y1="244.0" x2="414.0" y2="244.0"/>
+<circle class="s1 ring" cx="414.0" cy="233.5" r="5"><title>D: echo-020 (trained here) 0.44</title></circle>
+<circle class="s3 ring" cx="180.3" cy="240.5" r="5"><title>D: Nemotron 3.5 Lightning 0.02</title></circle>
+<circle class="s4 ring" cx="324.7" cy="247.5" r="5"><title>D: Inkling 2 Mini 0.28</title></circle>
+<circle class="s2 ring" cx="307.5" cy="254.5" r="5"><title>D: Qwen3.8-27B 0.25</title></circle>
+<text class="ink" x="24.0" y="294.0" font-size="13" text-anchor="start" font-weight="600">E</text>
+<text class="ink2" x="44.0" y="294.0" font-size="12" text-anchor="start" font-weight="normal">data quality</text>
+<line class="link" x1="331.6" y1="290.0" x2="716.6" y2="290.0"/>
+<circle class="s1 ring" cx="616.9" cy="279.5" r="5"><title>E: echo-020 (trained here) 0.81</title></circle>
+<circle class="s3 ring" cx="331.6" cy="286.5" r="5"><title>E: Nemotron 3.5 Lightning 0.29</title></circle>
+<circle class="s4 ring" cx="716.6" cy="293.5" r="5"><title>E: Inkling 2 Mini 0.99</title></circle>
+<circle class="s2 ring" cx="647.8" cy="300.5" r="5"><title>E: Qwen3.8-27B 0.87</title></circle>
+</svg>

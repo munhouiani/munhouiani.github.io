@@ -2,7 +2,7 @@
 title: "Proximal Policy Optimization Algorithms (PPO and PPO2)"
 source: https://blog.munhou.com/Proximal-Policy-Optimization-Algorithms-PPO-and-PPO2/
 date: 2023-03-01
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [Reinforcement Learning]
 ---
 

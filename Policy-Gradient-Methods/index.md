@@ -2,7 +2,7 @@
 title: "Policy Gradient Methods"
 source: https://blog.munhou.com/Policy-Gradient-Methods/
 date: 2023-03-01
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [Reinforcement Learning]
 ---
 

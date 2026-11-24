@@ -2,7 +2,7 @@
 title: "World Modeling for LLM Agent - Predicting or Acting in the Environment"
 source: https://blog.munhou.com/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/
 date: 2026-11-07
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [Deep Learning, Machine Learning, Reinforcement Learning, Large Language Model]
 ---
 

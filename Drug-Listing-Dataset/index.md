@@ -2,7 +2,7 @@
 title: "Drug Listing Dataset"
 source: https://blog.munhou.com/Drug-Listing-Dataset/
 date: 2021-09-29
-updated: 2026-11-23
+updated: 2026-11-24
 ---
 
 # Drug Listing Dataset

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 328" width="760" height="328" role="img" aria-label="Share of family A dev rollouts solved with and without the later-writes sentence, for four models">
+<title>Share of family A dev rollouts solved with and without the later-writes sentence, for four models</title>
+<style>
+  svg { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .surface { fill: #fcfcfb; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .muted { fill: #6f6d68; }
+  .grid { stroke: #e1e0d9; stroke-width: 1; } .axis { stroke: #c3c2b7; stroke-width: 1; }
+  .leader { stroke: #898781; stroke-width: 1; fill: none; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; } .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; } .s4 { fill: #eda100; stroke: #eda100; }
+  .ref { fill: #898781; stroke: #898781; }
+  .bar { stroke: none; } .soft { fill-opacity: 0.38; }
+  .ring { stroke: #fcfcfb; stroke-width: 2; }
+  .whisk { fill: none; stroke-width: 2; stroke-linecap: round; }
+  .link { stroke: #c3c2b7; stroke-width: 2; }
+  .tk-env { fill: #eda100; } .tk-act { fill: #6250d6; } .on { fill: #0b0b0b; } .onw { fill: #ffffff; }
+  .tk-off { fill: none; stroke: #c3c2b7; stroke-width: 1; }
+  .band { fill: #f0efec; stroke: #c3c2b7; stroke-width: 1; }
+  .hid { fill: none; stroke: #898781; stroke-width: 1; stroke-dasharray: 4 3; }
+  .hl { fill: #f3efe2; } .hot { fill: #fbe3c8; stroke: #eb6834; stroke-width: 1.5; }
+  .flow { stroke: #898781; stroke-width: 1.5; fill: none; } .flowhead { fill: #898781; }
+  .query { stroke: #0b0b0b; stroke-width: 1.5; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  @media (prefers-color-scheme: dark) {
+    .surface { fill: #1a1a19; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; } .muted { fill: #a3a19a; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #383835; }
+    .s1 { fill: #3987e5; stroke: #3987e5; } .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; } .s4 { fill: #c98500; stroke: #c98500; }
+    .ring { stroke: #1a1a19; } .link { stroke: #383835; }
+    .bar { stroke: none; } .whisk { fill: none; }
+    .tk-env { fill: #c98500; } .tk-act { fill: #9085e9; } .onw { fill: #0b0b0b; }
+    .tk-off { stroke: #52514e; } .band { fill: #2c2c2a; stroke: #383835; }
+    .hl { fill: #2a271c; } .hot { fill: #4a2c1a; stroke: #d95926; } .query { stroke: #f0efec; }
+  }
+</style>
+<defs>
+  <marker id="flowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="flowhead" d="M0,0 L10,5 L0,10 z"/></marker>
+</defs>
+<rect class="surface" x="0" y="0" width="760" height="328"/>
+<text class="ink" x="24.0" y="22.0" font-size="15" text-anchor="start" font-weight="600">One sentence decides Inkling&#x27;s family A score</text>
+<text class="ink2" x="24.0" y="42.0" font-size="12" text-anchor="start" font-weight="normal">Family A on dev: share solved, with and without “Other jobs have written to the table since then.”</text>
+<rect class="ref bar soft" x="24.0" y="55.0" width="14.0" height="10.0" rx="2"></rect>
+<text class="ink2" x="44.0" y="64.0" font-size="12" text-anchor="start" font-weight="normal">without the sentence</text>
+<rect class="ref bar" x="190.0" y="55.0" width="14.0" height="10.0" rx="2"></rect>
+<text class="ink2" x="210.0" y="64.0" font-size="12" text-anchor="start" font-weight="normal">with the sentence</text>
+<line class="grid" x1="150.0" y1="80.0" x2="150.0" y2="298.0"/>
+<text class="muted" x="150.0" y="314.0" font-size="11" text-anchor="middle" font-weight="normal">0</text>
+<line class="grid" x1="272.5" y1="80.0" x2="272.5" y2="298.0"/>
+<text class="muted" x="272.5" y="314.0" font-size="11" text-anchor="middle" font-weight="normal">0.25</text>
+<line class="grid" x1="395.0" y1="80.0" x2="395.0" y2="298.0"/>
+<text class="muted" x="395.0" y="314.0" font-size="11" text-anchor="middle" font-weight="normal">0.5</text>
+<line class="grid" x1="517.5" y1="80.0" x2="517.5" y2="298.0"/>
+<text class="muted" x="517.5" y="314.0" font-size="11" text-anchor="middle" font-weight="normal">0.75</text>
+<line class="grid" x1="640.0" y1="80.0" x2="640.0" y2="298.0"/>
+<text class="muted" x="640.0" y="314.0" font-size="11" text-anchor="middle" font-weight="normal">1</text>
+<text class="ink" x="24.0" y="110.0" font-size="12.5" text-anchor="start" font-weight="600">Inkling</text>
+<path class="s4 soft bar" d="M150.0,86.0 H636.0 Q640.0,86.0 640.0,90.0 V98.0 Q640.0,102.0 636.0,102.0 H150.0 Z"><title>Inkling 2 Mini, without the sentence: 52 of 52</title></path>
+<text class="ink2" x="647.0" y="98.0" font-size="11" text-anchor="start" font-weight="normal">52 of 52</text>
+<path class="s4 bar" d="M150.0,106.0 H195.9 Q199.9,106.0 199.9,110.0 V118.0 Q199.9,122.0 195.9,122.0 H150.0 Z"><title>Inkling 2 Mini, with the sentence: 11 of 108</title></path>
+<text class="ink2" x="206.9" y="118.0" font-size="11" text-anchor="start" font-weight="normal">11 of 108</text>
+<text class="ink" x="24.0" y="168.0" font-size="12.5" text-anchor="start" font-weight="600">Qwen</text>
+<path class="s2 soft bar" d="M150.0,144.0 H617.2 Q621.2,144.0 621.2,148.0 V156.0 Q621.2,160.0 617.2,160.0 H150.0 Z"><title>Qwen3.8-27B, without the sentence: 50 of 52</title></path>
+<text class="ink2" x="628.2" y="156.0" font-size="11" text-anchor="start" font-weight="normal">50 of 52</text>
+<path class="s2 bar" d="M150.0,164.0 H586.1 Q590.1,164.0 590.1,168.0 V176.0 Q590.1,180.0 586.1,180.0 H150.0 Z"><title>Qwen3.8-27B, with the sentence: 97 of 108</title></path>
+<text class="ink2" x="597.1" y="176.0" font-size="11" text-anchor="start" font-weight="normal">97 of 108</text>
+<text class="ink" x="24.0" y="226.0" font-size="12.5" text-anchor="start" font-weight="600">echo-020</text>
+<path class="s1 soft bar" d="M150.0,202.0 H626.6 Q630.6,202.0 630.6,206.0 V214.0 Q630.6,218.0 626.6,218.0 H150.0 Z"><title>echo-020 (trained here), without the sentence: 51 of 52</title></path>
+<text class="ink2" x="637.6" y="214.0" font-size="11" text-anchor="start" font-weight="normal">51 of 52</text>
+<path class="s1 bar" d="M150.0,222.0 H622.4 Q626.4,222.0 626.4,226.0 V234.0 Q626.4,238.0 622.4,238.0 H150.0 Z"><title>echo-020 (trained here), with the sentence: 105 of 108</title></path>
+<text class="ink2" x="633.4" y="234.0" font-size="11" text-anchor="start" font-weight="normal">105 of 108</text>
+<text class="ink" x="24.0" y="284.0" font-size="12.5" text-anchor="start" font-weight="600">Lightning</text>
+<path class="s3 soft bar" d="M150.0,260.0 H164.8 Q168.8,260.0 168.8,264.0 V272.0 Q168.8,276.0 164.8,276.0 H150.0 Z"><title>Nemotron 3.5 Lightning, without the sentence: 2 of 52</title></path>
+<text class="ink2" x="175.8" y="272.0" font-size="11" text-anchor="start" font-weight="normal">2 of 52</text>
+<path class="s3 bar" d="M150.0,280.0 H205.0 Q209.0,280.0 209.0,284.0 V292.0 Q209.0,296.0 205.0,296.0 H150.0 Z"><title>Nemotron 3.5 Lightning, with the sentence: 13 of 108</title></path>
+<text class="ink2" x="216.0" y="292.0" font-size="11" text-anchor="start" font-weight="normal">13 of 108</text>
+</svg>
