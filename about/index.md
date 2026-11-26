@@ -9,7 +9,7 @@ updated: 2026-11-25
 
 Hi, I'm Mun Hou. I build and study machine learning systems, and I write here about what I learn along the way.
 
-My recent work is on **LLM agents and reinforcement learning**: training small models to act in tool environments and checking whether a model that predicts its environment better also acts better. Before that I spent a lot of time on **ML for network security** (encrypted traffic classification, intrusion and anomaly detection, malware detection) and on the **data and serving systems** that ML runs on, mostly with PyTorch and PySpark.
+My recent work is on **LLM agents and reinforcement learning**: training small models to act in tool environments and checking whether a model that predicts its environment better also acts better, both in models I train and in released open models. Before that I spent a lot of time on **ML for network security** (encrypted traffic classification, intrusion and anomaly detection, malware detection) and on the **data and serving systems** that ML runs on, mostly with PyTorch and PySpark.
 
 I like reimplementing papers to see what holds up. Most of the projects below started that way, and the write-ups say where my results matched the paper and where they didn't.
 
@@ -34,10 +34,11 @@ An agent that works on Delta Lake tables in a Databricks-style workspace, traine
 -   ECHO-trained models predicted the facts in tool outputs 0.64–0.77 nats per token better than the GRPO model on held-out episodes.
 -   ECHO models solved about 0.2 more of the tasks than GRPO (CI +0.12 to +0.29).
 -   A better world model did not always mean a better agent, and debugging the training run took most of the effort.
+-   On [Delta-Bench](https://github.com/munhouiani/delta_bench), with three released open models and no training, the order reversed: Nemotron 3.5 Lightning predicted tool outputs best and solved the fewest tasks, Qwen3.8-27B predicted worst and solved the most, and Inkling 2 Mini came between them on both.
 
 LLM agentsGRPONeMo RLvLLMDelta Lake
 
-[Code](https://github.com/munhouiani/delta_world) [Results](https://blog.munhou.com/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/) [Lessons learned](https://blog.munhou.com/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/)
+[Code](https://github.com/munhouiani/delta_world) [Benchmark](https://github.com/munhouiani/delta_bench) [Results](https://blog.munhou.com/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/) [Lessons learned](https://blog.munhou.com/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/) [Open models compared](https://blog.munhou.com/Inkling-2-Mini-on-Delta-Lake/)
 
 [![Dev pass@1 at training steps 0 to 90 for GRPO and two ECHO settings](https://blog.munhou.com/images/echo-model/learning-curve.svg)](https://blog.munhou.com/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/)
 

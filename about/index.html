@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css?v=mwwukpvp">
+<link rel="stylesheet" href="/css/main.css?v=mwwuxb8p">
 
 
 
@@ -27,7 +27,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog.munhou.com/images/echo-model/learning-curve.svg">
 <meta property="article:published_time" content="2026-11-16T23:00:00.000Z">
-<meta property="article:modified_time" content="2026-11-26T01:01:45.425Z">
+<meta property="article:modified_time" content="2026-11-26T01:11:31.820Z">
 <meta property="article:author" content="Mun Hou">
 <meta property="article:tag" content="Anomaly Detection">
 <meta property="article:tag" content="Deep Learning">
@@ -272,7 +272,7 @@
       <div class="post-body">
           <div class="about-intro">
 <p class="about-lead">Hi, I'm Mun Hou. I build and study machine learning systems, and I write here about what I learn along the way.</p>
-<p>My recent work is on <strong>LLM agents and reinforcement learning</strong>: training small models to act in tool environments and checking whether a model that predicts its environment better also acts better. Before that I spent a lot of time on <strong>ML for network security</strong> (encrypted traffic classification, intrusion and anomaly detection, malware detection) and on the <strong>data and serving systems</strong> that ML runs on, mostly with PyTorch and PySpark.</p>
+<p>My recent work is on <strong>LLM agents and reinforcement learning</strong>: training small models to act in tool environments and checking whether a model that predicts its environment better also acts better, both in models I train and in released open models. Before that I spent a lot of time on <strong>ML for network security</strong> (encrypted traffic classification, intrusion and anomaly detection, malware detection) and on the <strong>data and serving systems</strong> that ML runs on, mostly with PyTorch and PySpark.</p>
 <p>I like reimplementing papers to see what holds up. Most of the projects below started that way, and the write-ups say where my results matched the paper and where they didn't.</p>
 </div>
 
@@ -290,9 +290,10 @@
 <li>ECHO-trained models predicted the facts in tool outputs 0.64–0.77 nats per token better than the GRPO model on held-out episodes.</li>
 <li>ECHO models solved about 0.2 more of the tasks than GRPO (CI +0.12 to +0.29).</li>
 <li>A better world model did not always mean a better agent, and debugging the training run took most of the effort.</li>
+<li>On <a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_bench">Delta-Bench</a>, with three released open models and no training, the order reversed: Nemotron 3.5 Lightning predicted tool outputs best and solved the fewest tasks, Qwen3.8-27B predicted worst and solved the most, and Inkling 2 Mini came between them on both.</li>
 </ul>
 <p class="about-tags"><span>LLM agents</span><span>GRPO</span><span>NeMo RL</span><span>vLLM</span><span>Delta Lake</span></p>
-<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_world"><i class="fab fa-github"></i> Code</a><a href="/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/"><i class="fa fa-file-lines"></i> Results</a><a href="/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/"><i class="fa fa-file-lines"></i> Lessons learned</a></p>
+<p class="about-links"><a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_world"><i class="fab fa-github"></i> Code</a><a target="_blank" rel="noopener" href="https://github.com/munhouiani/delta_bench"><i class="fab fa-github"></i> Benchmark</a><a href="/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/"><i class="fa fa-file-lines"></i> Results</a><a href="/Lessons-Learned-During-World-Model-Training-for-LLM-Agent/"><i class="fa fa-file-lines"></i> Lessons learned</a><a href="/Inkling-2-Mini-on-Delta-Lake/"><i class="fa fa-file-lines"></i> Open models compared</a></p>
 </div>
 <figure class="about-featured-figure"><a href="/World-Modeling-for-LLM-Agent-Predicting-or-Acting-in-the-Environment/"><img src="/images/echo-model/learning-curve.svg" alt="Dev pass@1 at training steps 0 to 90 for GRPO and two ECHO settings" loading="lazy"></a><figcaption>Dev pass@1 during training. With task family E left out, the three curves stay close.</figcaption></figure>
 </div>
