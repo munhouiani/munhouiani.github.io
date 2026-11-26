@@ -2,7 +2,7 @@
 title: "Paper Study: LLaMA 2 Open Foundation and Fine-Tuned Chat Models"
 source: https://blog.munhou.com/Paper-Study-LLaMA-2-Open-Foundation-and-Fine-Tuned-Chat-Models/
 date: 2023-08-11
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [Deep Learning, Large Language Model, Paper Study]
 ---
 
@@ -35,7 +35,10 @@ In this work, we develop and release Llama 2, a collection of pretrained and ﬁ
 -   The training corpus has 2 trillion tokens.
 -   The majority of the data is in English:
 
-![](https://blog.munhou.com/images/llama2/CleanShot2023-08-09at215358.png) - The data has a cutoff of September 2022. - The data was collected adhering to standard privacy and legal reviews and includes no private Meta user data.
+![](https://blog.munhou.com/images/llama2/CleanShot2023-08-09at215358.png)
+
+-   The data has a cutoff of September 2022.
+-   The data was collected adhering to standard privacy and legal reviews and includes no private Meta user data.
 
 #### Model Architecture
 
@@ -137,7 +140,16 @@ In this work, we develop and release Llama 2, a collection of pretrained and ﬁ
 -   Where $r\_{\\theta}(x, y)$ is the scalar score output for prompt $x$ and completion $y$ with model weights $\\theta$. $y\_c$ is the preferred response and $y\_r$ is the rejected counterpart. The margin $m(r)$ is a discrete function of the preference rating.
 -   They use a large margin for pairs with distinct responses and a smaller one for those with similar responses. There are two variants for setting the margin function. See the table below.
 
-![](https://blog.munhou.com/images/llama2/CleanShot2023-08-10at001305.png) - The final training data composition for both reward models: - \*\*Helpfulness RM\*\*: - All Meta Helpfulness data - Equal parts of the remaining data were uniformly sampled from Meta Safety and the open-source datasets. - \*\*Safety RM\*\*: - All Meta Safety data - All Anthropic Harmless data - Mixed with Meta Helpfulness and open-source helpfulness data in a 90/10 proportion.
+![](https://blog.munhou.com/images/llama2/CleanShot2023-08-10at001305.png)
+
+-   The final training data composition for both reward models:
+    -   **Helpfulness RM**:
+        -   All Meta Helpfulness data
+        -   Equal parts of the remaining data were uniformly sampled from Meta Safety and the open-source datasets.
+    -   **Safety RM**:
+        -   All Meta Safety data
+        -   All Anthropic Harmless data
+        -   Mixed with Meta Helpfulness and open-source helpfulness data in a 90/10 proportion.
 
 ##### RLHF Reward Model Training Details
 

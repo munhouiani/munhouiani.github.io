@@ -2,7 +2,7 @@
 title: "ML Prediction with XGBoost and PySpark"
 source: https://blog.munhou.com/ML-Prediction-with-XGBoost-and-PySpark/
 date: 2020-02-29
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [Machine Learning, PySpark]
 ---
 

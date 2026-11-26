@@ -2,7 +2,7 @@
 title: "Inkling 2 Mini on Delta Lake"
 source: https://blog.munhou.com/Inkling-2-Mini-on-Delta-Lake/
 date: 2026-11-24
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [Deep Learning, Machine Learning, Reinforcement Learning, Large Language Model]
 ---
 

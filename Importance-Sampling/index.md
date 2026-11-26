@@ -2,7 +2,7 @@
 title: "Importance Sampling"
 source: https://blog.munhou.com/Importance-Sampling/
 date: 2023-03-01
-updated: 2026-11-24
+updated: 2026-11-25
 ---
 
 # Importance Sampling

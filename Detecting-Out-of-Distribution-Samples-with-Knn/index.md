@@ -2,7 +2,7 @@
 title: "Detecting Out-of-Distribution Samples with kNN"
 source: https://blog.munhou.com/Detecting-Out-of-Distribution-Samples-with-Knn/
 date: 2022-12-01
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [Deep Learning, PyTorch, Machine Learning]
 ---
 

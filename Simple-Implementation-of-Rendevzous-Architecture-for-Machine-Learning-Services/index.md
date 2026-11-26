@@ -2,7 +2,7 @@
 title: "Simple Implementation of Rendezvous Architecture for Machine Learning Services"
 source: https://blog.munhou.com/Simple-Implementation-of-Rendevzous-Architecture-for-Machine-Learning-Services/
 date: 2022-02-08
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [Machine Learning]
 ---
 

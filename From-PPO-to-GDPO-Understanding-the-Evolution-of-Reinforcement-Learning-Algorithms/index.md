@@ -2,7 +2,7 @@
 title: "From PPO to GDPO — Understanding the Evolution of Reinforcement Learning Algorithms"
 source: https://blog.munhou.com/From-PPO-to-GDPO-Understanding-the-Evolution-of-Reinforcement-Learning-Algorithms/
 date: 2026-01-14
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [Machine Learning, Reinforcement Learning, Large Language Model]
 ---
 

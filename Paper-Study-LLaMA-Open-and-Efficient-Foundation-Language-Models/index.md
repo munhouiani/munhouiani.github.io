@@ -2,7 +2,7 @@
 title: "Paper Study: LLaMA Open and Efﬁcient Foundation Language Models"
 source: https://blog.munhou.com/Paper-Study-LLaMA-Open-and-Efficient-Foundation-Language-Models/
 date: 2023-08-10
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [Deep Learning, Large Language Model, Paper Study]
 ---
 
@@ -24,7 +24,34 @@ We introduce LLaMA, a collection of foundation language models ranging from 7B t
 
 -   Use only publicly available data. The entire training dataset contains 1.4T tokens after tokenization.
 
-![](https://blog.munhou.com/images/llama/CleanShot2023-08-07at231107.png) - Tokenize the data with [Byte-Pair Encoding](https://blog.munhou.com/Byte-Pair-Encoding-BPE/ "Byte-Pair-Encoding (BPE)") ([BPE](https://blog.munhou.com/Byte-Pair-Encoding-BPE/ "Byte-Pair-Encoding (BPE)")) algorithm, with the implementation from \[SentencePiece\](https://github.com/google/sentencepiece). - Each token is used only once during training, except Wikipedia and Books, which are trained for approximately 2 epochs. - Architecture-wise, their network is based on the Transformer architecture, with the following differences: - Pre-normalization: - Normalize the input of each transformer sub-layer instead of the output. - Use the RMSNorm normalizing function. - SwiGLU activation function: - Replace the ReLU with the SwiGLU activation function. - SwiGLU has trainable parameters $W$ and $V$, they scale down the size of the hidden units with a factor of $\\frac{2}{3}$. - Rotary Embedding - Replace absolute positional embedding with Rotary Positional Embedding(RoPE) - Use AdamW optimizer with the following hyperparemeters: - $\\beta\_1 = 0.9$ - $\\beta\_2 = 0.95$ - Use a cosine learning rate schedule, where the final learning rate equals 10% of the maximal learning rate. - Use weight decay of 0.1 - Use gradient clipping of 1.0 - use 2000 warmup steps - Varying batch size and learning rate ![](https://blog.munhou.com/images/llama/CleanShot2023-08-07at235133.png) - Use efficient implementation of the causal multi-head attention to reduce memory usage and runtime - Use works from \*Self-attention does not need O(n2) memory\* and \*Flashattention Fast and memory-efﬁcient exact attention with io-awareness\* - Available at the \[xformers\](https://github.com/facebookresearch/xformers) library. - Reducing activation recomputation in large transformer models
+![](https://blog.munhou.com/images/llama/CleanShot2023-08-07at231107.png)
+
+-   Tokenize the data with [Byte-Pair Encoding](https://blog.munhou.com/Byte-Pair-Encoding-BPE/ "Byte-Pair-Encoding (BPE)") ([BPE](https://blog.munhou.com/Byte-Pair-Encoding-BPE/ "Byte-Pair-Encoding (BPE)")) algorithm, with the implementation from [SentencePiece](https://github.com/google/sentencepiece).
+-   Each token is used only once during training, except Wikipedia and Books, which are trained for approximately 2 epochs.
+-   Architecture-wise, their network is based on the Transformer architecture, with the following differences:
+    -   Pre-normalization:
+        -   Normalize the input of each transformer sub-layer instead of the output.
+        -   Use the RMSNorm normalizing function.
+    -   SwiGLU activation function:
+        -   Replace the ReLU with the SwiGLU activation function.
+        -   SwiGLU has trainable parameters $W$ and $V$, they scale down the size of the hidden units with a factor of $\\frac{2}{3}$.
+    -   Rotary Embedding
+        -   Replace absolute positional embedding with Rotary Positional Embedding(RoPE)
+-   Use AdamW optimizer with the following hyperparemeters:
+    -   $\\beta\_1 = 0.9$
+    -   $\\beta\_2 = 0.95$
+    -   Use a cosine learning rate schedule, where the final learning rate equals 10% of the maximal learning rate.
+    -   Use weight decay of 0.1
+    -   Use gradient clipping of 1.0
+    -   use 2000 warmup steps
+    -   Varying batch size and learning rate
+
+![](https://blog.munhou.com/images/llama/CleanShot2023-08-07at235133.png)
+
+-   Use efficient implementation of the causal multi-head attention to reduce memory usage and runtime
+    -   Use works from *Self-attention does not need O(n2) memory* and *Flashattention Fast and memory-efﬁcient exact attention with io-awareness*
+    -   Available at the [xformers](https://github.com/facebookresearch/xformers) library.
+-   Reducing activation recomputation in large transformer models
 
 ## 📊 Result(s)
 

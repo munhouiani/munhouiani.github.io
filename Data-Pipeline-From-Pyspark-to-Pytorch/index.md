@@ -2,7 +2,7 @@
 title: "Data Pipeline: From PySpark to PyTorch"
 source: https://blog.munhou.com/Data-Pipeline-From-Pyspark-to-Pytorch/
 date: 2020-01-16
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [Deep Learning, PyTorch, Machine Learning]
 ---
 

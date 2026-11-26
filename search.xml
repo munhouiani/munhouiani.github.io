@@ -1944,9 +1944,11 @@ Pic 3. Network Graph from Day 2
 <li>The majority of the data is in English:</li>
 </ul>
 <img src="/images/llama2/CleanShot2023-08-09at215358.png" width=500px/>
-- The data has a cutoff of September 2022.
-- The data was collected adhering to standard privacy and legal reviews and includes no private Meta user data.
 
+<ul>
+<li>The data has a cutoff of September 2022.</li>
+<li>The data was collected adhering to standard privacy and legal reviews and includes no private Meta user data.</li>
+</ul>
 <h4 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h4><ul>
 <li>Adopt most of the pretraining setting from Llama1<ul>
 <li>Standard Transformer architecture</li>
@@ -2045,15 +2047,23 @@ Pic 3. Network Graph from Day 2
 <li>They use a large margin for pairs with distinct responses and a smaller one for those with similar responses. There are two variants for setting the margin function. See the table below.</li>
 </ul>
 <img src="/images/llama2/CleanShot2023-08-10at001305.png" width=500px/>
-- The final training data composition for both reward models:
-    - **Helpfulness RM**:
-        - All Meta Helpfulness data
-        - Equal parts of the remaining data were uniformly sampled from Meta Safety and the open-source datasets.
-    - **Safety RM**:
-        - All Meta Safety data
-        - All Anthropic Harmless data
-        - Mixed with Meta Helpfulness and open-source helpfulness data in a 90/10 proportion.
 
+<ul>
+<li>The final training data composition for both reward models:<ul>
+<li><strong>Helpfulness RM</strong>:<ul>
+<li>All Meta Helpfulness data</li>
+<li>Equal parts of the remaining data were uniformly sampled from Meta Safety and the open-source datasets.</li>
+</ul>
+</li>
+<li><strong>Safety RM</strong>:<ul>
+<li>All Meta Safety data</li>
+<li>All Anthropic Harmless data</li>
+<li>Mixed with Meta Helpfulness and open-source helpfulness data in a 90&#x2F;10 proportion.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h5 id="RLHF-Reward-Model-Training-Details"><a href="#RLHF-Reward-Model-Training-Details" class="headerlink" title="RLHF Reward Model Training Details"></a>RLHF Reward Model Training Details</h5><ul>
 <li>Train for one epoch over the training data</li>
 <li>Use the same optimizer parameters as for the base model:<ul>
@@ -2223,31 +2233,48 @@ Pic 3. Network Graph from Day 2
 <li>Use only publicly available data. The entire training dataset contains 1.4T tokens after tokenization.</li>
 </ul>
 <img src="/images/llama/CleanShot2023-08-07at231107.png" width=500px>
-- Tokenize the data with <a href="/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">Byte-Pair Encoding</a> (<a href="/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">BPE</a>) algorithm, with the implementation from [SentencePiece](https://github.com/google/sentencepiece).
-- Each token is used only once during training, except Wikipedia and Books, which are trained for approximately 2 epochs.
-- Architecture-wise, their network is based on the Transformer architecture, with the following differences:
-    - Pre-normalization:
-        - Normalize the input of each transformer sub-layer instead of the output.
-        - Use the RMSNorm normalizing function.
-    - SwiGLU activation function:
-        - Replace the ReLU with the SwiGLU activation function.
-        - SwiGLU has trainable parameters $W$ and $V$, they scale down the size of the hidden units with a factor of $\frac{2}{3}$.
-    - Rotary Embedding
-        - Replace absolute positional embedding with Rotary Positional Embedding(RoPE)
-- Use AdamW optimizer with the following hyperparemeters:
-    - $\beta_1 = 0.9$
-    - $\beta_2 = 0.95$
-    - Use a cosine learning rate schedule, where the final learning rate equals 10% of the maximal learning rate.
-    - Use weight decay of 0.1
-    - Use gradient clipping of 1.0
-    - use 2000 warmup steps
-    - Varying batch size and learning rate  
-   <img src="/images/llama/CleanShot2023-08-07at235133.png" width=500/>
-   - Use efficient implementation of the causal multi-head attention to reduce memory usage and runtime
-       - Use works from *Self-attention does not need O(n2) memory* and *Flashattention Fast and memory-efﬁcient exact attention with io-awareness*
-       - Available at the [xformers](https://github.com/facebookresearch/xformers) library.
-   - Reducing activation recomputation in large transformer models
 
+<ul>
+<li>Tokenize the data with <a href="/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">Byte-Pair Encoding</a> (<a href="/Byte-Pair-Encoding-BPE/" title="Byte-Pair-Encoding (BPE)">BPE</a>) algorithm, with the implementation from <a href="https://github.com/google/sentencepiece">SentencePiece</a>.</li>
+<li>Each token is used only once during training, except Wikipedia and Books, which are trained for approximately 2 epochs.</li>
+<li>Architecture-wise, their network is based on the Transformer architecture, with the following differences:<ul>
+<li>Pre-normalization:<ul>
+<li>Normalize the input of each transformer sub-layer instead of the output.</li>
+<li>Use the RMSNorm normalizing function.</li>
+</ul>
+</li>
+<li>SwiGLU activation function:<ul>
+<li>Replace the ReLU with the SwiGLU activation function.</li>
+<li>SwiGLU has trainable parameters $W$ and $V$, they scale down the size of the hidden units with a factor of $\frac{2}{3}$.</li>
+</ul>
+</li>
+<li>Rotary Embedding<ul>
+<li>Replace absolute positional embedding with Rotary Positional Embedding(RoPE)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Use AdamW optimizer with the following hyperparemeters:<ul>
+<li>$\beta_1 &#x3D; 0.9$</li>
+<li>$\beta_2 &#x3D; 0.95$</li>
+<li>Use a cosine learning rate schedule, where the final learning rate equals 10% of the maximal learning rate.</li>
+<li>Use weight decay of 0.1</li>
+<li>Use gradient clipping of 1.0</li>
+<li>use 2000 warmup steps</li>
+<li>Varying batch size and learning rate</li>
+</ul>
+</li>
+</ul>
+<img src="/images/llama/CleanShot2023-08-07at235133.png" width=500/>
+
+<ul>
+<li>Use efficient implementation of the causal multi-head attention to reduce memory usage and runtime<ul>
+<li>Use works from <em>Self-attention does not need O(n2) memory</em> and <em>Flashattention Fast and memory-efﬁcient exact attention with io-awareness</em></li>
+<li>Available at the <a href="https://github.com/facebookresearch/xformers">xformers</a> library.</li>
+</ul>
+</li>
+<li>Reducing activation recomputation in large transformer models</li>
+</ul>
 <h2 id="📊-Result-s"><a href="#📊-Result-s" class="headerlink" title="📊 Result(s)"></a>📊 Result(s)</h2><h3 id="Training-Loss"><a href="#Training-Loss" class="headerlink" title="Training Loss"></a>Training Loss</h3><img src="/images/llama/CleanShot2023-08-08at001349.png" width=500/>
 
 <h3 id="Evolution-of-Performance"><a href="#Evolution-of-Performance" class="headerlink" title="Evolution of Performance"></a>Evolution of Performance</h3><img src="/images/llama/CleanShot2023-08-08at002024.png" width=500/>

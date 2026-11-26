@@ -2,7 +2,7 @@
 title: "Network Anomaly Detection with MIDAS, MIDAS-R, and MIDAS-F"
 source: https://blog.munhou.com/Network-Anomaly-Detection-with-MIDAS-MIDAS-R-and-MIDAS-F/
 date: 2021-03-26
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [Machine Learning, Anomaly Detection]
 ---
 

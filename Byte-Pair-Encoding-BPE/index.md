@@ -2,7 +2,7 @@
 title: "Byte-Pair-Encoding (BPE)"
 source: https://blog.munhou.com/Byte-Pair-Encoding-BPE/
 date: 2023-08-14
-updated: 2026-11-24
+updated: 2026-11-25
 ---
 
 # Byte-Pair Encoding
